@@ -1,4 +1,6 @@
 import ESA, {
+  CommitRoutineStagingCodeRequest,
+  CommitRoutineStagingCodeResponse,
   CreateRoutineRequest,
   CreateRoutineResponse,
   DeleteRoutineRequest,
@@ -106,16 +108,28 @@ class Client {
     return this.callApi(this.client.getRoutineUserInfo.bind(this.client));
   }
 
-  getRoutineStagingCodeUploadInfo(
+  async getRoutineStagingCodeUploadInfo(
     params: GetRoutineStagingCodeUploadInfoRequest,
   ) {
     const request = new GetRoutineStagingCodeUploadInfoRequest(params);
+
     return this.callApi(
       this.client.getRoutineStagingCodeUploadInfo.bind(
         this.client,
       ) as ApiMethod<
         GetRoutineStagingCodeUploadInfoRequest,
         GetRoutineStagingCodeUploadInfoResponse
+      >,
+      request,
+    );
+  }
+
+  commitRoutineStagingCode(params: CommitRoutineStagingCodeRequest) {
+    const request = new CommitRoutineStagingCodeRequest(params);
+    return this.callApi(
+      this.client.commitRoutineStagingCode.bind(this.client) as ApiMethod<
+        CommitRoutineStagingCodeRequest,
+        CommitRoutineStagingCodeResponse
       >,
       request,
     );

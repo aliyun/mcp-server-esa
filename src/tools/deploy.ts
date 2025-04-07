@@ -6,9 +6,9 @@ import {
 } from '@alicloud/esa20240910';
 import { uploadCodeToOSS } from '../utils/helpers.js';
 
-export const ROUTINE_CODE_COMMIT_TOOL: Tool = {
-  name: 'routine_code_commit',
-  description: 'Commit a routine code',
+export const ROUTINE_CODE_DEPLOY_TOOL: Tool = {
+  name: 'routine_code_deploy',
+  description: 'Deploy a routine code',
   inputSchema: {
     type: 'object',
     properties: {

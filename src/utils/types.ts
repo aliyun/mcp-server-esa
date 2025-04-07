@@ -8,3 +8,12 @@ export type ToolHandlers = Record<
   string,
   (request: z.infer<typeof CallToolRequestSchema>) => Promise<Result>
 >;
+export interface IOssConfig {
+  OSSAccessKeyId: string;
+  Signature: string;
+  Url: string;
+  callback: string;
+  key: string;
+  policy: string;
+  'x:codeDescription': string;
+}

@@ -1,5 +1,4 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
-import { ToolHandlers } from '../utils/types';
 import api from '../utils/service.js';
 import {
   CreateRoutineRequest,
@@ -97,17 +96,3 @@ export const routine_get = async (request: CallToolRequest) => {
   );
   return { result: JSON.stringify(res), success: true };
 };
-
-export const routineHandlers: ToolHandlers = {
-  routine_create,
-  routine_delete,
-  routine_list,
-  routine_get,
-};
-
-export const ESA_OPENAPI_ER_LIST = [
-  ROUTINE_CREATE_TOOL,
-  ROUTINE_DELETE_TOOL,
-  ROUTINE_LIST_TOOL,
-  ROUTINE_GET_TOOL,
-];
