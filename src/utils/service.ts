@@ -1,14 +1,22 @@
 import ESA, {
   CommitRoutineStagingCodeRequest,
   CommitRoutineStagingCodeResponse,
+  CreateRoutineRelatedRecordRequest,
+  CreateRoutineRelatedRecordResponse,
   CreateRoutineRequest,
   CreateRoutineResponse,
+  DeleteRoutineCodeVersionRequest,
+  DeleteRoutineCodeVersionResponse,
   DeleteRoutineRequest,
   DeleteRoutineResponse,
   GetRoutineRequest,
   GetRoutineResponse,
   GetRoutineStagingCodeUploadInfoRequest,
   GetRoutineStagingCodeUploadInfoResponse,
+  ListSitesRequest,
+  ListSitesResponse,
+  PublishRoutineCodeVersionRequest,
+  PublishRoutineCodeVersionResponse,
 } from '@alicloud/esa20240910';
 import * as $OpenApi from '@alicloud/openapi-client';
 import * as $Util from '@alicloud/tea-util';
@@ -130,6 +138,54 @@ class Client {
       this.client.commitRoutineStagingCode.bind(this.client) as ApiMethod<
         CommitRoutineStagingCodeRequest,
         CommitRoutineStagingCodeResponse
+      >,
+      request,
+    );
+  }
+
+  publishRoutineCodeVersion(params: PublishRoutineCodeVersionRequest) {
+    const request = new PublishRoutineCodeVersionRequest(params);
+    return this.callApi(
+      this.client.publishRoutineCodeVersion.bind(this.client) as ApiMethod<
+        PublishRoutineCodeVersionRequest,
+        PublishRoutineCodeVersionResponse
+      >,
+      request,
+    );
+  }
+
+  listRoutineCanaryAreas() {
+    return this.callApi(this.client.listRoutineCanaryAreas.bind(this.client));
+  }
+
+  listSites(params: ListSitesRequest) {
+    const request = new ListSitesRequest(params);
+    return this.callApi(
+      this.client.listSites.bind(this.client) as ApiMethod<
+        ListSitesRequest,
+        ListSitesResponse
+      >,
+      request,
+    );
+  }
+
+  deleteRoutineCodeVersion(params: DeleteRoutineCodeVersionRequest) {
+    const request = new DeleteRoutineCodeVersionRequest(params);
+    return this.callApi(
+      this.client.deleteRoutineCodeVersion.bind(this.client) as ApiMethod<
+        DeleteRoutineCodeVersionRequest,
+        DeleteRoutineCodeVersionResponse
+      >,
+      request,
+    );
+  }
+
+  createRoutineRelatedRecord(params: CreateRoutineRelatedRecordRequest) {
+    const request = new CreateRoutineRelatedRecordRequest(params);
+    return this.callApi(
+      this.client.createRoutineRelatedRecord.bind(this.client) as ApiMethod<
+        CreateRoutineRelatedRecordRequest,
+        CreateRoutineRelatedRecordResponse
       >,
       request,
     );

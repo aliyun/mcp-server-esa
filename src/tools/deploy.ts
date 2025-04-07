@@ -1,10 +1,6 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
 import api from '../utils/service.js';
-import {
-  CommitRoutineStagingCodeRequest,
-  GetRoutineStagingCodeUploadInfoRequest,
-} from '@alicloud/esa20240910';
-import { uploadCodeToOSS } from '../utils/helpers.js';
+import { PublishRoutineCodeVersionRequest } from '@alicloud/esa20240910';
 
 export const ROUTINE_CODE_DEPLOY_TOOL: Tool = {
   name: 'routine_code_deploy',
@@ -17,50 +13,60 @@ export const ROUTINE_CODE_DEPLOY_TOOL: Tool = {
         description:
           'The name of the routine, support lowercase English, numbers, and hyphens, must start with lowercase English, length cannot be less than 2 characters',
       },
-      description: {
+      codeVersion: {
         type: 'string',
-        description: 'Description of the routine, no spaces',
+        description: 'Version of the routine, must be a valid semantic version',
       },
-      code: {
+      env: {
         type: 'string',
         description:
-          'Source Code of the routine, export default { async fetch(request) { return handleRequest(request); } }',
+          'Environment of the routine, must be "production" or "staging"',
+      },
+      canaryAreaList: {
+        type: 'array',
+        description:
+          'The regions for canary release, must be a valid region name. Need to call ListRoutineCanaryAreas method to get',
+      },
+      canaryCodeVersion: {
+        type: 'string',
+        description: 'Version of the routine, must be a valid semantic version',
       },
     },
-    required: ['name', 'code'],
+    required: ['name', 'codeVersion', 'env'],
   },
 };
-export const routine_code_commit = async (request: CallToolRequest) => {
-  const res = await api.getRoutineStagingCodeUploadInfo(
-    request.params.arguments as GetRoutineStagingCodeUploadInfoRequest,
+
+export const CANARY_AREA_LIST: Tool = {
+  name: 'canary_area_list',
+  description: 'List all available canary areas for routine deployment',
+  inputSchema: {
+    type: 'object',
+    properties: {},
+  },
+};
+
+export const routine_code_deploy = async (request: CallToolRequest) => {
+  const res = await api.publishRoutineCodeVersion(
+    request.params.arguments as PublishRoutineCodeVersionRequest,
   );
   if (!res) {
     return {
-      result: `Failed to get routine staging code upload info. ${JSON.stringify(res)}`,
+      result: `Failed to publish routine code version. ${JSON.stringify(res)}`,
       success: false,
     };
   } else {
-    const uploadRes = await uploadCodeToOSS(
-      res,
-      request?.params?.arguments?.code as string,
-    );
-    if (uploadRes !== true) {
-      return {
-        result: `Failed to upload code to OSS. ${uploadRes}`,
-        success: false,
-      };
-    } else {
-      const commitRes = await api.commitRoutineStagingCode(
-        request.params.arguments as CommitRoutineStagingCodeRequest,
-      );
-      if (commitRes.statusCode !== 200) {
-        return {
-          result: `Failed to commit routine staging code. ${JSON.stringify(commitRes)}`,
-          success: false,
-        };
-      } else {
-        return { result: JSON.stringify(commitRes), success: true };
-      }
-    }
+    return { result: JSON.stringify(res), success: true };
+  }
+};
+
+export const canary_area_list = async () => {
+  const res = await api.listRoutineCanaryAreas();
+  if (!res || !Array.isArray(res.canaryAreas)) {
+    return {
+      result: `Failed to list canary areas. ${JSON.stringify(res)}`,
+      success: false,
+    };
+  } else {
+    return { result: res.canaryAreas, success: true };
   }
 };
