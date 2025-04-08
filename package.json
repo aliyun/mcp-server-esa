@@ -1,8 +1,11 @@
 {
-  "name": "test-client",
+  "name": "@ali/esa-mcp-server",
   "version": "1.0.0",
-  "description": "返回了一个包含Hello world字符串的HTML页面。",
+  "description": "esa mcp server",
   "main": "index.js",
+  "bin": {
+    "esa-mcp-server": "./dist/index.js"
+  },
   "scripts": {
     "build": "rslib build",
     "dev": "rslib build --watch",
