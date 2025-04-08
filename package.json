@@ -2,7 +2,7 @@
   "name": "@ali/esa-mcp-server",
   "version": "1.0.0",
   "description": "esa mcp server",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "bin": {
     "esa-mcp-server": "./dist/index.js"
   },
@@ -27,7 +27,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://gitlab.alibaba-inc.com/sell/fusion-docs-mcp.git"
+    "url": "http://gitlab.alibaba-inc.com/cdn-fe/esa-mcp-server.git"
   },
   "publishConfig": {
     "registry": "https://registry.anpm.alibaba-inc.com"
