@@ -25,5 +25,13 @@ export const deployment_delete = async (request: CallToolRequest) => {
   const res = await api.deleteRoutineCodeVersion(
     request.params.arguments as DeleteRoutineCodeVersionRequest,
   );
-  return { result: JSON.stringify(res), success: true };
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(res),
+      },
+    ],
+    success: true,
+  };
 };

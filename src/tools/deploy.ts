@@ -1,6 +1,9 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
 import api from '../utils/service.js';
-import { PublishRoutineCodeVersionRequest } from '@alicloud/esa20240910';
+import {
+  ListRoutineCanaryAreasResponse,
+  PublishRoutineCodeVersionRequest,
+} from '@alicloud/esa20240910';
 
 export const ROUTINE_CODE_DEPLOY_TOOL: Tool = {
   name: 'routine_code_deploy',
@@ -51,22 +54,49 @@ export const routine_code_deploy = async (request: CallToolRequest) => {
   );
   if (!res) {
     return {
-      result: `Failed to publish routine code version. ${JSON.stringify(res)}`,
+      content: [
+        {
+          type: 'text',
+          text: `Failed to publish routine code version. ${JSON.stringify(res)}`,
+        },
+      ],
       success: false,
     };
   } else {
-    return { result: JSON.stringify(res), success: true };
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(res),
+        },
+      ],
+      success: true,
+    };
   }
 };
 
 export const canary_area_list = async () => {
-  const res = await api.listRoutineCanaryAreas();
-  if (!res || !Array.isArray(res.canaryAreas)) {
+  const res: ListRoutineCanaryAreasResponse =
+    await api.listRoutineCanaryAreas();
+  if (res.statusCode !== 200) {
     return {
-      result: `Failed to list canary areas. ${JSON.stringify(res)}`,
+      content: [
+        {
+          type: 'text',
+          text: `Failed to list canary areas. ${JSON.stringify(res)}`,
+        },
+      ],
       success: false,
     };
   } else {
-    return { result: res.canaryAreas, success: true };
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(res.body?.canaryAreas || []),
+        },
+      ],
+      success: true,
+    };
   }
 };

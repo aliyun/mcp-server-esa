@@ -5,40 +5,46 @@ import ESA, {
   CreateRoutineRelatedRecordResponse,
   CreateRoutineRequest,
   CreateRoutineResponse,
+  CreateRoutineRouteRequest,
+  CreateRoutineRouteResponse,
   DeleteRoutineCodeVersionRequest,
   DeleteRoutineCodeVersionResponse,
+  DeleteRoutineRelatedRecordRequest,
+  DeleteRoutineRelatedRecordResponse,
   DeleteRoutineRequest,
   DeleteRoutineResponse,
+  DeleteRoutineRouteRequest,
+  DeleteRoutineRouteResponse,
   GetRoutineRequest,
   GetRoutineResponse,
+  GetRoutineRouteRequest,
+  GetRoutineRouteResponse,
   GetRoutineStagingCodeUploadInfoRequest,
   GetRoutineStagingCodeUploadInfoResponse,
+  ListRoutineRoutesRequest,
+  ListRoutineRoutesResponse,
+  ListSiteRoutesRequest,
+  ListSiteRoutesResponse,
   ListSitesRequest,
   ListSitesResponse,
   PublishRoutineCodeVersionRequest,
   PublishRoutineCodeVersionResponse,
+  UpdateRoutineRouteRequest,
+  UpdateRoutineRouteResponse,
 } from '@alicloud/esa20240910';
 import * as $OpenApi from '@alicloud/openapi-client';
 import * as $Util from '@alicloud/tea-util';
 import { log } from './helpers';
+import {
+  CliConfig,
+  GetMatchSiteRequest,
+  ListRoutineRelatedRecordsRequest,
+} from './types';
 
 export interface ApiMethod<RequestType, ResponseType> {
   (runtime: $Util.RuntimeOptions): Promise<ResponseType>;
   (request: RequestType, runtime: $Util.RuntimeOptions): Promise<ResponseType>;
 }
-
-export interface AuthConfig {
-  accessKeyId: string;
-  accessKeySecret: string;
-}
-
-export interface CliConfig {
-  [key: string]: unknown;
-  auth?: AuthConfig;
-  endpoint?: string;
-  lang?: string;
-}
-
 class Client {
   client: ESA;
 
@@ -189,6 +195,142 @@ class Client {
       >,
       request,
     );
+  }
+
+  createRoutineRoute(params: CreateRoutineRouteRequest) {
+    const request = new CreateRoutineRouteRequest(params);
+    return this.callApi(
+      this.client.createRoutineRoute.bind(this.client) as ApiMethod<
+        CreateRoutineRouteRequest,
+        CreateRoutineRouteResponse
+      >,
+      request,
+    );
+  }
+
+  deleteRoutineRoute(params: DeleteRoutineRouteRequest) {
+    const request = new DeleteRoutineRouteRequest(params);
+    return this.callApi(
+      this.client.deleteRoutineRoute.bind(this.client) as ApiMethod<
+        DeleteRoutineRouteRequest,
+        DeleteRoutineRouteResponse
+      >,
+      request,
+    );
+  }
+
+  getRoutineRoute(params: GetRoutineRouteRequest) {
+    const request = new GetRoutineRouteRequest(params);
+    return this.callApi(
+      this.client.getRoutineRoute.bind(this.client) as ApiMethod<
+        GetRoutineRouteRequest,
+        GetRoutineRouteResponse
+      >,
+      request,
+    );
+  }
+
+  listSiteRoutes(params: ListSiteRoutesRequest) {
+    const request = new ListSiteRoutesRequest(params);
+    return this.callApi(
+      this.client.listSiteRoutes.bind(this.client) as ApiMethod<
+        ListSiteRoutesRequest,
+        ListSiteRoutesResponse
+      >,
+      request,
+    );
+  }
+
+  listRoutineRoutes(params: ListRoutineRoutesRequest) {
+    const request = new ListRoutineRoutesRequest(params);
+    return this.callApi(
+      this.client.listRoutineRoutes.bind(this.client) as ApiMethod<
+        ListRoutineRoutesRequest,
+        ListRoutineRoutesResponse
+      >,
+      request,
+    );
+  }
+
+  updateRoutineRoute(params: UpdateRoutineRouteRequest) {
+    const request = new UpdateRoutineRouteRequest(params);
+    return this.callApi(
+      this.client.updateRoutineRoute.bind(this.client) as ApiMethod<
+        UpdateRoutineRouteRequest,
+        UpdateRoutineRouteResponse
+      >,
+      request,
+    );
+  }
+
+  deleteRoutineRelatedRecord(params: DeleteRoutineRelatedRecordRequest) {
+    const request = new DeleteRoutineRelatedRecordRequest(params);
+    return this.callApi(
+      this.client.deleteRoutineRelatedRecord.bind(this.client) as ApiMethod<
+        DeleteRoutineRelatedRecordRequest,
+        DeleteRoutineRelatedRecordResponse
+      >,
+      request,
+    );
+  }
+
+  getMatchSite(requestParams: GetMatchSiteRequest) {
+    const params = {
+      action: 'GetMatchSite',
+      version: '2024-09-10',
+      protocol: 'https',
+      method: 'GET',
+      authType: 'AK',
+      bodyType: 'json',
+      reqBodyType: 'json',
+      style: 'RPC',
+      pathname: '/',
+      toMap: function () {
+        return this;
+      },
+    };
+    const request = new $OpenApi.OpenApiRequest({
+      query: {
+        RecordName: requestParams.recordName,
+      },
+    });
+    const runtime = {
+      toMap: function () {
+        return this;
+      },
+    };
+    return this.client.callApi(params, request, runtime);
+  }
+
+  listRoutineRelatedRecords(requestParams: ListRoutineRelatedRecordsRequest) {
+    const params = {
+      action: 'ListRoutineRelatedRecords',
+      version: '2024-09-10',
+      protocol: 'https',
+      method: 'GET',
+      authType: 'AK',
+      bodyType: 'json',
+      reqBodyType: 'json',
+      style: 'RPC',
+      pathname: '/',
+      toMap: function () {
+        return this;
+      },
+    };
+    const request = new $OpenApi.OpenApiRequest({
+      query: {
+        Name: requestParams.Name,
+        PageNumber: requestParams.PageNumber,
+        PageSize: requestParams.PageSize,
+        SearchKeyWord: requestParams.SearchKeyWord,
+      },
+    });
+    const runtime = {
+      toMap: function () {
+        return this;
+      },
+    };
+    return this.client.callApi(params, request, runtime);
   }
 }
 

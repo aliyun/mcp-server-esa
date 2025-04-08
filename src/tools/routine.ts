@@ -75,24 +75,56 @@ export const routine_create = async (request: CallToolRequest) => {
     request.params.arguments as CreateRoutineRequest,
   );
 
-  return { result: JSON.stringify(res), success: true };
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(res),
+      },
+    ],
+    success: true,
+  };
 };
 
 export const routine_delete = async (request: CallToolRequest) => {
   const res = await api.deleteRoutine(
     request.params.arguments as DeleteRoutineRequest,
   );
-  return { result: JSON.stringify(res), success: true };
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(res),
+      },
+    ],
+    success: true,
+  };
 };
 
 export const routine_list = async () => {
   const res = await api.getRoutineUserInfo();
-  return { result: JSON.stringify(res), success: true };
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(res),
+      },
+    ],
+    success: true,
+  };
 };
 
 export const routine_get = async (request: CallToolRequest) => {
   const res = await api.getRoutine(
     request.params.arguments as GetRoutineRequest,
   );
-  return { result: JSON.stringify(res), success: true };
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(res),
+      },
+    ],
+    success: true,
+  };
 };

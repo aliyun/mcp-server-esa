@@ -36,7 +36,12 @@ export const routine_code_commit = async (request: CallToolRequest) => {
   );
   if (!res) {
     return {
-      result: `Failed to get routine staging code upload info. ${JSON.stringify(res)}`,
+      content: [
+        {
+          type: 'text',
+          text: `Failed to get routine staging code upload info. ${JSON.stringify(res)}`,
+        },
+      ],
       success: false,
     };
   } else {
@@ -46,7 +51,12 @@ export const routine_code_commit = async (request: CallToolRequest) => {
     );
     if (uploadRes !== true) {
       return {
-        result: `Failed to upload code to OSS. ${uploadRes}`,
+        content: [
+          {
+            type: 'text',
+            text: `Failed to upload code to OSS. ${uploadRes}`,
+          },
+        ],
         success: false,
       };
     } else {
@@ -55,11 +65,24 @@ export const routine_code_commit = async (request: CallToolRequest) => {
       );
       if (commitRes.statusCode !== 200) {
         return {
-          result: `Failed to commit routine staging code. ${JSON.stringify(commitRes)}`,
+          content: [
+            {
+              type: 'text',
+              text: `Failed to commit routine staging code. ${JSON.stringify(commitRes)}`,
+            },
+          ],
           success: false,
         };
       } else {
-        return { result: JSON.stringify(commitRes), success: true };
+        return {
+          content: [
+            {
+              type: 'text',
+              text: JSON.stringify(commitRes),
+            },
+          ],
+          success: true,
+        };
       }
     }
   }

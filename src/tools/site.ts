@@ -1,6 +1,7 @@
-import { Tool } from '@modelcontextprotocol/sdk/types.js';
+import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
 import api from '../utils/service.js';
 import { ListSitesRequest } from '@alicloud/esa20240910';
+import { GetMatchSiteRequest } from '../utils/types.js';
 
 export const SITE_ACTIVE_LIST_TOOL: Tool = {
   name: 'site_active_list',
@@ -11,6 +12,21 @@ export const SITE_ACTIVE_LIST_TOOL: Tool = {
   },
 };
 
+export const SITE_MATCH_TOOL: Tool = {
+  name: 'site_match',
+  description: 'Match a site by name',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      recordName: {
+        type: 'string',
+        description: 'The name of the site to match',
+      },
+    },
+    required: ['recordName'],
+  },
+};
+
 export const site_active_list = async () => {
   const res = await api.listSites({
     siteSearchType: 'fuzzy',
@@ -18,5 +34,28 @@ export const site_active_list = async () => {
     pageNumber: 1,
     pageSize: 500,
   } as ListSitesRequest);
-  return { result: JSON.stringify(res), success: true };
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(res),
+      },
+    ],
+    success: true,
+  };
+};
+
+export const site_match = async (request: CallToolRequest) => {
+  const res = await api.getMatchSite({
+    recordName: request.params.arguments?.recordName ?? '',
+  } as GetMatchSiteRequest);
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(res),
+      },
+    ],
+    success: true,
+  };
 };
