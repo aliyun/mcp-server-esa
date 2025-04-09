@@ -2,6 +2,17 @@
 
 **ESA MCP 服务器是一个 Model Context Protocol (MCP) 服务器实现，用于实现 AI 模型与边缘安全加速(ESA)服务之间的通信。该服务器充当桥梁，允许模型通过标准化协议利用 ESA 功能。**
 
+## 演示视频
+
+![1744114625974](image/readme/1744165209310.mp4)
+
+## 安装
+
+Client配置成功后界面
+Cline
+![1744114625974](image/readme/1744114625974.png)
+Claude
+
 ## 功能特点
 
 - **实现了用于工具执行的 Model Context Protocol**
