@@ -1,5 +1,7 @@
 import { GetRoutineStagingCodeUploadInfoResponse } from '@alicloud/esa20240910';
 import { IOssConfig } from './types';
+import FormData from 'form-data';
+import fetch from 'node-fetch';
 
 export function log(...args: unknown[]) {
   const msg = `[DEBUG ${new Date().toISOString()}] ${args.join(' ')}\n`;
@@ -28,9 +30,10 @@ export const uploadCodeToOSS = async (
   formData.append('file', code);
 
   const ossRes = await fetch(Url, {
-    method: 'post',
+    method: 'POST',
     body: formData,
-  }).catch((e) => console.error(e));
+    headers: formData.getHeaders(),
+  });
 
   return ossRes && ossRes.status === 200;
 };
