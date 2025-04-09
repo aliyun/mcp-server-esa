@@ -2,11 +2,51 @@
 
 **ESA MCP 服务器是一个 Model Context Protocol (MCP) 服务器实现，用于实现 AI 模型与边缘安全加速(ESA)服务之间的通信。该服务器充当桥梁，允许模型通过标准化协议利用 ESA 功能。**
 
+## 安装
+
+**在支持MCP server的client配置文件中**
+
+```
+{
+  "mcpServers": {
+    "esa-mcp-server": {
+      "command": "tnpx",
+      "args": ["-y", "@ali/esa-mcp-server"],
+      "env": {
+        "ESA_ACCESS_KEY_ID": "你的AK",
+        "ESA_ACCESS_KEY_SECRET": "你的SK"
+      }
+    }
+  }
+}
+
+
+```
+
 ## 演示视频
 
 ![1744114625974](image/readme/1744165209310.mp4)
 
 ## 安装
+
+**在支持MCP server的client(Cline,Claude...)配置文件中**
+
+```
+{
+  "mcpServers": {
+    "esa-mcp-server": {
+      "command": "tnpx",
+      "args": ["-y", "@ali/esa-mcp-server"],
+      "env": {
+        "ESA_ACCESS_KEY_ID": "你的AK",
+        "ESA_ACCESS_KEY_SECRET": "你的SK"
+      }
+    }
+  }
+}
+
+
+```
 
 Client配置成功后界面
 
@@ -213,26 +253,7 @@ Claude
 | ------ | ------ | -------- | ------------ |
 | domain | string | 是       | 要匹配的域名 |
 
-## 安装
-
-**在支持MCP server的client配置文件中**
-
-```
-{
-  "mcpServers": {
-    "esa-mcp-server": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@ali/esa-mcp-server"
-      ]
-
-    }
-  }
-}
-```
-
-### 可用脚本
+## 可用脚本
 
 - `npm run build` - 使用 rslib 构建项目
 - `npm run dev` - 以监视模式运行构建用于开发
