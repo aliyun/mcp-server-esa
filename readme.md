@@ -9,9 +9,14 @@
 ## 安装
 
 Client配置成功后界面
+
 Cline
+
 ![1744114625974](image/readme/1744114625974.png)
+
 Claude
+
+![1744165412296](image/readme/1744165412296.png)
 
 ## 功能特点
 
