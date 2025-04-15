@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "Alibaba Cloud ESA (Edge Security Acceleration) MCP Server",
   "main": "./dist/index.js",
+  "type": "module",
   "bin": {
     "mcp-server-esa": "./dist/index.js"
   },
@@ -39,7 +40,7 @@
     "@modelcontextprotocol/sdk": "^1.7.0",
     "@types/semver": "^7.5.8",
     "form-data": "^4.0.2",
-    "node-fetch": "^3.3.2",
+    "node-fetch@2": "^3.3.2",
     "semver": "^7.7.1",
     "zod": "^3.24.2"
   }
