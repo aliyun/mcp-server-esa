@@ -1,6 +1,6 @@
 {
   "name": "mcp-server-esa",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Alibaba Cloud ESA (Edge Security Acceleration) MCP Server",
   "main": "./dist/index.js",
   "type": "module",
