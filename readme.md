@@ -35,27 +35,6 @@
 
 ![1744168966418](image/readme/1744168966418.gif)
 
-## 安装
-
-**在支持MCP server的client(Cline,Claude...)配置文件中**
-
-```
-{
-  "mcpServers": {
-    "esa-mcp-server": {
-      "command": "tnpx",
-      "args": ["-y", "@ali/esa-mcp-server"],
-      "env": {
-        "ESA_ACCESS_KEY_ID": "你的AK",
-        "ESA_ACCESS_KEY_SECRET": "你的SK"
-      }
-    }
-  }
-}
-
-
-```
-
 Client配置成功后界面
 
 ![1744114625974](image/readme/1744114625974.png)
