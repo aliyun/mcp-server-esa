@@ -1,10 +1,10 @@
 {
-  "name": "@ali/esa-mcp-server",
+  "name": "mcp-server-esa",
   "version": "1.0.0",
-  "description": "esa mcp server",
+  "description": "Alibaba Cloud ESA (Edge Security Acceleration) MCP Server",
   "main": "./dist/index.js",
   "bin": {
-    "esa-mcp-server": "./dist/index.js"
+    "mcp-server-esa": "./dist/index.js"
   },
   "scripts": {
     "build": "rslib build",
@@ -27,10 +27,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "http://gitlab.alibaba-inc.com/cdn-fe/esa-mcp-server.git"
+    "url": "https://github.com/aliyun/mcp-server-esa.git"
   },
   "publishConfig": {
-    "registry": "https://registry.anpm.alibaba-inc.com"
+    "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
     "@alicloud/esa20240910": "^2.23.0",
