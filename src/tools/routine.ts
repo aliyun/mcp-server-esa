@@ -8,7 +8,7 @@ import {
 
 export const ROUTINE_CREATE_TOOL: Tool = {
   name: 'routine_create',
-  description: 'Create a routine',
+  description: 'Create a edge routine(ER).',
   inputSchema: {
     type: 'object',
     properties: {
@@ -33,7 +33,7 @@ export const ROUTINE_CREATE_TOOL: Tool = {
 
 export const ROUTINE_DELETE_TOOL: Tool = {
   name: 'routine_delete',
-  description: 'Delete a routine',
+  description: 'Delete a edge routine(ER).',
   inputSchema: {
     type: 'object',
     properties: {
@@ -48,7 +48,7 @@ export const ROUTINE_DELETE_TOOL: Tool = {
 
 export const ROUTINE_LIST_TOOL: Tool = {
   name: 'routine_list',
-  description: 'List all routines',
+  description: 'List all edge routines',
   inputSchema: {
     type: 'object',
     properties: {},
@@ -57,7 +57,7 @@ export const ROUTINE_LIST_TOOL: Tool = {
 
 export const ROUTINE_GET_TOOL: Tool = {
   name: 'routine_get',
-  description: 'Get a routine detail by name',
+  description: 'Get a edge routine detail by name',
   inputSchema: {
     type: 'object',
     properties: {

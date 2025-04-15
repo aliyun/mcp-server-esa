@@ -12,7 +12,7 @@ import { transferRouteToRuleString } from '../utils/helpers.js';
 
 export const ROUTE_CREATE_TOOL: Tool = {
   name: 'route_create',
-  description: 'Create a routine related route',
+  description: 'Create a edge routine(ER) related route',
   inputSchema: {
     type: 'object',
     properties: {

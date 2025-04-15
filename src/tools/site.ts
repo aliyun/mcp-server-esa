@@ -14,7 +14,7 @@ export const SITE_ACTIVE_LIST_TOOL: Tool = {
 
 export const SITE_MATCH_TOOL: Tool = {
   name: 'site_match',
-  description: 'Match a site by name',
+  description: 'Check which site under the account matches the user input',
   inputSchema: {
     type: 'object',
     properties: {

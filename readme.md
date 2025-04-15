@@ -10,11 +10,11 @@
 {
   "mcpServers": {
     "esa-mcp-server": {
-      "command": "tnpx",
-      "args": ["-y", "@ali/esa-mcp-server"],
+      "command": "npx",
+      "args": ["-y", "mcp-server-esa"],
       "env": {
-        "ESA_ACCESS_KEY_ID": "你的AK",
-        "ESA_ACCESS_KEY_SECRET": "你的SK"
+        "ESA_ACCESS_KEY_ID": "your AK",
+        "ESA_ACCESS_KEY_SECRET": "your SK"
       }
     }
   }

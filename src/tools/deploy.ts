@@ -24,7 +24,7 @@ export const ROUTINE_CODE_DEPLOY_TOOL: Tool = {
       env: {
         type: 'string',
         description:
-          'Environment of the routine, must be "production" or "staging"',
+          'Environment of the routine, must be "production" or "staging". If the user has no special requirements, it will be deployed to the production environment by default',
       },
       canaryAreaList: {
         type: 'array',
