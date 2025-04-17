@@ -23,6 +23,8 @@ import ESA, {
   GetRoutineRouteResponse,
   GetRoutineStagingCodeUploadInfoRequest,
   GetRoutineStagingCodeUploadInfoResponse,
+  ListRecordsRequest,
+  ListRecordsResponse,
   ListRoutineRoutesRequest,
   ListRoutineRoutesResponse,
   ListSiteRoutesRequest,
@@ -336,12 +338,22 @@ class Client {
   }
 
   createRecord(params: CreateRecordRequest) {
-    log('createRecord', JSON.stringify(params));
     const request = new CreateRecordRequest(params);
     return this.callApi(
       this.client.createRecord.bind(this.client) as ApiMethod<
         CreateRecordRequest,
         CreateRecordResponse
+      >,
+      request,
+    );
+  }
+
+  listRecords(params: ListRecordsRequest) {
+    const request = new ListRecordsRequest(params);
+    return this.callApi(
+      this.client.listRecords.bind(this.client) as ApiMethod<
+        ListRecordsRequest,
+        ListRecordsResponse
       >,
       request,
     );

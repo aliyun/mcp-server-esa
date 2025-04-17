@@ -200,28 +200,37 @@ Claude配置成功后界面
 
 ### 记录管理工具
 
-#### record_create
+#### er_record_create
 
 **创建记录**
 
-| 参数  | 类型   | 是否必需 | 描述   |
-| ----- | ------ | -------- | ------ |
-| key   | string | 是       | 记录键 |
-| value | string | 是       | 记录值 |
+| 参数       | 类型   | 是否必需 | 描述         |
+| ---------- | ------ | -------- | ------------ |
+| name       | string | 是       | Routine 名称 |
+| siteId     | number | 是       | 站点 ID      |
+| recordName | string | 是       | 记录名称     |
 
-#### record_delete
+#### er_record_delete
 
 **删除记录**
 
-| 参数 | 类型   | 是否必需 | 描述           |
-| ---- | ------ | -------- | -------------- |
-| key  | string | 是       | 要删除的记录键 |
+| 参数       | 类型   | 是否必需 | 描述         |
+| ---------- | ------ | -------- | ------------ |
+| name       | string | 是       | Routine 名称 |
+| siteId     | number | 是       | 站点 ID      |
+| recordName | string | 是       | 记录名称     |
+| recordId   | number | 否       | 记录 ID      |
 
-#### record_list
+#### er_record_list
 
 **列出所有记录**
 
-无需参数。
+| 参数           | 类型   | 是否必需 | 描述               |
+| -------------- | ------ | -------- | ------------------ |
+| Name           | string | 是       | Routine 名称       |
+| PageNumber     | number | 否       | 页码               |
+| PageSize       | number | 否       | 每页数量           |
+| SearchKeyWord  | string | 否       | 搜索关键字         |
 
 ### 站点工具
 
@@ -239,27 +248,35 @@ Claude配置成功后界面
 | ---------- | ------ | -------- | ---------------- |
 | recordName | string | 是       | 要匹配的站点名称 |
 
-#### site_create_dns_type_a_record
+#### site_dns_type_a_record_create
 
 **为站点创建 A 记录**
 
 | 参数       | 类型   | 是否必需 | 描述                                   |
 | ---------- | ------ | -------- | -------------------------------------- |
-| recordName | string | 是       | DNS 记录名称（例如，子域名或完整域名） |
-| siteId     | number | 是       | 站点 ID，从 ListSites 操作获取         |
-| data       | object | 是       | 带有 value 属性的 DNS 记录数据         |
-| data.value | string | 是       | A 记录的 IP 地址（例如，"2.2.2.2"）    |
+| recordName | string | 是       | DNS 记录名称（如子域名或完整域名）     |
+| siteId     | number | 是       | 站点 ID（通过 ListSites 获取）         |
+| data       | object | 是       | DNS 记录数据，需包含 value 属性        |
+| data.value | string | 是       | A 记录的 IP 地址（如 "2.2.2.2"）      |
 
-#### site_create_dns_cname_domain_record
+#### site_dns_cname_domain_record_create
 
 **为站点创建 CNAME 域名记录**
 
 | 参数       | 类型   | 是否必需 | 描述                                   |
 | ---------- | ------ | -------- | -------------------------------------- |
-| recordName | string | 是       | DNS 记录名称（例如，子域名或完整域名） |
-| siteId     | number | 是       | 站点 ID，从 ListSites 操作获取         |
-| data       | object | 是       | 带有 value 属性的 DNS 记录数据         |
+| recordName | string | 是       | DNS 记录名称（如子域名或完整域名）     |
+| siteId     | number | 是       | 站点 ID（通过 ListSites 获取）         |
+| data       | object | 是       | DNS 记录数据，需包含 value 属性        |
 | data.value | string | 是       | CNAME 记录的域名值                     |
+
+#### site_record_list
+
+**列出站点的所有记录**
+
+| 参数   | 类型   | 是否必需 | 描述                       |
+| ------ | ------ | -------- | -------------------------- |
+| SiteId | number | 是       | 站点 ID（通过 ListSites 获取） |
 
 ##
 

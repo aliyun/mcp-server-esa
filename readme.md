@@ -203,28 +203,37 @@
 
 ### Record Management Tools
 
-#### record_create
+#### er_record_create
 
 **Create a record**
 
-| **Parameter** | **Type**   | **Required** | **Description**  |
-| ------------- | ---------- | ------------ | ---------------- |
-| **key**       | **string** | **Yes**      | **Record key**   |
-| **value**     | **string** | **Yes**      | **Record value** |
+| **Parameter** | **Type**   | **Required** | **Description**        |
+| ------------- | ---------- | ------------ | ---------------------- |
+| name          | string     | Yes          | The name of the routine|
+| siteId        | number     | Yes          | The ID of the site     |
+| recordName    | string     | Yes          | The name of the record |
 
-#### record_delete
+#### er_record_delete
 
 **Delete a record**
 
-| **Parameter** | **Type**   | **Required** | **Description**          |
-| ------------- | ---------- | ------------ | ------------------------ |
-| **key**       | **string** | **Yes**      | **Record key to delete** |
+| **Parameter** | **Type**   | **Required** | **Description**        |
+| ------------- | ---------- | ------------ | ---------------------- |
+| name          | string     | Yes          | The name of the routine|
+| siteId        | number     | Yes          | The ID of the site     |
+| recordName    | string     | Yes          | The name of the record |
+| recordId      | number     | No           | The ID of the record   |
 
-#### record_list
+#### er_record_list
 
 **List all records**
 
-**No parameters required.**
+| **Parameter**    | **Type**   | **Required** | **Description**                |
+| ---------------- | ---------- | ------------ | ------------------------------ |
+| Name             | string     | Yes          | The name of the routine        |
+| PageNumber       | number     | No           | The page number of the records |
+| PageSize         | number     | No           | The page size of the records   |
+| SearchKeyWord    | string     | No           | The search key word            |
 
 ### Site Tools
 
@@ -242,27 +251,35 @@ No parameters required.
 | ---------- | ------ | -------- | ----------------------------- |
 | recordName | string | Yes      | The name of the site to match |
 
-#### site_create_dns_type_a_record
+#### site_dns_type_a_record_create
 
 **Create an A record for a site**
 
-| Parameter  | Type   | Required | Description                                                 |
-| ---------- | ------ | -------- | ----------------------------------------------------------- |
-| recordName | string | Yes      | The name of the DNS record (e.g., subdomain or full domain) |
-| siteId     | number | Yes      | The ID of the site, obtained from the ListSites operation   |
-| data       | object | Yes      | The data for the DNS record with value property             |
-| data.value | string | Yes      | The IP address of the A record (e.g., "2.2.2.2")            |
+| Parameter  | Type   | Required | Description                                                        |
+| ---------- | ------ | -------- | ------------------------------------------------------------------ |
+| recordName | string | Yes      | The name of the DNS record (e.g., subdomain or full domain)        |
+| siteId     | number | Yes      | The ID of the site, obtained from the ListSites operation          |
+| data       | object | Yes      | The data for the DNS record, with value property                   |
+| data.value | string | Yes      | The IP address of the A record (e.g., "2.2.2.2")                   |
 
-#### site_create_dns_cname_domain_record
+#### site_dns_cname_domain_record_create
 
 **Create a CNAME domain record for a site**
 
-| Parameter  | Type   | Required | Description                                                 |
-| ---------- | ------ | -------- | ----------------------------------------------------------- |
-| recordName | string | Yes      | The name of the DNS record (e.g., subdomain or full domain) |
-| siteId     | number | Yes      | The ID of the site, obtained from the ListSites operation   |
-| data       | object | Yes      | The data for the DNS record with value property             |
-| data.value | string | Yes      | The domain value for the CNAME record                       |
+| Parameter  | Type   | Required | Description                                                        |
+| ---------- | ------ | -------- | ------------------------------------------------------------------ |
+| recordName | string | Yes      | The name of the DNS record (e.g., subdomain or full domain)        |
+| siteId     | number | Yes      | The ID of the site, obtained from the ListSites operation          |
+| data       | object | Yes      | The data for the DNS record, with value property                   |
+| data.value | string | Yes      | The domain value for the CNAME record                              |
+
+#### site_record_list
+
+**List all records in a site**
+
+| Parameter  | Type   | Required | Description                                                        |
+| ---------- | ------ | -------- | ------------------------------------------------------------------ |
+| SiteId     | number | Yes      | The ID of the site, obtained from the ListSites operation          |
 
 ##
 

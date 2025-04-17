@@ -8,12 +8,12 @@ import {
 } from './deploy';
 import { deployment_delete, DEPLOYMENT_DELETE_TOOL } from './deployments';
 import {
-  record_create,
-  RECORD_CREATE_TOOL,
-  record_delete,
-  RECORD_DELETE_TOOL,
-  record_list,
-  RECORD_LIST_TOOL,
+  er_record_create,
+  ER_RECORD_CREATE_TOOL,
+  er_record_delete,
+  ER_RECORD_DELETE_TOOL,
+  er_record_list,
+  ER_RECORD_LIST_TOOL,
 } from './record';
 import {
   route_create,
@@ -42,12 +42,14 @@ import {
 import {
   site_active_list,
   SITE_ACTIVE_LIST_TOOL,
-  SITE_CREATE_DNS_CNAME_DOMAIN_RECORD,
-  site_create_dns_cname_domain_record,
-  site_create_dns_type_a_record,
-  SITE_CREATE_DNS_TYPE_A_RECORD,
+  site_dns_cname_domain_record_create,
+  SITE_DNS_CNAME_DOMAIN_RECORD_CREATE_TOOL,
+  site_dns_type_a_record_create,
+  SITE_DNS_TYPE_A_RECORD_CREATE_TOOL,
   site_match,
   SITE_MATCH_TOOL,
+  site_record_list,
+  SITE_RECORD_LIST_TOOL,
 } from './site';
 
 export const ESA_OPENAPI_ER_LIST = [
@@ -67,17 +69,22 @@ export const ESA_OPENAPI_ER_LIST = [
   ROUTE_UPDATE_TOOL,
   ROUTE_GET_TOOL,
   SITE_MATCH_TOOL,
-  RECORD_CREATE_TOOL,
-  RECORD_DELETE_TOOL,
-  RECORD_LIST_TOOL,
-  SITE_CREATE_DNS_TYPE_A_RECORD,
-  SITE_CREATE_DNS_CNAME_DOMAIN_RECORD,
+  ER_RECORD_CREATE_TOOL,
+  ER_RECORD_DELETE_TOOL,
+  ER_RECORD_LIST_TOOL,
+  SITE_DNS_TYPE_A_RECORD_CREATE_TOOL,
+  SITE_DNS_CNAME_DOMAIN_RECORD_CREATE_TOOL,
+  SITE_RECORD_LIST_TOOL,
 ];
 
 export const ESA_OPENAPI_LIST = [...ESA_OPENAPI_ER_LIST];
 export const routineHandlers: ToolHandlers = {
-  site_create_dns_type_a_record,
-  site_create_dns_cname_domain_record,
+  site_dns_type_a_record_create,
+  site_dns_cname_domain_record_create,
+  site_active_list,
+  site_match,
+  site_route_list,
+  site_record_list,
   routine_create,
   routine_delete,
   routine_list,
@@ -87,14 +94,11 @@ export const routineHandlers: ToolHandlers = {
   routine_route_list,
   canary_area_list,
   deployment_delete,
-  site_active_list,
-  site_match,
-  site_route_list,
   route_create,
   route_delete,
   route_update,
   route_get,
-  record_create,
-  record_delete,
-  record_list,
+  er_record_create,
+  er_record_delete,
+  er_record_list,
 };
