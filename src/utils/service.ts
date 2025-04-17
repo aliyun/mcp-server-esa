@@ -1,6 +1,8 @@
 import ESA, {
   CommitRoutineStagingCodeRequest,
   CommitRoutineStagingCodeResponse,
+  CreateRecordRequest,
+  CreateRecordResponse,
   CreateRoutineRelatedRecordRequest,
   CreateRoutineRelatedRecordResponse,
   CreateRoutineRequest,
@@ -331,6 +333,18 @@ class Client {
       },
     };
     return this.client.callApi(params, request, runtime);
+  }
+
+  createRecord(params: CreateRecordRequest) {
+    log('createRecord', JSON.stringify(params));
+    const request = new CreateRecordRequest(params);
+    return this.callApi(
+      this.client.createRecord.bind(this.client) as ApiMethod<
+        CreateRecordRequest,
+        CreateRecordResponse
+      >,
+      request,
+    );
   }
 }
 
