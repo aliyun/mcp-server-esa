@@ -1,260 +1,288 @@
-# ESA MCP 服务器
+# ESA MCP Server
 
-**ESA MCP 服务器是一个 Model Context Protocol (MCP) 服务器实现，用于实现 AI 模型与边缘安全加速(ESA)服务之间的通信。该服务器充当桥梁，允许模型通过标准化协议利用 ESA 功能。**
+**ESA MCP Server is an implementation of the Model Context Protocol (MCP) server, designed to facilitate communication between AI models and Edge Security Acceleration (ESA) services. This server acts as a bridge, allowing models to leverage ESA features through a standardized protocol.**
 
-## 安装
+---
 
-**在支持MCP server的client配置文件中**
+[English](./readme.md) | [中文](./readme_zh.md)
+
+## Installation
+
+**Configure in your MCP-enabled client config:**
 
 ```
 {
-  "mcpServers": {
-    "esa-mcp-server": {
-      "command": "npx",
-      "args": ["-y", "mcp-server-esa"],
-      "env": {
-        "ESA_ACCESS_KEY_ID": "your AK",
-        "ESA_ACCESS_KEY_SECRET": "your SK"
-      }
-    }
+  "mcpServers": {
+    "esa-mcp-server": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-esa"],
+      "env": {
+        "ESA_ACCESS_KEY_ID": "your AK",
+        "ESA_ACCESS_KEY_SECRET": "your SK"
+      }
+    }
   }
 }
-
-
 ```
 
-## 演示视频
+## Demo Videos
 
-**Claude演示视频**
+**Claude Demo**
 
 ![1744168230082](image/readme/1744168230082.gif)
 
 ![1744168440370](image/readme/1744168440370.gif)
 
-**cline演示视频**
+**Cline Demo**
 
 ![1744168966418](image/readme/1744168966418.gif)
 
-Client配置成功后界面
+**Cline configured successfully:**
 
 ![1744114625974](image/readme/1744114625974.png)
 
-Claude配置成功后界面
+**Claude configured successfully:**
 
 ![1744165412296](image/readme/1744165412296.png)
 
-## 功能特点
+## Features
 
-- **实现了用于工具执行的 Model Context Protocol**
-- **提供对 ESA OpenAPI 服务的访问**
-- **通过标准输入/输出 (stdio) 作为服务器运行，以便与模型运行器无缝集成**
+- **Implements Model Context Protocol for tool execution**
+- **Provides access to ESA OpenAPI services**
+- **Runs as a server via stdio for seamless integration with model runners**
 
-## 工具列表
+## Tools List
 
-服务器提供以下 ESA 工具，可以通过 MCP 协议调用：
+**The server provides the following ESA tools callable via the MCP protocol:**
 
-### Routine 管理工具
+### Routine Management Tools
 
 #### routine_create
 
-**创建一个 Routine**
+**Create a Routine**
 
-| 参数        | 类型   | 是否必需 | 描述                                                                                               |
-| ----------- | ------ | -------- | -------------------------------------------------------------------------------------------------- |
-| name        | string | 是       | Routine 名称，支持小写英文、数字和连字符，必须以小写英文开头，长度不少于 2 个字符                  |
-| description | string | 否       | Routine 描述，不含空格                                                                             |
-| code        | string | 是       | Routine 源代码，例如：`export default { async fetch(request) { return handleRequest(request); } }` |
+| **Parameter**   | **Type**   | **Required** | **Description**                                                                                                     |
+| --------------- | ---------- | ------------ | ------------------------------------------------------------------------------------------------------------------- |
+| **name**        | **string** | **Yes**      | **Routine name, supports lowercase letters, numbers, and hyphens, must start with a lowercase letter, min 2 chars** |
+| **description** | **string** | **No**       | **Routine description, no spaces allowed**                                                                          |
+| **code**        | **string** | **Yes**      | **Routine source code, e.g.:**`export default { async fetch(request) { return handleRequest(request); } }`          |
 
 #### routine_delete
 
-**删除一个 Routine**
+**Delete a Routine**
 
-| 参数 | 类型   | 是否必需 | 描述                  |
-| ---- | ------ | -------- | --------------------- |
-| name | string | 是       | 要删除的 Routine 名称 |
+| **Parameter** | **Type**   | **Required** | **Description**                   |
+| ------------- | ---------- | ------------ | --------------------------------- |
+| **name**      | **string** | **Yes**      | **Name of the Routine to delete** |
 
 #### routine_list
 
-**列出所有 Routine**
+**List all Routines**
 
-无需参数。
+**No parameters required.**
 
 #### routine_get
 
-**获取 Routine 详情**
+**Get Routine details**
 
-| 参数 | 类型   | 是否必需 | 描述                      |
-| ---- | ------ | -------- | ------------------------- |
-| name | string | 是       | 要获取详情的 Routine 名称 |
+| **Parameter** | **Type**   | **Required** | **Description**                  |
+| ------------- | ---------- | ------------ | -------------------------------- |
+| **name**      | **string** | **Yes**      | **Name of the Routine to query** |
 
-### 部署工具
+---
+
+### Deployment Tools
 
 #### routine_code_commit
 
-**提交 Routine 代码**
+**Commit Routine code**
 
-| 参数 | 类型   | 是否必需 | 描述           |
-| ---- | ------ | -------- | -------------- |
-| name | string | 是       | Routine 名称   |
-| code | string | 是       | Routine 源代码 |
+| **Parameter** | **Type**   | **Required** | **Description**         |
+| ------------- | ---------- | ------------ | ----------------------- |
+| **name**      | **string** | **Yes**      | **Routine name**        |
+| **code**      | **string** | **Yes**      | **Routine source code** |
 
 #### routine_code_deploy
 
-**部署 Routine 代码**
+**Deploy Routine code**
 
-| 参数              | 类型   | 是否必需 | 描述                                                                     |
-| ----------------- | ------ | -------- | ------------------------------------------------------------------------ |
-| name              | string | 是       | Routine 名称                                                             |
-| codeVersion       | string | 是       | Routine 版本，必须是有效的语义化版本                                     |
-| env               | string | 是       | Routine 环境，必须是 "production" 或 "staging"                           |
-| canaryAreaList    | array  | 否       | 金丝雀发布区域，必须是有效的区域名称，需要调用 canary_area_list 方法获取 |
-| canaryCodeVersion | string | 否       | 金丝雀版本，必须是有效的语义化版本                                       |
+| **Parameter**         | **Type**   | **Required** | **Description**                                                           |
+| --------------------- | ---------- | ------------ | ------------------------------------------------------------------------- |
+| **name**              | **string** | **Yes**      | **Routine name**                                                          |
+| **codeVersion**       | **string** | **Yes**      | **Routine version, must be valid semver**                                 |
+| **env**               | **string** | **Yes**      | **Routine environment: "production" or "staging"**                        |
+| **canaryAreaList**    | **array**  | **No**       | **Canary release areas, must be valid area names (see canary_area_list)** |
+| **canaryCodeVersion** | **string** | **No**       | **Canary version, must be valid semver**                                  |
 
 #### canary_area_list
 
-**列出所有可用于 Routine 部署的金丝雀区域**
+**List all available canary areas for Routine deployment**
 
-无需参数。
+**No parameters required.**
 
 #### deployment_delete
 
-**删除部署**
+**Delete a deployment**
 
-| 参数 | 类型   | 是否必需 | 描述     |
-| ---- | ------ | -------- | -------- |
-| name | string | 是       | 部署名称 |
+| **Parameter** | **Type**   | **Required** | **Description**     |
+| ------------- | ---------- | ------------ | ------------------- |
+| **name**      | **string** | **Yes**      | **Deployment name** |
 
-### 路由管理工具
+### Route Management Tools
 
 #### route_create
 
-**创建与 Routine 相关的路由**
+**Create a route for a Routine**
 
-| 参数        | 类型   | 是否必需       | 描述                                          |
-| ----------- | ------ | -------------- | --------------------------------------------- |
-| siteId      | number | 是             | 站点 ID                                       |
-| mode        | string | 是             | 路由模式，可选 'simple' 或 'custom'           |
-| route       | string | 根据 mode 而定 | 路由路径，如果 mode 是 'simple'，则必填       |
-| rule        | string | 是             | 路由规则，如果 mode 是 'custom'，则必填       |
-| routineName | string | 是             | Routine 名称                                  |
-| routeName   | string | 是             | 路由名称，用于标识路由                        |
-| bypass      | string | 是             | 路由旁路，可选 'on' 或 'off'，默认为 'off'    |
-| routeEnable | string | 是             | 路由启用状态，可选 'on' 或 'off'，默认为 'on' |
-| sequence    | number | 否             | 路由序列，默认为当前路由数量                  |
+| **Parameter**   | **Type**   | **Required**         | **Description**                               |
+| --------------- | ---------- | -------------------- | --------------------------------------------- |
+| **siteId**      | **number** | **Yes**              | **Site ID**                                   |
+| **mode**        | **string** | **Yes**              | **Route mode: 'simple' or 'custom'**          |
+| **route**       | **string** | **Required by mode** | **Route path (required if mode is 'simple')** |
+| **rule**        | **string** | **Yes**              | **Route rule (required if mode is 'custom')** |
+| **routineName** | **string** | **Yes**              | **Routine name**                              |
+| **routeName**   | **string** | **Yes**              | **Route name**                                |
+| **bypass**      | **string** | **Yes**              | **Bypass: 'on' or 'off' (default 'off')**     |
+| **routeEnable** | **string** | **Yes**              | **Enable: 'on' or 'off' (default 'on')**      |
+| **sequence**    | **number** | **No**               | **Route sequence (default: current count)**   |
 
 #### route_update
 
-**更新与 Routine 相关的路由**
+**Update a Routine route**
 
-| 参数        | 类型   | 是否必需 | 描述                             |
-| ----------- | ------ | -------- | -------------------------------- |
-| siteId      | number | 是       | 站点 ID                          |
-| configId    | number | 是       | 配置 ID                          |
-| routeName   | string | 是       | 路由名称                         |
-| routeEnable | string | 是       | 路由启用状态，可选 'on' 或 'off' |
-| rule        | string | 是       | 路由规则                         |
-| routineName | string | 是       | Routine 名称                     |
-| bypass      | string | 是       | 路由旁路，可选 'on' 或 'off'     |
-| sequence    | number | 否       | 路由序列                         |
+| **Parameter**   | **Type**   | **Required** | **Description**           |
+| --------------- | ---------- | ------------ | ------------------------- |
+| **siteId**      | **number** | **Yes**      | **Site ID**               |
+| **configId**    | **number** | **Yes**      | **Config ID**             |
+| **routeName**   | **string** | **Yes**      | **Route name**            |
+| **routeEnable** | **string** | **Yes**      | **Enable: 'on' or 'off'** |
+| **rule**        | **string** | **Yes**      | **Route rule**            |
+| **routineName** | **string** | **Yes**      | **Routine name**          |
+| **bypass**      | **string** | **Yes**      | **Bypass: 'on' or 'off'** |
+| **sequence**    | **number** | **No**       | **Route sequence**        |
 
 #### route_delete
 
-**删除与 Routine 相关的路由**
+**Delete a Routine route**
 
-| 参数     | 类型   | 是否必需 | 描述    |
-| -------- | ------ | -------- | ------- |
-| siteId   | number | 是       | 站点 ID |
-| configId | number | 是       | 配置 ID |
+| **Parameter** | **Type**   | **Required** | **Description** |
+| ------------- | ---------- | ------------ | --------------- |
+| **siteId**    | **number** | **Yes**      | **Site ID**     |
+| **configId**  | **number** | **Yes**      | **Config ID**   |
 
 #### route_get
 
-**获取与 Routine 相关的路由**
+**Get a Routine-related route**
 
-| 参数     | 类型   | 是否必需 | 描述    |
-| -------- | ------ | -------- | ------- |
-| siteId   | number | 是       | 站点 ID |
-| configId | number | 是       | 配置 ID |
+| **Parameter** | **Type**   | **Required** | **Description** |
+| ------------- | ---------- | ------------ | --------------- |
+| **siteId**    | **number** | **Yes**      | **Site ID**     |
+| **configId**  | **number** | **Yes**      | **Config ID**   |
 
 #### routine_route_list
 
-**列出 Routine 的所有路由**
+**List all routes of a Routine**
 
-| 参数        | 类型   | 是否必需 | 描述                       |
-| ----------- | ------ | -------- | -------------------------- |
-| routineName | string | 是       | Routine 名称               |
-| routeName   | string | 否       | 路由名称，用于过滤列表结果 |
-| pageNumber  | number | 否       | 路由页码                   |
-| pageSize    | number | 否       | 每页路由数量               |
+| **Parameter**   | **Type**   | **Required** | **Description**                             |
+| --------------- | ---------- | ------------ | ------------------------------------------- |
+| **routineName** | **string** | **Yes**      | **Routine name**                            |
+| **routeName**   | **string** | **No**       | **Route name, used to filter list results** |
+| **pageNumber**  | **number** | **No**       | **Route page number**                       |
+| **pageSize**    | **number** | **No**       | **Routes per page**                         |
 
 #### site_route_list
 
-**列出站点的所有路由**
+**List all routes of a site**
 
-| 参数       | 类型   | 是否必需 | 描述                       |
-| ---------- | ------ | -------- | -------------------------- |
-| siteId     | number | 是       | 站点 ID                    |
-| routeName  | string | 否       | 路由名称，用于过滤列表结果 |
-| pageNumber | number | 否       | 路由页码                   |
-| pageSize   | number | 否       | 每页路由数量               |
+| **Parameter**  | **Type**   | **Required** | **Description**                             |
+| -------------- | ---------- | ------------ | ------------------------------------------- |
+| **siteId**     | **number** | **Yes**      | **Site ID**                                 |
+| **routeName**  | **string** | **No**       | **Route name, used to filter list results** |
+| **pageNumber** | **number** | **No**       | **Route page number**                       |
+| **pageSize**   | **number** | **No**       | **Routes per page**                         |
 
-### 记录管理工具
+### Record Management Tools
 
 #### record_create
 
-**创建记录**
+**Create a record**
 
-| 参数  | 类型   | 是否必需 | 描述   |
-| ----- | ------ | -------- | ------ |
-| key   | string | 是       | 记录键 |
-| value | string | 是       | 记录值 |
+| **Parameter** | **Type**   | **Required** | **Description**  |
+| ------------- | ---------- | ------------ | ---------------- |
+| **key**       | **string** | **Yes**      | **Record key**   |
+| **value**     | **string** | **Yes**      | **Record value** |
 
 #### record_delete
 
-**删除记录**
+**Delete a record**
 
-| 参数 | 类型   | 是否必需 | 描述           |
-| ---- | ------ | -------- | -------------- |
-| key  | string | 是       | 要删除的记录键 |
+| **Parameter** | **Type**   | **Required** | **Description**          |
+| ------------- | ---------- | ------------ | ------------------------ |
+| **key**       | **string** | **Yes**      | **Record key to delete** |
 
 #### record_list
 
-**列出所有记录**
+**List all records**
 
-无需参数。
+**No parameters required.**
 
-### 站点工具
+### Site Tools
 
 #### site_active_list
 
-**列出活跃站点**
+**List all active sites**
 
-无需参数。
+No parameters required.
 
 #### site_match
 
-**匹配站点**
+**Check which site under the account matches the user input**
 
-| 参数   | 类型   | 是否必需 | 描述         |
-| ------ | ------ | -------- | ------------ |
-| domain | string | 是       | 要匹配的域名 |
+| Parameter  | Type   | Required | Description                   |
+| ---------- | ------ | -------- | ----------------------------- |
+| recordName | string | Yes      | The name of the site to match |
 
-## 可用脚本
+#### site_create_dns_type_a_record
 
-- `npm run build` - 使用 rslib 构建项目
-- `npm run dev` - 以监视模式运行构建用于开发
-- `npm run format` - 使用 Prettier 格式化代码
-- `npm run lint` - 使用 ESLint 检查代码
+**Create an A record for a site**
 
-### 项目结构
+| Parameter  | Type   | Required | Description                                                 |
+| ---------- | ------ | -------- | ----------------------------------------------------------- |
+| recordName | string | Yes      | The name of the DNS record (e.g., subdomain or full domain) |
+| siteId     | number | Yes      | The ID of the site, obtained from the ListSites operation   |
+| data       | object | Yes      | The data for the DNS record with value property             |
+| data.value | string | Yes      | The IP address of the A record (e.g., "2.2.2.2")            |
 
-- `src/index.ts` - 主入口点
-- `src/tools/` - ESA 工具实现
-- `src/utils/` - 实用函数和辅助程序
+#### site_create_dns_cname_domain_record
 
-## 许可证
+**Create a CNAME domain record for a site**
+
+| Parameter  | Type   | Required | Description                                                 |
+| ---------- | ------ | -------- | ----------------------------------------------------------- |
+| recordName | string | Yes      | The name of the DNS record (e.g., subdomain or full domain) |
+| siteId     | number | Yes      | The ID of the site, obtained from the ListSites operation   |
+| data       | object | Yes      | The data for the DNS record with value property             |
+| data.value | string | Yes      | The domain value for the CNAME record                       |
+
+##
+
+## Available Scripts
+
+- `npm run build` - Build the project using rslib
+- `npm run dev` - Run build in watch mode for development
+- `npm run format` - Format code using Prettier
+- `npm run lint` - Check code using ESLint
+
+### Project Structure
+
+- `src/index.ts` - Main entry point
+- `src/tools/` - ESA tool implementations
+- `src/utils/` - Utilities and helpers
+
+## License
 
 **ISC**
 
-## 贡献
+## Contributions
 
-**对于阿里巴巴的内部贡献者，请遵循项目的标准贡献工作流程。**
+**For Alibaba internal contributors, please follow the standard contribution workflow for the project.**
