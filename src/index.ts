@@ -1,11 +1,11 @@
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
-import express from "express";
-import { ESA_OPENAPI_LIST, routineHandlers } from "./tools/list-esa-function";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
+import express from "express";
+import { ESA_OPENAPI_LIST, routineHandlers } from "./tools/list-esa-function";
 import { log } from "./utils/helpers";
 
 const app = express();
@@ -16,12 +16,15 @@ const server = new Server(
     version: "1.0.0",
   },
   {
-    capabilities: {},
+    capabilities: {
+      tools: {},
+    },
   }
 );
 
 // Define available tools
 server.setRequestHandler(ListToolsRequestSchema, async () => {
+  log("list");
   return { tools: ESA_OPENAPI_LIST };
 });
 
