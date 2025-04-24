@@ -1,45 +1,49 @@
-import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
-import api from '../utils/service.js';
+import { CallToolRequest, Tool } from "@modelcontextprotocol/sdk/types.js";
+
 import {
   CommitRoutineStagingCodeRequest,
   GetRoutineStagingCodeUploadInfoRequest,
-} from '@alicloud/esa20240910';
-import { uploadCodeToOSS } from '../utils/helpers.js';
+} from "@alicloud/esa20240910";
+import { uploadCodeToOSS } from "../utils/helpers.js";
+import { ApiServer } from "../utils/service.js";
 
 export const ROUTINE_CODE_COMMIT_TOOL: Tool = {
-  name: 'routine_code_commit',
+  name: "routine_code_commit",
   description:
-    'Commit a edge routine(ER) code. If it fails, please submit again.',
+    "Commit a edge routine(ER) code. If it fails, please submit again.",
   inputSchema: {
-    type: 'object',
+    type: "object",
     properties: {
       name: {
-        type: 'string',
+        type: "string",
         description:
-          'The name of the routine, support lowercase English, numbers, and hyphens, must start with lowercase English, length cannot be less than 2 characters',
+          "The name of the routine, support lowercase English, numbers, and hyphens, must start with lowercase English, length cannot be less than 2 characters",
       },
       description: {
-        type: 'string',
-        description: 'Description of the routine, no spaces',
+        type: "string",
+        description: "Description of the routine, no spaces",
       },
       code: {
-        type: 'string',
+        type: "string",
         description:
-          'Source Code of the routine, export default { async fetch(request) { return handleRequest(request); } }',
+          "Source Code of the routine, export default { async fetch(request) { return handleRequest(request); } }",
       },
     },
-    required: ['name', 'code'],
+    required: ["name", "code"],
   },
 };
-export const routine_code_commit = async (request: CallToolRequest) => {
-  const res = await api.getRoutineStagingCodeUploadInfo(
-    request.params.arguments as GetRoutineStagingCodeUploadInfoRequest,
+export const routine_code_commit = async (
+  request: CallToolRequest,
+  apiServer: ApiServer
+) => {
+  const res = await apiServer.getRoutineStagingCodeUploadInfo(
+    request.params.arguments as GetRoutineStagingCodeUploadInfoRequest
   );
   if (!res) {
     return {
       content: [
         {
-          type: 'text',
+          type: "text",
           text: `Failed to get routine staging code upload info. ${JSON.stringify(res)}`,
         },
       ],
@@ -48,27 +52,27 @@ export const routine_code_commit = async (request: CallToolRequest) => {
   } else {
     const uploadRes = await uploadCodeToOSS(
       res,
-      request?.params?.arguments?.code as string,
+      request?.params?.arguments?.code as string
     );
     if (uploadRes !== true) {
       return {
         content: [
           {
-            type: 'text',
+            type: "text",
             text: `Failed to upload code to OSS. ${uploadRes}`,
           },
         ],
         success: false,
       };
     } else {
-      const commitRes = await api.commitRoutineStagingCode(
-        request.params.arguments as CommitRoutineStagingCodeRequest,
+      const commitRes = await apiServer.commitRoutineStagingCode(
+        request.params.arguments as CommitRoutineStagingCodeRequest
       );
       if (commitRes.statusCode !== 200) {
         return {
           content: [
             {
-              type: 'text',
+              type: "text",
               text: `Failed to commit routine staging code. ${JSON.stringify(commitRes)}`,
             },
           ],
@@ -78,7 +82,7 @@ export const routine_code_commit = async (request: CallToolRequest) => {
         return {
           content: [
             {
-              type: 'text',
+              type: "text",
               text: JSON.stringify(commitRes),
             },
           ],

@@ -1,9 +1,11 @@
-import z from 'zod';
+import z from "zod";
 import {
   Result,
   CallToolRequestSchema,
-} from '@modelcontextprotocol/sdk/types.js';
-import { CreateRoutineRouteRequest } from '@alicloud/esa20240910';
+  CallToolRequest,
+} from "@modelcontextprotocol/sdk/types.js";
+import { CreateRoutineRouteRequest } from "@alicloud/esa20240910";
+import { ApiServer } from "./service";
 
 export type ToolHandlers = Record<
   string,
@@ -16,11 +18,11 @@ export interface IOssConfig {
   callback: string;
   key: string;
   policy: string;
-  'x:codeDescription': string;
+  "x:codeDescription": string;
 }
 
 export class CreateRoutineRouteRequestExt extends CreateRoutineRouteRequest {
-  mode: 'simple' | 'custom';
+  mode: "simple" | "custom";
   constructor(params: CreateRoutineRouteRequest) {
     super(params);
     this.mode = params.mode;
@@ -69,3 +71,15 @@ export interface ListRoutineRelatedRecordsResponse {
   };
 }
 export type Map = Record<string, unknown>;
+
+export interface ExtendedCallToolRequest extends CallToolRequest {
+  apiServer: ApiServer;
+}
+
+export type ToolHandlersWithApiServer = Record<
+  string,
+  (
+    request: z.infer<typeof CallToolRequestSchema>,
+    apiServer: ApiServer
+  ) => Promise<Result>
+>;

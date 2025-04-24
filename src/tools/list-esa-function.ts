@@ -1,12 +1,11 @@
-import { ToolHandlers } from '../utils/types';
-import { routine_code_commit, ROUTINE_CODE_COMMIT_TOOL } from './commit';
+import { routine_code_commit, ROUTINE_CODE_COMMIT_TOOL } from "./commit";
 import {
   CANARY_AREA_LIST,
   canary_area_list,
   routine_code_deploy,
   ROUTINE_CODE_DEPLOY_TOOL,
-} from './deploy';
-import { deployment_delete, DEPLOYMENT_DELETE_TOOL } from './deployments';
+} from "./deploy";
+import { deployment_delete, DEPLOYMENT_DELETE_TOOL } from "./deployments";
 import {
   er_record_create,
   ER_RECORD_CREATE_TOOL,
@@ -14,7 +13,7 @@ import {
   ER_RECORD_DELETE_TOOL,
   er_record_list,
   ER_RECORD_LIST_TOOL,
-} from './record';
+} from "./record";
 import {
   route_create,
   ROUTE_CREATE_TOOL,
@@ -28,7 +27,7 @@ import {
   ROUTINE_ROUTE_LIST_TOOL,
   site_route_list,
   SITE_ROUTE_LIST_TOOL,
-} from './route';
+} from "./route";
 import {
   ROUTINE_CREATE_TOOL,
   ROUTINE_DELETE_TOOL,
@@ -38,7 +37,7 @@ import {
   routine_create,
   routine_list,
   routine_get,
-} from './routine';
+} from "./routine";
 import {
   site_active_list,
   SITE_ACTIVE_LIST_TOOL,
@@ -50,7 +49,9 @@ import {
   SITE_MATCH_TOOL,
   site_record_list,
   SITE_RECORD_LIST_TOOL,
-} from './site';
+} from "./site";
+
+import { ToolHandlersWithApiServer } from "../utils/types";
 
 export const ESA_OPENAPI_ER_LIST = [
   ROUTINE_CREATE_TOOL,
@@ -78,7 +79,8 @@ export const ESA_OPENAPI_ER_LIST = [
 ];
 
 export const ESA_OPENAPI_LIST = [...ESA_OPENAPI_ER_LIST];
-export const routineHandlers: ToolHandlers = {
+
+export const routineHandlers: ToolHandlersWithApiServer = {
   site_dns_type_a_record_create,
   site_dns_cname_domain_record_create,
   site_active_list,

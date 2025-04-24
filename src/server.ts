@@ -1,218 +1,338 @@
-// import {
-//   isInitializeRequest,
-//   JSONRPCMessage,
-//   JSONRPCMessageSchema,
-// } from "@modelcontextprotocol/sdk/types.js";
+import {
+  mergeCapabilities,
+  Protocol,
+  ProtocolOptions,
+  RequestOptions,
+} from "@modelcontextprotocol/sdk/shared/protocol.js";
+import {
+  ClientCapabilities,
+  CreateMessageRequest,
+  CreateMessageResultSchema,
+  EmptyResultSchema,
+  Implementation,
+  InitializedNotificationSchema,
+  InitializeRequest,
+  InitializeRequestSchema,
+  InitializeResult,
+  LATEST_PROTOCOL_VERSION,
+  ListRootsRequest,
+  ListRootsResultSchema,
+  LoggingMessageNotification,
+  Notification,
+  ResourceUpdatedNotification,
+  Result,
+  ServerCapabilities,
+  ServerNotification,
+  ServerRequest,
+  ServerResult,
+  SUPPORTED_PROTOCOL_VERSIONS,
+} from "@modelcontextprotocol/sdk/types.js";
 
-// export async function handleRequest(req, parsedBody) {
-//   if (req.method === "POST") {
-//     await handlePostRequest(req, parsedBody);
-//   } else if (req.method === "GET") {
-//     await handleGetRequest(req);
-//   } else if (req.method === "DELETE") {
-//     await handleDeleteRequest(req);
-//   } else {
-//     await handleUnsupportedRequest(req);
-//   }
-// }
+export type ServerOptions = ProtocolOptions & {
+  /**
+   * Capabilities to advertise as being supported by this server.
+   */
+  capabilities?: ServerCapabilities;
 
-// const MAXIMUM_MESSAGE_SIZE = "4mb";
+  /**
+   * Optional instructions describing how to use the server and its features.
+   */
+  instructions?: string;
+};
 
-// async function handlePostRequest(request: Request): Promise<Response> {
-//   try {
-//     // 1. 验证 Accept 头
-//     const acceptHeader = request.headers.get("accept") || "";
-//     if (
-//       !acceptHeader.includes("application/json") ||
-//       !acceptHeader.includes("text/event-stream")
-//     ) {
-//       return new Response(
-//         JSON.stringify({
-//           jsonrpc: "2.0",
-//           error: {
-//             code: -32000,
-//             message:
-//               "Not Acceptable: Client must accept both application/json and text/event-stream",
-//           },
-//           id: null,
-//         }),
-//         { status: 406, headers: { "Content-Type": "application/json" } }
-//       );
-//     }
+/**
+ * An MCP server on top of a pluggable transport.
+ *
+ * This server will automatically respond to the initialization flow as initiated from the client.
+ *
+ * To use with custom types, extend the base Request/Notification/Result types and pass them as type parameters:
+ *
+ * ```typescript
+ * // Custom schemas
+ * const CustomRequestSchema = RequestSchema.extend({...})
+ * const CustomNotificationSchema = NotificationSchema.extend({...})
+ * const CustomResultSchema = ResultSchema.extend({...})
+ *
+ * // Type aliases
+ * type CustomRequest = z.infer<typeof CustomRequestSchema>
+ * type CustomNotification = z.infer<typeof CustomNotificationSchema>
+ * type CustomResult = z.infer<typeof CustomResultSchema>
+ *
+ * // Create typed server
+ * const server = new Server<CustomRequest, CustomNotification, CustomResult>({
+ *   name: "CustomServer",
+ *   version: "1.0.0"
+ * })
+ * ```
+ */
+export class Server<
+  RequestT extends Request = Request,
+  NotificationT extends Notification = Notification,
+  ResultT extends Result = Result,
+> extends Protocol<
+  ServerRequest | RequestT,
+  ServerNotification | NotificationT,
+  ServerResult | ResultT
+> {
+  private _clientCapabilities?: ClientCapabilities;
+  private _clientVersion?: Implementation;
+  private _capabilities: ServerCapabilities;
+  private _instructions?: string;
 
-//     // 2. 验证 Content-Type
-//     const contentType = request.headers.get("content-type") || "";
-//     if (!contentType.includes("application/json")) {
-//       return new Response(
-//         JSON.stringify({
-//           jsonrpc: "2.0",
-//           error: {
-//             code: -32000,
-//             message:
-//               "Unsupported Media Type: Content-Type must be application/json",
-//           },
-//           id: null,
-//         }),
-//         { status: 415, headers: { "Content-Type": "application/json" } }
-//       );
-//     }
+  /**
+   * Callback for when initialization has fully completed (i.e., the client has sent an `initialized` notification).
+   */
+  oninitialized?: () => void;
 
-//     let rawMessage;
-//     try {
-//       rawMessage = await request.json();
-//     } catch (error) {
-//       return new Response(
-//         JSON.stringify({
-//           jsonrpc: "2.0",
-//           error: {
-//             code: -32700,
-//             message: "Parse error",
-//             data: String(error),
-//           },
-//           id: null,
-//         }),
-//         { status: 400, headers: { "Content-Type": "application/json" } }
-//       );
-//     }
+  /**
+   * Initializes this server with the given name and version information.
+   */
+  constructor(
+    private _serverInfo: Implementation,
+    options?: ServerOptions
+  ) {
+    super(options);
+    this._capabilities = options?.capabilities ?? {};
+    this._instructions = options?.instructions;
 
-//     // 4. 处理单条或批量消息
-//     let messages: JSONRPCMessage[];
-//     if (Array.isArray(rawMessage)) {
-//       messages = rawMessage.map((msg) => JSONRPCMessageSchema.parse(msg));
-//     } else {
-//       messages = [JSONRPCMessageSchema.parse(rawMessage)];
-//     }
+    this.setRequestHandler(InitializeRequestSchema, (request) =>
+      this._oninitialize(request)
+    );
+    this.setNotificationHandler(InitializedNotificationSchema, () =>
+      this.oninitialized?.()
+    );
+  }
 
-//     // 5. 检查是否为初始化请求
-//     const isInitializationRequest = messages.some(isInitializeRequest);
-//     if (isInitializationRequest) {
-//       if (this._initialized && this.sessionId !== undefined) {
-//         return new Response(
-//           JSON.stringify({
-//             jsonrpc: "2.0",
-//             error: {
-//               code: -32600,
-//               message: "Invalid Request: Server already initialized",
-//             },
-//             id: null,
-//           }),
-//           { status: 400, headers: { "Content-Type": "application/json" } }
-//         );
-//       }
-//       if (messages.length > 1) {
-//         return new Response(
-//           JSON.stringify({
-//             jsonrpc: "2.0",
-//             error: {
-//               code: -32600,
-//               message:
-//                 "Invalid Request: Only one initialization request is allowed",
-//             },
-//             id: null,
-//           }),
-//           { status: 400, headers: { "Content-Type": "application/json" } }
-//         );
-//       }
-//       this.sessionId = this.sessionIdGenerator?.();
-//       this._initialized = true;
+  /**
+   * The server's name and version.
+   */
+  getVersion(): { readonly name: string; readonly version: string } {
+    return this._serverInfo;
+  }
 
-//       if (this.sessionId && this._onsessioninitialized) {
-//         this._onsessioninitialized(this.sessionId);
-//       }
-//     }
+  /**
+   * Registers new capabilities. This can only be called before connecting to a transport.
+   *
+   * The new capabilities will be merged with any existing capabilities previously given (e.g., at initialization).
+   */
+  public registerCapabilities(capabilities: ServerCapabilities): void {
+    if (this.transport) {
+      throw new Error(
+        "Cannot register capabilities after connecting to transport"
+      );
+    }
 
-//     // 6. 验证会话（非初始化请求）
-//     if (!isInitializationRequest && !this.validateSession(request)) {
-//       return new Response(
-//         JSON.stringify({
-//           jsonrpc: "2.0",
-//           error: {
-//             code: -32000,
-//             message: "Invalid Session: Mcp-Session-Id required",
-//           },
-//           id: null,
-//         }),
-//         { status: 400, headers: { "Content-Type": "application/json" } }
-//       );
-//     }
+    this._capabilities = mergeCapabilities(this._capabilities, capabilities);
+  }
 
-//     // 7. 检查是否包含请求
-//     const hasRequests = messages.some(isJSONRPCRequest);
+  protected assertCapabilityForMethod(method: RequestT["method"]): void {
+    switch (method as ServerRequest["method"]) {
+      case "sampling/createMessage":
+        if (!this._clientCapabilities?.sampling) {
+          throw new Error(
+            `Client does not support sampling (required for ${method})`
+          );
+        }
+        break;
 
-//     if (!hasRequests) {
-//       // 仅包含通知或响应，返回 202
-//       for (const message of messages) {
-//         this.onmessage?.(message);
-//       }
-//       return new Response(null, { status: 202 });
-//     } else {
-//       // 包含请求，默认使用 SSE 流
-//       const streamId = randomUUID();
-//       let response: Response;
+      case "roots/list":
+        if (!this._clientCapabilities?.roots) {
+          throw new Error(
+            `Client does not support listing roots (required for ${method})`
+          );
+        }
+        break;
 
-//       if (!this._enableJsonResponse) {
-//         // 使用 SSE 流
-//         const headers: HeadersInit = {
-//           "Content-Type": "text/event-stream",
-//           "Cache-Control": "no-cache",
-//           Connection: "keep-alive",
-//         };
-//         if (this.sessionId) {
-//           headers["mcp-session-id"] = this.sessionId;
-//         }
+      case "ping":
+        // No specific capability required for ping
+        break;
+    }
+  }
 
-//         // 创建 SSE 流
-//         const { readable, writable } = new TransformStream();
-//         response = new Response(readable, { status: 200, headers });
+  protected assertNotificationCapability(
+    method: (ServerNotification | NotificationT)["method"]
+  ): void {
+    switch (method as ServerNotification["method"]) {
+      case "notifications/message":
+        if (!this._capabilities.logging) {
+          throw new Error(
+            `Server does not support logging (required for ${method})`
+          );
+        }
+        break;
 
-//         // 存储流
-//         this._streamMapping.set(streamId, writable);
-//         for (const message of messages) {
-//           if (isJSONRPCRequest(message)) {
-//             this._requestToStreamMapping.set(message.id, streamId);
-//           }
-//         }
+      case "notifications/resources/updated":
+      case "notifications/resources/list_changed":
+        if (!this._capabilities.resources) {
+          throw new Error(
+            `Server does not support notifying about resources (required for ${method})`
+          );
+        }
+        break;
 
-//         // 处理流关闭
-//         writable.getWriter().closed.catch(() => {
-//           this._streamMapping.delete(streamId);
-//         });
-//       } else {
-//         // 使用 JSON 响应（未实现具体逻辑，假设直接处理）
-//         // 这里可以扩展为同步 JSON 响应
-//         response = new Response(null, {
-//           status: 200,
-//           headers: { "Content-Type": "application/json" },
-//         });
-//       }
+      case "notifications/tools/list_changed":
+        if (!this._capabilities.tools) {
+          throw new Error(
+            `Server does not support notifying of tool list changes (required for ${method})`
+          );
+        }
+        break;
 
-//       // 处理消息
-//       for (const message of messages) {
-//         this.onmessage?.(message);
-//       }
+      case "notifications/prompts/list_changed":
+        if (!this._capabilities.prompts) {
+          throw new Error(
+            `Server does not support notifying of prompt list changes (required for ${method})`
+          );
+        }
+        break;
 
-//       return response;
-//     }
-//   } catch (error) {
-//     // 返回 JSON-RPC 格式的错误
-//     this.onerror?.(error as Error);
-//     return new Response(
-//       JSON.stringify({
-//         jsonrpc: "2.0",
-//         error: {
-//           code: -32700,
-//           message: "Parse error",
-//           data: String(error),
-//         },
-//         id: null,
-//       }),
-//       { status: 400, headers: { "Content-Type": "application/json" } }
-//     );
-//   }
-// }
+      case "notifications/cancelled":
+        // Cancellation notifications are always allowed
+        break;
 
-// export async function handleGetRequest(req) {}
+      case "notifications/progress":
+        // Progress notifications are always allowed
+        break;
+    }
+  }
 
-// export async function handleDeleteRequest(req) {}
+  protected assertRequestHandlerCapability(method: string): void {
+    switch (method) {
+      case "sampling/createMessage":
+        if (!this._capabilities.sampling) {
+          throw new Error(
+            `Server does not support sampling (required for ${method})`
+          );
+        }
+        break;
 
-// export async function handleUnsupportedRequest(req) {}
+      case "logging/setLevel":
+        if (!this._capabilities.logging) {
+          throw new Error(
+            `Server does not support logging (required for ${method})`
+          );
+        }
+        break;
+
+      case "prompts/get":
+      case "prompts/list":
+        if (!this._capabilities.prompts) {
+          throw new Error(
+            `Server does not support prompts (required for ${method})`
+          );
+        }
+        break;
+
+      case "resources/list":
+      case "resources/templates/list":
+      case "resources/read":
+        if (!this._capabilities.resources) {
+          throw new Error(
+            `Server does not support resources (required for ${method})`
+          );
+        }
+        break;
+
+      case "tools/call":
+      case "tools/list":
+        if (!this._capabilities.tools) {
+          throw new Error(
+            `Server does not support tools (required for ${method})`
+          );
+        }
+        break;
+
+      case "ping":
+      case "initialize":
+        // No specific capability required for these methods
+        break;
+    }
+  }
+
+  private async _oninitialize(
+    request: InitializeRequest
+  ): Promise<InitializeResult> {
+    const requestedVersion = request.params.protocolVersion;
+
+    this._clientCapabilities = request.params.capabilities;
+    this._clientVersion = request.params.clientInfo;
+
+    return {
+      protocolVersion: SUPPORTED_PROTOCOL_VERSIONS.includes(requestedVersion)
+        ? requestedVersion
+        : LATEST_PROTOCOL_VERSION,
+      capabilities: this.getCapabilities(),
+      serverInfo: this._serverInfo,
+      ...(this._instructions && { instructions: this._instructions }),
+    };
+  }
+
+  /**
+   * After initialization has completed, this will be populated with the client's reported capabilities.
+   */
+  getClientCapabilities(): ClientCapabilities | undefined {
+    return this._clientCapabilities;
+  }
+
+  /**
+   * After initialization has completed, this will be populated with information about the client's name and version.
+   */
+  getClientVersion(): Implementation | undefined {
+    return this._clientVersion;
+  }
+
+  private getCapabilities(): ServerCapabilities {
+    return this._capabilities;
+  }
+
+  async ping() {
+    return this.request({ method: "ping" }, EmptyResultSchema);
+  }
+
+  async createMessage(
+    params: CreateMessageRequest["params"],
+    options?: RequestOptions
+  ) {
+    return this.request(
+      { method: "sampling/createMessage", params },
+      CreateMessageResultSchema,
+      options
+    );
+  }
+
+  async listRoots(
+    params?: ListRootsRequest["params"],
+    options?: RequestOptions
+  ) {
+    return this.request(
+      { method: "roots/list", params },
+      ListRootsResultSchema,
+      options
+    );
+  }
+
+  async sendLoggingMessage(params: LoggingMessageNotification["params"]) {
+    return this.notification({ method: "notifications/message", params });
+  }
+
+  async sendResourceUpdated(params: ResourceUpdatedNotification["params"]) {
+    return this.notification({
+      method: "notifications/resources/updated",
+      params,
+    });
+  }
+
+  async sendResourceListChanged() {
+    return this.notification({
+      method: "notifications/resources/list_changed",
+    });
+  }
+
+  async sendToolListChanged() {
+    return this.notification({ method: "notifications/tools/list_changed" });
+  }
+
+  async sendPromptListChanged() {
+    return this.notification({ method: "notifications/prompts/list_changed" });
+  }
+}

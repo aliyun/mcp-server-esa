@@ -35,38 +35,38 @@ import ESA, {
   PublishRoutineCodeVersionResponse,
   UpdateRoutineRouteRequest,
   UpdateRoutineRouteResponse,
-} from '@alicloud/esa20240910';
-import * as $OpenApi from '@alicloud/openapi-client';
-import * as $Util from '@alicloud/tea-util';
-import { log } from './helpers';
+} from "@alicloud/esa20240910";
+import * as $OpenApi from "@alicloud/openapi-client";
+import * as $Util from "@alicloud/tea-util";
+import { log } from "./helpers";
 import {
   CliConfig,
   GetMatchSiteRequest,
   ListRoutineRelatedRecordsRequest,
-} from './types';
+} from "./types";
 
 export interface ApiMethod<RequestType, ResponseType> {
   (runtime: $Util.RuntimeOptions): Promise<ResponseType>;
   (request: RequestType, runtime: $Util.RuntimeOptions): Promise<ResponseType>;
 }
-class Client {
+export class ApiServer {
   client: ESA;
 
-  constructor() {
+  constructor(accessKeyId: string, accessKeySecret: string) {
     const config = {
       auth: {
-        accessKeyId: process.env.ESA_ACCESS_KEY_ID || '',
-        accessKeySecret: process.env.ESA_ACCESS_KEY_SECRET || '',
+        accessKeyId,
+        accessKeySecret,
       },
-      endpoint: 'esa.cn-hangzhou.aliyuncs.com',
+      endpoint: "esa.cn-hangzhou.aliyuncs.com",
     };
-    this.client = Client.createClient(config);
+    this.client = ApiServer.createClient(config);
   }
 
   static createClient(config: CliConfig) {
     const apiConfig = new $OpenApi.Config({
-      accessKeyId: config.auth?.accessKeyId || '',
-      accessKeySecret: config.auth?.accessKeySecret || '',
+      accessKeyId: config.auth?.accessKeyId || "",
+      accessKeySecret: config.auth?.accessKeySecret || "",
       endpoint: config.endpoint,
     });
     return new ESA(apiConfig);
@@ -74,7 +74,7 @@ class Client {
 
   callApi = async <RequestType, ResponseType>(
     action: ApiMethod<RequestType, ResponseType>,
-    request?: RequestType,
+    request?: RequestType
   ): Promise<ResponseType> => {
     const runtime = new $Util.RuntimeOptions({
       connectTimeout: 10000,
@@ -90,13 +90,13 @@ class Client {
 
   createRoutine(params: CreateRoutineRequest) {
     const request = new CreateRoutineRequest(params);
-    log('Creating routine with parameters:', JSON.stringify(params));
+    log("Creating routine with parameters:", JSON.stringify(params));
     return this.callApi(
       this.client.createRoutine.bind(this.client) as ApiMethod<
         CreateRoutineRequest,
         CreateRoutineResponse
       >,
-      request,
+      request
     );
   }
 
@@ -107,7 +107,7 @@ class Client {
         DeleteRoutineRequest,
         DeleteRoutineResponse
       >,
-      request,
+      request
     );
   }
 
@@ -118,7 +118,7 @@ class Client {
         GetRoutineRequest,
         GetRoutineResponse
       >,
-      request,
+      request
     );
   }
 
@@ -127,18 +127,18 @@ class Client {
   }
 
   async getRoutineStagingCodeUploadInfo(
-    params: GetRoutineStagingCodeUploadInfoRequest,
+    params: GetRoutineStagingCodeUploadInfoRequest
   ) {
     const request = new GetRoutineStagingCodeUploadInfoRequest(params);
 
     return this.callApi(
       this.client.getRoutineStagingCodeUploadInfo.bind(
-        this.client,
+        this.client
       ) as ApiMethod<
         GetRoutineStagingCodeUploadInfoRequest,
         GetRoutineStagingCodeUploadInfoResponse
       >,
-      request,
+      request
     );
   }
 
@@ -149,7 +149,7 @@ class Client {
         CommitRoutineStagingCodeRequest,
         CommitRoutineStagingCodeResponse
       >,
-      request,
+      request
     );
   }
 
@@ -160,7 +160,7 @@ class Client {
         PublishRoutineCodeVersionRequest,
         PublishRoutineCodeVersionResponse
       >,
-      request,
+      request
     );
   }
 
@@ -175,7 +175,7 @@ class Client {
         ListSitesRequest,
         ListSitesResponse
       >,
-      request,
+      request
     );
   }
 
@@ -186,7 +186,7 @@ class Client {
         DeleteRoutineCodeVersionRequest,
         DeleteRoutineCodeVersionResponse
       >,
-      request,
+      request
     );
   }
 
@@ -197,7 +197,7 @@ class Client {
         CreateRoutineRelatedRecordRequest,
         CreateRoutineRelatedRecordResponse
       >,
-      request,
+      request
     );
   }
 
@@ -208,7 +208,7 @@ class Client {
         CreateRoutineRouteRequest,
         CreateRoutineRouteResponse
       >,
-      request,
+      request
     );
   }
 
@@ -219,7 +219,7 @@ class Client {
         DeleteRoutineRouteRequest,
         DeleteRoutineRouteResponse
       >,
-      request,
+      request
     );
   }
 
@@ -230,7 +230,7 @@ class Client {
         GetRoutineRouteRequest,
         GetRoutineRouteResponse
       >,
-      request,
+      request
     );
   }
 
@@ -241,7 +241,7 @@ class Client {
         ListSiteRoutesRequest,
         ListSiteRoutesResponse
       >,
-      request,
+      request
     );
   }
 
@@ -252,7 +252,7 @@ class Client {
         ListRoutineRoutesRequest,
         ListRoutineRoutesResponse
       >,
-      request,
+      request
     );
   }
 
@@ -263,7 +263,7 @@ class Client {
         UpdateRoutineRouteRequest,
         UpdateRoutineRouteResponse
       >,
-      request,
+      request
     );
   }
 
@@ -274,21 +274,21 @@ class Client {
         DeleteRoutineRelatedRecordRequest,
         DeleteRoutineRelatedRecordResponse
       >,
-      request,
+      request
     );
   }
 
   getMatchSite(requestParams: GetMatchSiteRequest) {
     const params = {
-      action: 'GetMatchSite',
-      version: '2024-09-10',
-      protocol: 'https',
-      method: 'GET',
-      authType: 'AK',
-      bodyType: 'json',
-      reqBodyType: 'json',
-      style: 'RPC',
-      pathname: '/',
+      action: "GetMatchSite",
+      version: "2024-09-10",
+      protocol: "https",
+      method: "GET",
+      authType: "AK",
+      bodyType: "json",
+      reqBodyType: "json",
+      style: "RPC",
+      pathname: "/",
       toMap: function () {
         return this;
       },
@@ -308,15 +308,15 @@ class Client {
 
   listRoutineRelatedRecords(requestParams: ListRoutineRelatedRecordsRequest) {
     const params = {
-      action: 'ListRoutineRelatedRecords',
-      version: '2024-09-10',
-      protocol: 'https',
-      method: 'GET',
-      authType: 'AK',
-      bodyType: 'json',
-      reqBodyType: 'json',
-      style: 'RPC',
-      pathname: '/',
+      action: "ListRoutineRelatedRecords",
+      version: "2024-09-10",
+      protocol: "https",
+      method: "GET",
+      authType: "AK",
+      bodyType: "json",
+      reqBodyType: "json",
+      style: "RPC",
+      pathname: "/",
       toMap: function () {
         return this;
       },
@@ -344,7 +344,7 @@ class Client {
         CreateRecordRequest,
         CreateRecordResponse
       >,
-      request,
+      request
     );
   }
 
@@ -355,9 +355,7 @@ class Client {
         ListRecordsRequest,
         ListRecordsResponse
       >,
-      request,
+      request
     );
   }
 }
-
-export default new Client();
