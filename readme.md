@@ -17,8 +17,9 @@
       "command": "npx",
       "args": ["-y", "mcp-server-esa"],
       "env": {
-        "ESA_ACCESS_KEY_ID": "your AK",
-        "ESA_ACCESS_KEY_SECRET": "your SK"
+        "ALIBABA_CLOUD_ACCESS_KEY_ID": "your AK",
+        "ALIBABA_CLOUD_ACCESS_KEY_SECRET": "your SK",
+	"ALIBABA_CLOUD_SECURITY_TOKEN": "sts_security_token optional, required when using STS Token"
       }
     }
   }
@@ -207,33 +208,33 @@
 
 **Create a record**
 
-| **Parameter** | **Type**   | **Required** | **Description**        |
-| ------------- | ---------- | ------------ | ---------------------- |
-| name          | string     | Yes          | The name of the routine|
-| siteId        | number     | Yes          | The ID of the site     |
-| recordName    | string     | Yes          | The name of the record |
+| **Parameter** | **Type** | **Required** | **Description**         |
+| ------------- | -------- | ------------ | ----------------------- |
+| name          | string   | Yes          | The name of the routine |
+| siteId        | number   | Yes          | The ID of the site      |
+| recordName    | string   | Yes          | The name of the record  |
 
 #### er_record_delete
 
 **Delete a record**
 
-| **Parameter** | **Type**   | **Required** | **Description**        |
-| ------------- | ---------- | ------------ | ---------------------- |
-| name          | string     | Yes          | The name of the routine|
-| siteId        | number     | Yes          | The ID of the site     |
-| recordName    | string     | Yes          | The name of the record |
-| recordId      | number     | No           | The ID of the record   |
+| **Parameter** | **Type** | **Required** | **Description**         |
+| ------------- | -------- | ------------ | ----------------------- |
+| name          | string   | Yes          | The name of the routine |
+| siteId        | number   | Yes          | The ID of the site      |
+| recordName    | string   | Yes          | The name of the record  |
+| recordId      | number   | No           | The ID of the record    |
 
 #### er_record_list
 
 **List all records**
 
-| **Parameter**    | **Type**   | **Required** | **Description**                |
-| ---------------- | ---------- | ------------ | ------------------------------ |
-| Name             | string     | Yes          | The name of the routine        |
-| PageNumber       | number     | No           | The page number of the records |
-| PageSize         | number     | No           | The page size of the records   |
-| SearchKeyWord    | string     | No           | The search key word            |
+| **Parameter** | **Type** | **Required** | **Description**                |
+| ------------- | -------- | ------------ | ------------------------------ |
+| Name          | string   | Yes          | The name of the routine        |
+| PageNumber    | number   | No           | The page number of the records |
+| PageSize      | number   | No           | The page size of the records   |
+| SearchKeyWord | string   | No           | The search key word            |
 
 ### Site Tools
 
@@ -255,33 +256,31 @@ No parameters required.
 
 **Create an A record for a site**
 
-| Parameter  | Type   | Required | Description                                                        |
-| ---------- | ------ | -------- | ------------------------------------------------------------------ |
-| recordName | string | Yes      | The name of the DNS record (e.g., subdomain or full domain)        |
-| siteId     | number | Yes      | The ID of the site, obtained from the ListSites operation          |
-| data       | object | Yes      | The data for the DNS record, with value property                   |
-| data.value | string | Yes      | The IP address of the A record (e.g., "2.2.2.2")                   |
+| Parameter  | Type   | Required | Description                                                 |
+| ---------- | ------ | -------- | ----------------------------------------------------------- |
+| recordName | string | Yes      | The name of the DNS record (e.g., subdomain or full domain) |
+| siteId     | number | Yes      | The ID of the site, obtained from the ListSites operation   |
+| data       | object | Yes      | The data for the DNS record, with value property            |
+| data.value | string | Yes      | The IP address of the A record (e.g., "2.2.2.2")            |
 
 #### site_dns_cname_domain_record_create
 
 **Create a CNAME domain record for a site**
 
-| Parameter  | Type   | Required | Description                                                        |
-| ---------- | ------ | -------- | ------------------------------------------------------------------ |
-| recordName | string | Yes      | The name of the DNS record (e.g., subdomain or full domain)        |
-| siteId     | number | Yes      | The ID of the site, obtained from the ListSites operation          |
-| data       | object | Yes      | The data for the DNS record, with value property                   |
-| data.value | string | Yes      | The domain value for the CNAME record                              |
+| Parameter  | Type   | Required | Description                                                 |
+| ---------- | ------ | -------- | ----------------------------------------------------------- |
+| recordName | string | Yes      | The name of the DNS record (e.g., subdomain or full domain) |
+| siteId     | number | Yes      | The ID of the site, obtained from the ListSites operation   |
+| data       | object | Yes      | The data for the DNS record, with value property            |
+| data.value | string | Yes      | The domain value for the CNAME record                       |
 
 #### site_record_list
 
 **List all records in a site**
 
-| Parameter  | Type   | Required | Description                                                        |
-| ---------- | ------ | -------- | ------------------------------------------------------------------ |
-| SiteId     | number | Yes      | The ID of the site, obtained from the ListSites operation          |
-
-##
+| Parameter | Type   | Required | Description                                               |
+| --------- | ------ | -------- | --------------------------------------------------------- |
+| SiteId    | number | Yes      | The ID of the site, obtained from the ListSites operation |
 
 ## Available Scripts
 

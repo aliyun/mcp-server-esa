@@ -12,15 +12,16 @@
 
 ```
 {
-  "mcpServers": {
-    "esa-mcp-server": {
-      "command": "npx",
-      "args": ["-y", "mcp-server-esa"],
-      "env": {
-        "ESA_ACCESS_KEY_ID": "your AK",
-        "ESA_ACCESS_KEY_SECRET": "your SK"
-      }
-    }
+  "mcpServers": {
+    "esa-mcp-server": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-esa"],
+      "env": {
+        "ALIBABA_CLOUD_ACCESS_KEY_ID": "your AK",
+        "ALIBABA_CLOUD_ACCESS_KEY_SECRET": "your SK",
+	"ALIBABA_CLOUD_SECURITY_TOKEN": "sts_security_token optional, required when using STS Token"
+      }
+    }
   }
 }
 ```
@@ -225,12 +226,12 @@ Claude配置成功后界面
 
 **列出所有记录**
 
-| 参数           | 类型   | 是否必需 | 描述               |
-| -------------- | ------ | -------- | ------------------ |
-| Name           | string | 是       | Routine 名称       |
-| PageNumber     | number | 否       | 页码               |
-| PageSize       | number | 否       | 每页数量           |
-| SearchKeyWord  | string | 否       | 搜索关键字         |
+| 参数          | 类型   | 是否必需 | 描述         |
+| ------------- | ------ | -------- | ------------ |
+| Name          | string | 是       | Routine 名称 |
+| PageNumber    | number | 否       | 页码         |
+| PageSize      | number | 否       | 每页数量     |
+| SearchKeyWord | string | 否       | 搜索关键字   |
 
 ### 站点工具
 
@@ -252,33 +253,31 @@ Claude配置成功后界面
 
 **为站点创建 A 记录**
 
-| 参数       | 类型   | 是否必需 | 描述                                   |
-| ---------- | ------ | -------- | -------------------------------------- |
-| recordName | string | 是       | DNS 记录名称（如子域名或完整域名）     |
-| siteId     | number | 是       | 站点 ID（通过 ListSites 获取）         |
-| data       | object | 是       | DNS 记录数据，需包含 value 属性        |
-| data.value | string | 是       | A 记录的 IP 地址（如 "2.2.2.2"）      |
+| 参数       | 类型   | 是否必需 | 描述                               |
+| ---------- | ------ | -------- | ---------------------------------- |
+| recordName | string | 是       | DNS 记录名称（如子域名或完整域名） |
+| siteId     | number | 是       | 站点 ID（通过 ListSites 获取）     |
+| data       | object | 是       | DNS 记录数据，需包含 value 属性    |
+| data.value | string | 是       | A 记录的 IP 地址（如 "2.2.2.2"）   |
 
 #### site_dns_cname_domain_record_create
 
 **为站点创建 CNAME 域名记录**
 
-| 参数       | 类型   | 是否必需 | 描述                                   |
-| ---------- | ------ | -------- | -------------------------------------- |
-| recordName | string | 是       | DNS 记录名称（如子域名或完整域名）     |
-| siteId     | number | 是       | 站点 ID（通过 ListSites 获取）         |
-| data       | object | 是       | DNS 记录数据，需包含 value 属性        |
-| data.value | string | 是       | CNAME 记录的域名值                     |
+| 参数       | 类型   | 是否必需 | 描述                               |
+| ---------- | ------ | -------- | ---------------------------------- |
+| recordName | string | 是       | DNS 记录名称（如子域名或完整域名） |
+| siteId     | number | 是       | 站点 ID（通过 ListSites 获取）     |
+| data       | object | 是       | DNS 记录数据，需包含 value 属性    |
+| data.value | string | 是       | CNAME 记录的域名值                 |
 
 #### site_record_list
 
 **列出站点的所有记录**
 
-| 参数   | 类型   | 是否必需 | 描述                       |
-| ------ | ------ | -------- | -------------------------- |
+| 参数   | 类型   | 是否必需 | 描述                           |
+| ------ | ------ | -------- | ------------------------------ |
 | SiteId | number | 是       | 站点 ID（通过 ListSites 获取） |
-
-##
 
 ## 可用脚本
 

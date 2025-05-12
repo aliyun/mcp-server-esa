@@ -55,8 +55,8 @@ class Client {
   constructor() {
     const config = {
       auth: {
-        accessKeyId: process.env.ESA_ACCESS_KEY_ID || '',
-        accessKeySecret: process.env.ESA_ACCESS_KEY_SECRET || '',
+        accessKeyId: process.env.ALIBABA_CLOUD_ACCESS_KEY_ID || '',
+        accessKeySecret: process.env.ALIBABA_CLOUD_ACCESS_KEY_SECRET || '',
         securityToken: process.env.ALIBABA_CLOUD_SECURITY_TOKEN,
       },
       endpoint: 'esa.cn-hangzhou.aliyuncs.com',
