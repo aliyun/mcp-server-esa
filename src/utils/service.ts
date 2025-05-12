@@ -57,6 +57,7 @@ class Client {
       auth: {
         accessKeyId: process.env.ESA_ACCESS_KEY_ID || '',
         accessKeySecret: process.env.ESA_ACCESS_KEY_SECRET || '',
+        securityToken: process.env.ALIBABA_CLOUD_SECURITY_TOKEN,
       },
       endpoint: 'esa.cn-hangzhou.aliyuncs.com',
     };
@@ -67,6 +68,7 @@ class Client {
     const apiConfig = new $OpenApi.Config({
       accessKeyId: config.auth?.accessKeyId || '',
       accessKeySecret: config.auth?.accessKeySecret || '',
+      securityToken: config.auth?.securityToken || '',
       endpoint: config.endpoint,
     });
     return new ESA(apiConfig);

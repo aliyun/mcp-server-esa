@@ -28,8 +28,9 @@ export class CreateRoutineRouteRequestExt extends CreateRoutineRouteRequest {
 }
 
 export interface AuthConfig {
-  accessKeyId: string;
-  accessKeySecret: string;
+  accessKeyId?: string;
+  accessKeySecret?: string;
+  securityToken?: string;
 }
 
 export interface CliConfig {
