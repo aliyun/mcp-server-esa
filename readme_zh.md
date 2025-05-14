@@ -1,6 +1,6 @@
-# ESA MCP 服务器
+# ESA MCP Server
 
-**ESA MCP 服务器是一个 Model Context Protocol (MCP) 服务器实现，用于实现 AI 模型与边缘安全加速(ESA)服务之间的通信。该服务器充当桥梁，允许模型通过标准化协议利用 ESA 功能。**
+一个MCP服务器，简化对阿里云ESA多种服务的调用
 
 ---
 
@@ -8,294 +8,89 @@
 
 ## 安装
 
-**在支持MCP server的client配置文件中**
+1. **在 Accesskey 页面申请阿里云的 AK 和 SK**
 
-```
+   https://ram.console.aliyun.com/profile/access-keys
+
+2. **开通边缘函数服务**
+
+   https://esa.console.aliyun.com/edge/function/list
+
+3. **在支持 MCP 的客户端配置中进行设置：**
+
+```json
 {
-  "mcpServers": {
-    "esa-mcp-server": {
-      "command": "npx",
-      "args": ["-y", "mcp-server-esa"],
-      "env": {
-        "ALIBABA_CLOUD_ACCESS_KEY_ID": "your AK",
-        "ALIBABA_CLOUD_ACCESS_KEY_SECRET": "your SK",
-	"ALIBABA_CLOUD_SECURITY_TOKEN": "sts_security_token optional, required when using STS Token"
-      }
-    }
+  "mcpServers": {
+    "esa-mcp-server": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-esa"],
+      "env": {
+        "ALIBABA_CLOUD_ACCESS_KEY_ID": "your AK",
+        "ALIBABA_CLOUD_ACCESS_KEY_SECRET": "your SK",
+        "ALIBABA_CLOUD_SECURITY_TOKEN": "sts_security_token optional, required when using STS Token (默认不需要传)"
+      }
+    }
   }
 }
 ```
 
 ## 演示视频
 
-**Claude演示视频**
+**Claude 演示**
 
 ![1744168230082](image/readme/1744168230082.gif)
 
 ![1744168440370](image/readme/1744168440370.gif)
 
-**cline演示视频**
+**Cline 演示**
 
 ![1744168966418](image/readme/1744168966418.gif)
 
-Cline配置成功后界面
+**Cline 配置成功：**
 
 ![1744114625974](image/readme/1744114625974.png)
 
-Claude配置成功后界面
+**Claude 配置成功：**
 
 ![1744165412296](image/readme/1744165412296.png)
 
-## 功能特点
-
-- **实现了用于工具执行的 Model Context Protocol**
-- **提供对 ESA OpenAPI 服务的访问**
-- **通过标准输入/输出 (stdio) 作为服务器运行，以便与模型运行器无缝集成**
-
 ## 工具列表
 
-服务器提供以下 ESA 工具，可以通过 MCP 协议调用：
-
-### Routine 管理工具
-
-#### routine_create
-
-**创建一个 Routine**
-
-| 参数        | 类型   | 是否必需 | 描述                                                                                               |
-| ----------- | ------ | -------- | -------------------------------------------------------------------------------------------------- |
-| name        | string | 是       | Routine 名称，支持小写英文、数字和连字符，必须以小写英文开头，长度不少于 2 个字符                  |
-| description | string | 否       | Routine 描述，不含空格                                                                             |
-| code        | string | 是       | Routine 源代码，例如：`export default { async fetch(request) { return handleRequest(request); } }` |
-
-#### routine_delete
-
-**删除一个 Routine**
-
-| 参数 | 类型   | 是否必需 | 描述                  |
-| ---- | ------ | -------- | --------------------- |
-| name | string | 是       | 要删除的 Routine 名称 |
-
-#### routine_list
-
-**列出所有 Routine**
-
-无需参数。
-
-#### routine_get
-
-**获取 Routine 详情**
-
-| 参数 | 类型   | 是否必需 | 描述                      |
-| ---- | ------ | -------- | ------------------------- |
-| name | string | 是       | 要获取详情的 Routine 名称 |
-
-### 部署工具
-
-#### routine_code_commit
-
-**提交 Routine 代码**
-
-| 参数 | 类型   | 是否必需 | 描述           |
-| ---- | ------ | -------- | -------------- |
-| name | string | 是       | Routine 名称   |
-| code | string | 是       | Routine 源代码 |
-
-#### routine_code_deploy
-
-**部署 Routine 代码**
-
-| 参数              | 类型   | 是否必需 | 描述                                                                     |
-| ----------------- | ------ | -------- | ------------------------------------------------------------------------ |
-| name              | string | 是       | Routine 名称                                                             |
-| codeVersion       | string | 是       | Routine 版本，必须是有效的语义化版本                                     |
-| env               | string | 是       | Routine 环境，必须是 "production" 或 "staging"                           |
-| canaryAreaList    | array  | 否       | 金丝雀发布区域，必须是有效的区域名称，需要调用 canary_area_list 方法获取 |
-| canaryCodeVersion | string | 否       | 金丝雀版本，必须是有效的语义化版本                                       |
-
-#### canary_area_list
-
-**列出所有可用于 Routine 部署的金丝雀区域**
-
-无需参数。
-
-#### deployment_delete
-
-**删除部署**
-
-| 参数 | 类型   | 是否必需 | 描述     |
-| ---- | ------ | -------- | -------- |
-| name | string | 是       | 部署名称 |
-
-### 路由管理工具
-
-#### route_create
-
-**创建与 Routine 相关的路由**
-
-| 参数        | 类型   | 是否必需 | 描述                                          |
-| ----------- | ------ | -------- | --------------------------------------------- |
-| siteId      | number | 是       | 站点 ID                                       |
-| mode        | string | 是       | 路由模式，可选 'simple' 或 'custom'           |
-| configId    | number | 是       | 配置 ID                                       |
-| routineName | string | 是       | Routine 名称                                  |
-| routeName   | string | 是       | 路由名称，用于标识路由                        |
-| bypass      | string | 是       | 路由旁路，可选 'on' 或 'off'，默认为 'off'    |
-| routeEnable | string | 是       | 路由启用状态，可选 'on' 或 'off'，默认为 'on' |
-| sequence    | number | 否       | 路由序列，默认为当前路由数量                  |
-
-#### route_update
-
-**更新与 Routine 相关的路由**
-
-| 参数        | 类型   | 是否必需 | 描述                             |
-| ----------- | ------ | -------- | -------------------------------- |
-| siteId      | number | 是       | 站点 ID                          |
-| configId    | number | 是       | 配置 ID                          |
-| routeName   | string | 是       | 路由名称                         |
-| routeEnable | string | 是       | 路由启用状态，可选 'on' 或 'off' |
-| rule        | string | 是       | 路由规则                         |
-| routineName | string | 是       | Routine 名称                     |
-| bypass      | string | 是       | 路由旁路，可选 'on' 或 'off'     |
-| sequence    | number | 否       | 路由序列                         |
-
-#### route_delete
-
-**删除与 Routine 相关的路由**
-
-| 参数     | 类型   | 是否必需 | 描述    |
-| -------- | ------ | -------- | ------- |
-| siteId   | number | 是       | 站点 ID |
-| configId | number | 是       | 配置 ID |
-
-#### route_get
-
-**获取与 Routine 相关的路由**
-
-| 参数     | 类型   | 是否必需 | 描述    |
-| -------- | ------ | -------- | ------- |
-| siteId   | number | 是       | 站点 ID |
-| configId | number | 是       | 配置 ID |
-
-#### routine_route_list
-
-**列出 Routine 的所有路由**
-
-| 参数        | 类型   | 是否必需 | 描述                       |
-| ----------- | ------ | -------- | -------------------------- |
-| routineName | string | 是       | Routine 名称               |
-| routeName   | string | 否       | 路由名称，用于过滤列表结果 |
-| pageNumber  | number | 否       | 路由页码                   |
-| pageSize    | number | 否       | 每页路由数量               |
-
-#### site_route_list
-
-**列出站点的所有路由**
-
-| 参数       | 类型   | 是否必需 | 描述                       |
-| ---------- | ------ | -------- | -------------------------- |
-| siteId     | number | 是       | 站点 ID                    |
-| routeName  | string | 否       | 路由名称，用于过滤列表结果 |
-| pageNumber | number | 否       | 路由页码                   |
-| pageSize   | number | 否       | 每页路由数量               |
-
-### 记录管理工具
-
-#### er_record_create
-
-**创建记录**
-
-| 参数       | 类型   | 是否必需 | 描述         |
-| ---------- | ------ | -------- | ------------ |
-| name       | string | 是       | Routine 名称 |
-| siteId     | number | 是       | 站点 ID      |
-| recordName | string | 是       | 记录名称     |
-
-#### er_record_delete
-
-**删除记录**
-
-| 参数       | 类型   | 是否必需 | 描述         |
-| ---------- | ------ | -------- | ------------ |
-| name       | string | 是       | Routine 名称 |
-| siteId     | number | 是       | 站点 ID      |
-| recordName | string | 是       | 记录名称     |
-| recordId   | number | 否       | 记录 ID      |
-
-#### er_record_list
-
-**列出所有记录**
-
-| 参数          | 类型   | 是否必需 | 描述         |
-| ------------- | ------ | -------- | ------------ |
-| Name          | string | 是       | Routine 名称 |
-| PageNumber    | number | 否       | 页码         |
-| PageSize      | number | 否       | 每页数量     |
-| SearchKeyWord | string | 否       | 搜索关键字   |
-
-### 站点工具
-
-#### site_active_list
-
-**列出活跃站点**
-
-无需参数。
-
-#### site_match
-
-**检查账户下哪个站点与用户输入匹配**
-
-| 参数       | 类型   | 是否必需 | 描述             |
-| ---------- | ------ | -------- | ---------------- |
-| recordName | string | 是       | 要匹配的站点名称 |
-
-#### site_dns_type_a_record_create
-
-**为站点创建 A 记录**
-
-| 参数       | 类型   | 是否必需 | 描述                               |
-| ---------- | ------ | -------- | ---------------------------------- |
-| recordName | string | 是       | DNS 记录名称（如子域名或完整域名） |
-| siteId     | number | 是       | 站点 ID（通过 ListSites 获取）     |
-| data       | object | 是       | DNS 记录数据，需包含 value 属性    |
-| data.value | string | 是       | A 记录的 IP 地址（如 "2.2.2.2"）   |
-
-#### site_dns_cname_domain_record_create
-
-**为站点创建 CNAME 域名记录**
-
-| 参数       | 类型   | 是否必需 | 描述                               |
-| ---------- | ------ | -------- | ---------------------------------- |
-| recordName | string | 是       | DNS 记录名称（如子域名或完整域名） |
-| siteId     | number | 是       | 站点 ID（通过 ListSites 获取）     |
-| data       | object | 是       | DNS 记录数据，需包含 value 属性    |
-| data.value | string | 是       | CNAME 记录的域名值                 |
-
-#### site_record_list
-
-**列出站点的所有记录**
-
-| 参数   | 类型   | 是否必需 | 描述                           |
-| ------ | ------ | -------- | ------------------------------ |
-| SiteId | number | 是       | 站点 ID（通过 ListSites 获取） |
-
-## 可用脚本
-
-- `npm run build` - 使用 rslib 构建项目
-- `npm run dev` - 以监视模式运行构建用于开发
-- `npm run format` - 使用 Prettier 格式化代码
-- `npm run lint` - 使用 ESLint 检查代码
-
-### 项目结构
-
-- `src/index.ts` - 主入口点
-- `src/tools/` - ESA 工具实现
-- `src/utils/` - 实用函数和辅助程序
+**服务器提供以下可通过 MCP 协议调用的 ESA 工具：**
+
+| 类别         | 工具                         | 描述                                                   |
+| ------------ | ---------------------------- | ------------------------------------------------------ |
+| **边缘函数** | routine_create               | 在你的阿里云账户中创建新的边缘函数（ER）。             |
+|              | routine_delete               | 从你的阿里云账户中删除现有的边缘函数（ER）。           |
+|              | routine_list                 | 列出你的阿里云账户中的所有边缘函数（ER）。             |
+|              | routine_get                  | 获取特定边缘函数（ER）的详细信息。                     |
+| **部署**     | routine_code_commit          | 在边缘函数（ER）中保存代码版本以供后续修改或发布使用。 |
+|              | routine_code_deploy          | 将选定的代码版本部署到测试或生产环境。                 |
+|              | deployment_delete            | 删除与边缘函数（ER）相关的指定代码版本。               |
+| **路由**     | route_create                 | 创建与边缘函数（ER）相关的新路由。                     |
+|              | route_update                 | 修改现有边缘函数路由的配置。                           |
+|              | route_delete                 | 删除与边缘函数（ER）相关的指定路由。                   |
+|              | route_get                    | 获取与边缘函数（ER）相关的特定路由的详细信息。         |
+|              | routine_route_list           | 列出与特定边缘函数（ER）相关的所有路由。               |
+|              | site_route_list              | 列出与特定站点相关的所有路由。                         |
+| **记录**     | er_record_create             | 创建与边缘函数（ER）相关的新记录。                     |
+|              | er_record_delete             | 删除与边缘函数（ER）相关的指定记录。                   |
+|              | er_record_list               | 列出与特定边缘函数（ER）相关的所有记录。               |
+| **站点**     | site_active_list             | 列出你的阿里云账户中所有激活的站点。                   |
+|              | site_match                   | 识别账户中与提供的输入条件匹配的站点。                 |
+|              | site_dns_cname_record_create | 为指定站点创建CNAME记录。                              |
+|              | site_dns_a_record_create     | 为指定站点创建A记录。                                  |
+|              | site_record_list             | 列出与特定站点相关的所有 DNS 记录。                    |
+
+## Prompt示例
+
+- 编写一个 2048 游戏并将其部署在边缘函数上，显示边缘函数提供的默认访问 URL。
+- 删除 2025 年 5 月之后创建的边缘函数。
+- 列出我的账户下的所有边缘函数。
+- 我的边缘函数“hello-world”的默认访问地址是什么？
+- 为 `test.example.com` 创建一个 CNAME 记录，值设置为 `example2.com`。
+- 为 `test.example.com` 创建一个 A 记录，值设置为 `1.1.1.1`。
 
 ## 许可证
 
-**ISC**
-
-## 贡献
-
-**对于阿里巴巴的内部贡献者，请遵循项目的标准贡献工作流程。**
+MIT

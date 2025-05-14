@@ -8,7 +8,7 @@ import { ListRoutineRelatedRecordsRequest } from '../utils/types.js';
 
 export const ER_RECORD_CREATE_TOOL: Tool = {
   name: 'er_record_create',
-  description: 'Create a record',
+  description: 'Create a new record associated with an Edge Routine (ER)',
   inputSchema: {
     type: 'object',
     properties: {
@@ -31,7 +31,8 @@ export const ER_RECORD_CREATE_TOOL: Tool = {
 
 export const ER_RECORD_DELETE_TOOL: Tool = {
   name: 'er_record_delete',
-  description: 'Delete a record',
+  description:
+    'Delete a specified record associated with an Edge Routine (ER).',
   inputSchema: {
     type: 'object',
     properties: {
@@ -58,7 +59,7 @@ export const ER_RECORD_DELETE_TOOL: Tool = {
 
 export const ER_RECORD_LIST_TOOL: Tool = {
   name: 'er_record_list',
-  description: 'List all records',
+  description: 'List all records associated with a specific Edge Routine (ER).',
   inputSchema: {
     type: 'object',
     properties: {

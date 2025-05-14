@@ -19,7 +19,7 @@ export const SITE_ACTIVE_LIST_TOOL: Tool = {
 export const SITE_MATCH_TOOL: Tool = {
   name: 'site_match',
   description:
-    'Check which site under the account matches the user input， user must input recordName',
+    'Identify which site in the account matches the provided input criteria.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -32,9 +32,9 @@ export const SITE_MATCH_TOOL: Tool = {
   },
 };
 
-export const SITE_DNS_TYPE_A_RECORD_CREATE_TOOL: Tool = {
-  name: 'site_dns_type_a_record_create',
-  description: 'Create a A record for a site.',
+export const SITE_DNS_A_RECORD_CREATE_TOOL: Tool = {
+  name: 'site_dns_a_record_create',
+  description: 'Create an A DNS record for a specified site.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -67,9 +67,9 @@ export const SITE_DNS_TYPE_A_RECORD_CREATE_TOOL: Tool = {
   },
 };
 
-export const SITE_DNS_CNAME_DOMAIN_RECORD_CREATE_TOOL: Tool = {
-  name: 'site_dns_cname_domain_record_create',
-  description: 'Create a CNAME domain record for a site.',
+export const SITE_DNS_CNAME_RECORD_CREATE_TOOL: Tool = {
+  name: 'site_dns_cname_record_create',
+  description: 'Create a CNAME DNS record for a specified site.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -104,7 +104,7 @@ export const SITE_DNS_CNAME_DOMAIN_RECORD_CREATE_TOOL: Tool = {
 
 export const SITE_RECORD_LIST_TOOL: Tool = {
   name: 'site_record_list',
-  description: 'List all records in a site',
+  description: 'List DNS records associated with a specific site.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -117,9 +117,7 @@ export const SITE_RECORD_LIST_TOOL: Tool = {
   },
 };
 
-export const site_dns_type_a_record_create = async (
-  request: CallToolRequest,
-) => {
+export const site_dns_a_record_create = async (request: CallToolRequest) => {
   const res = await api.createRecord({
     ttl: 1,
     proxied: true,
@@ -138,7 +136,7 @@ export const site_dns_type_a_record_create = async (
   };
 };
 
-export const site_dns_cname_domain_record_create = async (
+export const site_dns_cname_record_create = async (
   request: CallToolRequest,
 ) => {
   const res = await api.createRecord({

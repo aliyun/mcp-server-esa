@@ -8,7 +8,7 @@ import {
 
 export const ROUTINE_CREATE_TOOL: Tool = {
   name: 'routine_create',
-  description: 'Create a edge routine(ER).',
+  description: 'Create a new Edge Routine (ER) in your Alibaba Cloud account.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -33,7 +33,8 @@ export const ROUTINE_CREATE_TOOL: Tool = {
 
 export const ROUTINE_DELETE_TOOL: Tool = {
   name: 'routine_delete',
-  description: 'Delete a edge routine(ER).',
+  description:
+    'Delete an existing Edge Routine (ER) from your Alibaba Cloud account.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -48,7 +49,7 @@ export const ROUTINE_DELETE_TOOL: Tool = {
 
 export const ROUTINE_LIST_TOOL: Tool = {
   name: 'routine_list',
-  description: 'List all edge routines',
+  description: 'List all Edge Routines (ERs) in your Alibaba Cloud account.',
   inputSchema: {
     type: 'object',
     properties: {},
@@ -57,7 +58,7 @@ export const ROUTINE_LIST_TOOL: Tool = {
 
 export const ROUTINE_GET_TOOL: Tool = {
   name: 'routine_get',
-  description: 'Get a edge routine detail by name',
+  description: 'Get a the details of a Edge Routine (ER).',
   inputSchema: {
     type: 'object',
     properties: {

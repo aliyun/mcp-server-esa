@@ -1,8 +1,0 @@
-name = "test-client"
-description = "Hello World"
-entry = "src/index.js"
-codeVersions = [ ]
-
-[dev]
-port = 18_080
-localUpstream = ""

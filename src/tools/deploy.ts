@@ -8,7 +8,7 @@ import {
 export const ROUTINE_CODE_DEPLOY_TOOL: Tool = {
   name: 'routine_code_deploy',
   description:
-    'Deploy a routine code, must be a valid semantic version. If version is not exist, should call routine_code_commit first',
+    'Deploy a selected code version to the staging or production environment. If version is not exist, should call routine_code_commit first',
   inputSchema: {
     type: 'object',
     properties: {

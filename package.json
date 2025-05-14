@@ -35,7 +35,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@alicloud/esa20240910": "^2.23.0",
+    "@alicloud/esa20240910": "^2.25.0",
     "@alicloud/openapi-client": "^0.4.13",
     "@alicloud/tea-util": "^1.4.10",
     "@modelcontextprotocol/sdk": "^1.7.0",

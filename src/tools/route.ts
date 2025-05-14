@@ -12,7 +12,7 @@ import { transferRouteToRuleString } from '../utils/helpers.js';
 
 export const ROUTE_CREATE_TOOL: Tool = {
   name: 'route_create',
-  description: 'Create a edge routine(ER) related route',
+  description: 'Create a new route associated with an Edge Routine (ER).',
   inputSchema: {
     type: 'object',
     properties: {
@@ -28,7 +28,7 @@ export const ROUTE_CREATE_TOOL: Tool = {
       route: {
         type: 'string',
         description:
-          'The route of the route, if mode is simple, this field is required',
+          'The route of the route, if mode is simple, this field is required. For example: test.example.com/*',
       },
       rule: {
         type: 'string',
@@ -41,7 +41,8 @@ export const ROUTE_CREATE_TOOL: Tool = {
       },
       routeName: {
         type: 'string',
-        description: 'The name of the route, use to identify the route',
+        description:
+          'The name of the route, use to identify the route. For example: test-route',
       },
       bypass: {
         type: 'enum',
@@ -73,7 +74,7 @@ export const ROUTE_CREATE_TOOL: Tool = {
 
 export const ROUTE_UPDATE_TOOL: Tool = {
   name: 'route_update',
-  description: 'Update a routine related route',
+  description: 'Modify the configuration of an existing Edge Routine route.',
   inputSchema: {
     type: 'object',
     properties: {
@@ -87,7 +88,7 @@ export const ROUTE_UPDATE_TOOL: Tool = {
       },
       routeName: {
         type: 'string',
-        description: 'The name of the route, use to identify the route',
+        description: 'The name of the route, use to identify the route.',
       },
       routeEnable: {
         type: 'enum',
@@ -127,7 +128,7 @@ export const ROUTE_UPDATE_TOOL: Tool = {
 
 export const ROUTE_DELETE_TOOL: Tool = {
   name: 'route_delete',
-  description: 'Delete a routine related route',
+  description: 'Delete a specified route associated with an Edge Routine (ER).',
   inputSchema: {
     type: 'object',
     properties: {
@@ -146,7 +147,8 @@ export const ROUTE_DELETE_TOOL: Tool = {
 
 export const ROUTE_GET_TOOL: Tool = {
   name: 'route_get',
-  description: 'Get a routine related route',
+  description:
+    'Get details of a specific route associated with an Edge Routine (ER).',
   inputSchema: {
     type: 'object',
     properties: {
@@ -165,7 +167,7 @@ export const ROUTE_GET_TOOL: Tool = {
 
 export const ROUTINE_ROUTE_LIST_TOOL: Tool = {
   name: 'routine_route_list',
-  description: 'List all routes of a routine',
+  description: 'List all routes associated with a specific Edge Routine (ER).',
   inputSchema: {
     type: 'object',
     properties: {
@@ -203,7 +205,7 @@ export const ROUTINE_ROUTE_LIST_TOOL: Tool = {
 
 export const SITE_ROUTE_LIST_TOOL: Tool = {
   name: 'site_route_list',
-  description: 'List all routes of a site',
+  description: 'List all routes associated with a specific site.',
   inputSchema: {
     type: 'object',
     properties: {

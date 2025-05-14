@@ -9,7 +9,7 @@ import { uploadCodeToOSS } from '../utils/helpers.js';
 export const ROUTINE_CODE_COMMIT_TOOL: Tool = {
   name: 'routine_code_commit',
   description:
-    'Commit a edge routine(ER) code. If it fails, please submit again.',
+    'Save a code version for future modifications or release within an Edge Routine (ER).',
   inputSchema: {
     type: 'object',
     properties: {

@@ -4,7 +4,8 @@ import { DeleteRoutineCodeVersionRequest } from '@alicloud/esa20240910';
 
 export const DEPLOYMENT_DELETE_TOOL: Tool = {
   name: 'deployment_delete',
-  description: 'Delete a deployment',
+  description:
+    'Delete a specified code version associated with an Edge Routine (ER).',
   inputSchema: {
     type: 'object',
     properties: {

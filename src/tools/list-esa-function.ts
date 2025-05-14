@@ -42,10 +42,10 @@ import {
 import {
   site_active_list,
   SITE_ACTIVE_LIST_TOOL,
-  site_dns_cname_domain_record_create,
-  SITE_DNS_CNAME_DOMAIN_RECORD_CREATE_TOOL,
-  site_dns_type_a_record_create,
-  SITE_DNS_TYPE_A_RECORD_CREATE_TOOL,
+  site_dns_cname_record_create,
+  SITE_DNS_CNAME_RECORD_CREATE_TOOL,
+  site_dns_a_record_create,
+  SITE_DNS_A_RECORD_CREATE_TOOL,
   site_match,
   SITE_MATCH_TOOL,
   site_record_list,
@@ -72,15 +72,15 @@ export const ESA_OPENAPI_ER_LIST = [
   ER_RECORD_CREATE_TOOL,
   ER_RECORD_DELETE_TOOL,
   ER_RECORD_LIST_TOOL,
-  SITE_DNS_TYPE_A_RECORD_CREATE_TOOL,
-  SITE_DNS_CNAME_DOMAIN_RECORD_CREATE_TOOL,
+  SITE_DNS_A_RECORD_CREATE_TOOL,
+  SITE_DNS_CNAME_RECORD_CREATE_TOOL,
   SITE_RECORD_LIST_TOOL,
 ];
 
 export const ESA_OPENAPI_LIST = [...ESA_OPENAPI_ER_LIST];
 export const routineHandlers: ToolHandlers = {
-  site_dns_type_a_record_create,
-  site_dns_cname_domain_record_create,
+  site_dns_a_record_create,
+  site_dns_cname_record_create,
   site_active_list,
   site_match,
   site_route_list,
