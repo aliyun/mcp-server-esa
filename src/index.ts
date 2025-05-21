@@ -6,7 +6,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { ESA_OPENAPI_LIST, routineHandlers } from './tools/list-esa-function';
+import { ESA_OPENAPI_LIST, esaHandlers } from './tools/list-esa-function';
 import { log } from './utils/helpers';
 
 const server = new Server(
@@ -35,7 +35,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     'Params:',
     JSON.stringify(request.params),
   );
-  return await routineHandlers[toolName](request);
+  return await esaHandlers[toolName](request);
 });
 
 async function main() {

@@ -78,7 +78,7 @@ export const ESA_OPENAPI_ER_LIST = [
 ];
 
 export const ESA_OPENAPI_LIST = [...ESA_OPENAPI_ER_LIST];
-export const routineHandlers: ToolHandlers = {
+export const esaHandlers: ToolHandlers = {
   site_dns_a_record_create,
   site_dns_cname_record_create,
   site_active_list,
