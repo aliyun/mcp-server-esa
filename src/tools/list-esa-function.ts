@@ -38,6 +38,8 @@ import {
   routine_create,
   routine_list,
   routine_get,
+  HTML_DEPLOY_TOOL,
+  html_deploy,
 } from './routine';
 import {
   site_active_list,
@@ -53,6 +55,7 @@ import {
 } from './site';
 
 export const ESA_OPENAPI_ER_LIST = [
+  HTML_DEPLOY_TOOL,
   ROUTINE_CREATE_TOOL,
   ROUTINE_DELETE_TOOL,
   ROUTINE_LIST_TOOL,
@@ -101,4 +104,5 @@ export const esaHandlers: ToolHandlers = {
   er_record_create,
   er_record_delete,
   er_record_list,
+  html_deploy,
 };

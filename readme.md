@@ -60,6 +60,7 @@ https://esa.console.aliyun.com/edge/function/list
 
 | Category        | Tool                         | Description                                                                          |
 | --------------- | ---------------------------- | ------------------------------------------------------------------------------------ |
+| **HTML**        | html_deploy                  | Quick deploy a HTML in a new Edge Routine (ER)                                       |
 | **Routines**    | routine_create               | Create a new Edge Routine (ER) in your Alibaba Cloud account.                        |
 |                 | routine_delete               | Delete an existing Edge Routine (ER) from your Alibaba Cloud account.                |
 |                 | routine_list                 | List all Edge Routines (ERs) in your Alibaba Cloud account.                          |

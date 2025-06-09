@@ -38,7 +38,6 @@ import ESA, {
 } from '@alicloud/esa20240910';
 import * as $OpenApi from '@alicloud/openapi-client';
 import * as $Util from '@alicloud/tea-util';
-import { log } from './helpers';
 import {
   CliConfig,
   GetMatchSiteRequest,
@@ -92,7 +91,6 @@ class Client {
 
   createRoutine(params: CreateRoutineRequest) {
     const request = new CreateRoutineRequest(params);
-    log('Creating routine with parameters:', JSON.stringify(params));
     return this.callApi(
       this.client.createRoutine.bind(this.client) as ApiMethod<
         CreateRoutineRequest,

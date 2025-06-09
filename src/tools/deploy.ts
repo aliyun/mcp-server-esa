@@ -26,15 +26,6 @@ export const ROUTINE_CODE_DEPLOY_TOOL: Tool = {
         description:
           'Environment of the routine, must be "production" or "staging". If the user has no special requirements, it will be deployed to the production environment by default',
       },
-      canaryAreaList: {
-        type: 'array',
-        description:
-          'The regions for canary release, must be a valid region name. Need to call ListRoutineCanaryAreas method to get',
-      },
-      canaryCodeVersion: {
-        type: 'string',
-        description: 'Version of the routine, must be a valid semantic version',
-      },
     },
     required: ['name', 'codeVersion', 'env'],
   },
