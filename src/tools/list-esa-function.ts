@@ -52,6 +52,10 @@ import {
   SITE_MATCH_TOOL,
   site_record_list,
   SITE_RECORD_LIST_TOOL,
+  update_site_pause,
+  UPDATE_SITE_PAUSE_TOOL,
+  get_site_pause,
+  GET_SITE_PAUSE_TOOL
 } from './site';
 
 export const ESA_OPENAPI_ER_LIST = [
@@ -78,6 +82,8 @@ export const ESA_OPENAPI_ER_LIST = [
   SITE_DNS_A_RECORD_CREATE_TOOL,
   SITE_DNS_CNAME_RECORD_CREATE_TOOL,
   SITE_RECORD_LIST_TOOL,
+  UPDATE_SITE_PAUSE_TOOL,
+  GET_SITE_PAUSE_TOOL
 ];
 
 export const ESA_OPENAPI_LIST = [...ESA_OPENAPI_ER_LIST];
@@ -105,4 +111,6 @@ export const esaHandlers: ToolHandlers = {
   er_record_delete,
   er_record_list,
   html_deploy,
+  update_site_pause,
+  get_site_pause,
 };
