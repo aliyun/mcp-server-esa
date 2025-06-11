@@ -129,11 +129,13 @@ export const UPDATE_SITE_PAUSE_TOOL: Tool = {
         type: 'number',
         description:
           'The website ID, which can be obtained by calling the [ListSites] operation.',
+        examples: ['123456****'],
       },
       paused: {
         type: 'boolean',
         description:
           'Specifies whether to temporarily pause ESA on the website. If you set this parameter to true, all requests to the domains in your DNS records go directly to your origin server. Valid values: true, false',
+        examples: ['true'],
       },
     },
     required: ['siteId', 'paused'],
@@ -147,17 +149,19 @@ export const UPDATE_SITE_PAUSE_TOOL: Tool = {
 };
 
 export const GET_SITE_PAUSE_TOOL: Tool = {
-  name: "get_site_pause",
-  description: "Queries the ESA proxy configuration of a website.",
+  name: 'get_site_pause',
+  description: 'Queries the ESA proxy configuration of a website.',
   inputSchema: {
-    type: "object",
+    type: 'object',
     properties: {
       siteId: {
-        type: "number",
-        description: "The website ID, which can be obtained by calling the [ListSites] operation.",
+        type: 'number',
+        description:
+          'The website ID, which can be obtained by calling the [ListSites] operation.',
+        examples: ['123456****'],
       },
     },
-    required: ["siteId"],
+    required: ['siteId'],
     annotations: {
       readOnlyHint: true,
       destructiveHint: false,
@@ -264,7 +268,7 @@ export const update_site_pause = async (request: CallToolRequest) => {
   );
 
   return {
-    content: [{ type: "text", text: JSON.stringify(res) }],
+    content: [{ type: 'text', text: JSON.stringify(res) }],
     success: true,
   };
 };
@@ -275,7 +279,7 @@ export const get_site_pause = async (request: CallToolRequest) => {
   );
 
   return {
-    content: [{ type: "text", text: JSON.stringify(res) }],
+    content: [{ type: 'text', text: JSON.stringify(res) }],
     success: true,
   };
 };
