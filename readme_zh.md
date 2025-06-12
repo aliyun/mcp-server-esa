@@ -79,10 +79,15 @@
 |              | er_record_list               | 列出与特定边缘函数（ER）相关的所有记录。               |
 | **站点**     | site_active_list             | 列出你的阿里云账户中所有激活的站点。                   |
 |              | site_match                   | 识别账户中与提供的输入条件匹配的站点。                 |
-|              | site_dns_cname_record_create | 为指定站点创建CNAME记录。                              |
-|              | site_dns_a_record_create     | 为指定站点创建A记录。                                  |
 |              | site_record_list             | 列出与特定站点相关的所有 DNS 记录。                    |
-
+|              | create_site_a_or_aaaa_record | 在站点下创建一条 A/AAAA 类型的 DNS 解析记录。          |
+|              | create_site_cname_record     | 在站点下创建一条 CNAME 类型的 DNS 解析记录。           |
+|              | create_site_txt_record       | 在站点下创建一条 TXT 类型的 DNS 解析记录。             |
+|              | create_site_ns_record        | 在站点下创建一条 NS 类型的 DNS 解析记录。              |
+|              | create_site_mx_record        | 在站点下创建一条 MX 类型的 DNS 解析记录。              |
+|              | get_site_pause               | 查询站点暂停配置。                                     |
+|              | update_site_pause            | 修改站点暂停配置。                                     |
+|              | create_site                  | 让用户创建一个新的站点。                               |
 ## Prompt示例
 
 - 编写一个 2048 游戏并将其部署在边缘函数上，显示边缘函数提供的默认访问 URL。
