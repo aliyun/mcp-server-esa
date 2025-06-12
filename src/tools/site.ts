@@ -74,7 +74,7 @@ export const CREATE_A_OR_AAAA_RECORD_TOOL: Tool = {
       bizName: {
         type: 'string',
         description:
-          'The business scenario of the record for acceleration. Leave the parameter empty if your record is not proxied. Valid values:\n- image_video\n- api\n- web',
+          'The business scenario of the record for acceleration. The parameter cannot be empty if your record is proxied. Valid values:\n- image_video\n- api\n- web',
         enum: ['image_video', 'api', 'web'],
         examples: ['web'],
       },
