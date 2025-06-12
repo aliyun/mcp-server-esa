@@ -41,26 +41,30 @@ import {
   HTML_DEPLOY_TOOL,
   html_deploy,
 } from './routine';
+
 import {
   site_active_list,
   SITE_ACTIVE_LIST_TOOL,
   site_match,
   SITE_MATCH_TOOL,
-  site_record_list,
-  SITE_RECORD_LIST_TOOL,
   create_site,
   CREATE_SITE_TOOL,
-  create_mx_record,
-  CREATE_MX_RECORD_TOOL,
-  create_ns_record,
-  CREATE_NS_RECORD_TOOL,
-  create_txt_record,
-  CREATE_TXT_RECORD_TOOL,
-  create_cname_record,
-  CREATE_CNAME_RECORD_TOOL,
-  create_a_or_aaaa_record,
-  CREATE_A_OR_AAAA_RECORD_TOOL,
-} from './site';
+} from './site/site';
+
+import {
+  site_record_list,
+  SITE_RECORD_LIST_TOOL,
+  create_site_mx_record,
+  CREATE_SITE_MX_RECORD_TOOL,
+  create_site_ns_record,
+  CREATE_SITE_NS_RECORD_TOOL,
+  create_site_txt_record,
+  CREATE_SITE_TXT_RECORD_TOOL,
+  create_site_cname_record,
+  CREATE_SITE_CNAME_RECORD_TOOL,
+  create_site_a_or_aaaa_record,
+  CREATE_SITE_A_OR_AAAA_RECORD_TOOL,
+} from './site/record';
 
 export const ESA_OPENAPI_ER_LIST = [
   HTML_DEPLOY_TOOL,
@@ -85,11 +89,11 @@ export const ESA_OPENAPI_ER_LIST = [
   ER_RECORD_LIST_TOOL,
   SITE_RECORD_LIST_TOOL,
   CREATE_SITE_TOOL,
-  CREATE_MX_RECORD_TOOL,
-  CREATE_NS_RECORD_TOOL,
-  CREATE_TXT_RECORD_TOOL,
-  CREATE_CNAME_RECORD_TOOL,
-  CREATE_A_OR_AAAA_RECORD_TOOL,
+  CREATE_SITE_MX_RECORD_TOOL,
+  CREATE_SITE_NS_RECORD_TOOL,
+  CREATE_SITE_TXT_RECORD_TOOL,
+  CREATE_SITE_CNAME_RECORD_TOOL,
+  CREATE_SITE_A_OR_AAAA_RECORD_TOOL,
 ];
 
 export const ESA_OPENAPI_LIST = [...ESA_OPENAPI_ER_LIST];
@@ -116,9 +120,9 @@ export const esaHandlers: ToolHandlers = {
   er_record_list,
   html_deploy,
   create_site,
-  create_mx_record,
-  create_ns_record,
-  create_txt_record,
-  create_cname_record,
-  create_a_or_aaaa_record,
+  create_site_mx_record,
+  create_site_ns_record,
+  create_site_txt_record,
+  create_site_cname_record,
+  create_site_a_or_aaaa_record,
 };
