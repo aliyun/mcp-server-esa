@@ -1,10 +1,10 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
-import api from '../utils/service.js';
+import api from '../../utils/service.js';
 import {
   CreateRoutineRelatedRecordRequest,
   DeleteRoutineRelatedRecordRequest,
 } from '@alicloud/esa20240910';
-import { ListRoutineRelatedRecordsRequest } from '../utils/types.js';
+import { ListRoutineRelatedRecordsRequest } from '../../utils/types.js';
 
 export const ER_RECORD_CREATE_TOOL: Tool = {
   name: 'er_record_create',

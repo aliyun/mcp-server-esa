@@ -1,5 +1,5 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
-import api from '../utils/service.js';
+import api from '../../utils/service.js';
 import {
   CreateRoutineRouteRequest,
   DeleteRoutineRouteRequest,
@@ -8,7 +8,7 @@ import {
   ListSiteRoutesRequest,
   UpdateRoutineRouteRequest,
 } from '@alicloud/esa20240910';
-import { transferRouteToRuleString } from '../utils/helpers.js';
+import { transferRouteToRuleString } from '../../utils/helpers.js';
 
 export const ROUTE_CREATE_TOOL: Tool = {
   name: 'route_create',

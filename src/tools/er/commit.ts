@@ -1,10 +1,10 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
-import api from '../utils/service.js';
+import api from '../../utils/service.js';
 import {
   CommitRoutineStagingCodeRequest,
   GetRoutineStagingCodeUploadInfoRequest,
 } from '@alicloud/esa20240910';
-import { uploadCodeToOSS } from '../utils/helpers.js';
+import { uploadCodeToOSS } from '../../utils/helpers.js';
 
 export const ROUTINE_CODE_COMMIT_TOOL: Tool = {
   name: 'routine_code_commit',

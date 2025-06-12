@@ -1,5 +1,5 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
-import api from '../utils/service.js';
+import api from '../../utils/service.js';
 import { DeleteRoutineCodeVersionRequest } from '@alicloud/esa20240910';
 
 export const DEPLOYMENT_DELETE_TOOL: Tool = {

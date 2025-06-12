@@ -1,5 +1,5 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
-import api from '../utils/service.js';
+import api from '../../utils/service.js';
 import {
   CommitRoutineStagingCodeRequest,
   CreateRoutineRequest,
@@ -8,7 +8,7 @@ import {
   GetRoutineStagingCodeUploadInfoRequest,
   PublishRoutineCodeVersionRequest,
 } from '@alicloud/esa20240910';
-import { uploadCodeToOSS } from '../utils/helpers.js';
+import { uploadCodeToOSS } from '../../utils/helpers.js';
 
 // Prompt:帮我写个HTML部署在ER上
 export const HTML_DEPLOY_TOOL: Tool = {
