@@ -1,13 +1,14 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
-import api from '../../utils/service.js';
+import api from '../utils/service.js';
 import {
+  CreateRecordRequest,
   ListRecordsRequest,
   ListSitesRequest,
-  CreateSiteRequest,
   UpdateSitePauseRequest,
   GetSitePauseRequest,
+  CreateSiteRequest,
 } from '@alicloud/esa20240910';
-import { GetMatchSiteRequest } from '../../utils/types.js';
+import { GetMatchSiteRequest } from '../utils/types.js';
 
 export const SITE_ACTIVE_LIST_TOOL: Tool = {
   name: 'site_active_list',
@@ -31,6 +32,91 @@ export const SITE_MATCH_TOOL: Tool = {
       },
     },
     required: ['recordName'],
+  },
+};
+
+export const SITE_DNS_A_RECORD_CREATE_TOOL: Tool = {
+  name: 'site_dns_a_record_create',
+  description: 'Create an A DNS record for a specified site.',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      recordName: {
+        type: 'string',
+        description:
+          'The name of the DNS record (e.g., subdomain or full domain). Required.',
+        examples: ['www.example.com', 'sub.example.com'],
+      },
+      siteId: {
+        type: 'number',
+        description:
+          'The ID of the site, obtained from the ListSites operation. Required.',
+        examples: [1234567890123],
+      },
+      data: {
+        type: 'object',
+        description:
+          'The data for the DNS record, varying by record type. Required.',
+        properties: {
+          value: {
+            type: 'string',
+            description: 'The IP address of the A record. Required.',
+            examples: ['2.2.2.2'],
+          },
+        },
+      },
+    },
+    required: ['recordName', 'siteId', 'data'],
+  },
+};
+
+export const SITE_DNS_CNAME_RECORD_CREATE_TOOL: Tool = {
+  name: 'site_dns_cname_record_create',
+  description: 'Create a CNAME DNS record for a specified site.',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      recordName: {
+        type: 'string',
+        description:
+          'The name of the DNS record (e.g., subdomain or full domain). Required.',
+        examples: ['www.example.com', 'sub.example.com'],
+      },
+      siteId: {
+        type: 'number',
+        description:
+          'The ID of the site, obtained from the ListSites operation. Required.',
+        examples: [1234567890123],
+      },
+      data: {
+        type: 'object',
+        description:
+          'The data for the DNS record, varying by record type. Required.',
+        properties: {
+          value: {
+            type: 'string',
+            description: 'The IP address of the A record. Required.',
+            examples: ['2.2.2.2'],
+          },
+        },
+      },
+    },
+    required: ['recordName', 'siteId', 'data'],
+  },
+};
+
+export const SITE_RECORD_LIST_TOOL: Tool = {
+  name: 'site_record_list',
+  description: 'List DNS records associated with a specific site.',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      SiteId: {
+        type: 'number',
+        description:
+          'The ID of the site, obtained from the ListSites operation. Required.',
+      },
+    },
   },
 };
 
@@ -134,6 +220,64 @@ export const GET_SITE_PAUSE_TOOL: Tool = {
   },
 };
 
+export const site_dns_a_record_create = async (request: CallToolRequest) => {
+  const res = await api.createRecord({
+    ttl: 1,
+    proxied: true,
+    bizName: 'web',
+    type: 'A/AAAA',
+    ...request.params.arguments,
+  } as CreateRecordRequest);
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(res),
+      },
+    ],
+    success: true,
+  };
+};
+
+export const site_dns_cname_record_create = async (
+  request: CallToolRequest,
+) => {
+  const res = await api.createRecord({
+    ttl: 1,
+    proxied: true,
+    bizName: 'web',
+    type: 'CNAME',
+    sourceType: 'Domain',
+    hostPolicy: 'follow_hostname',
+
+    ...request.params.arguments,
+  } as CreateRecordRequest);
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(res),
+      },
+    ],
+    success: true,
+  };
+};
+
+export const site_record_list = async (request: CallToolRequest) => {
+  const res = await api.listRecords({
+    siteId: request.params.arguments?.SiteId ?? 0,
+  } as ListRecordsRequest);
+  return {
+    content: [
+      {
+        type: 'text',
+        text: JSON.stringify(res),
+      },
+    ],
+    success: true,
+  };
+};
+
 export const site_active_list = async () => {
   const res = await api.listSites({
     siteSearchType: 'fuzzy',
@@ -166,7 +310,6 @@ export const site_match = async (request: CallToolRequest) => {
     success: true,
   };
 };
-
 export const create_site = async (request: CallToolRequest) => {
   const res = await api.createSite(
     request.params.arguments as CreateSiteRequest,

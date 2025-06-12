@@ -37,6 +37,10 @@ import ESA, {
   UpdateRoutineRouteResponse,
   CreateSiteRequest,
   CreateSiteResponse,
+  UpdateSitePauseRequest,
+  UpdateSitePauseResponse,
+  GetSitePauseRequest,
+  GetSitePauseResponse,
 } from '@alicloud/esa20240910';
 import * as $OpenApi from '@alicloud/openapi-client';
 import * as $Util from '@alicloud/tea-util';
@@ -366,6 +370,28 @@ class Client {
       this.client.createSite.bind(this.client) as ApiMethod<
         CreateSiteRequest,
         CreateSiteResponse
+      >,
+      request,
+    );
+  }
+  updateSitePause(params: UpdateSitePauseRequest) {
+    params.pause = params.pause || false;
+    const request = new UpdateSitePauseRequest(params);
+    return this.callApi(
+      this.client.updateSitePause.bind(this.client) as ApiMethod<
+        UpdateSitePauseRequest,
+        UpdateSitePauseResponse
+      >,
+      request,
+    );
+  }
+
+  getSitePause(params: GetSitePauseRequest) {
+    const request = new GetSitePauseRequest(params);
+    return this.callApi(
+      this.client.getSitePause.bind(this.client) as ApiMethod<
+        GetSitePauseRequest,
+        GetSitePauseResponse
       >,
       request,
     );

@@ -49,6 +49,10 @@ import {
   SITE_MATCH_TOOL,
   create_site,
   CREATE_SITE_TOOL,
+  update_site_pause,
+  UPDATE_SITE_PAUSE_TOOL,
+  get_site_pause,
+  GET_SITE_PAUSE_TOOL
 } from './site/site';
 
 import {
@@ -89,6 +93,8 @@ export const ESA_OPENAPI_ER_LIST = [
   ER_RECORD_LIST_TOOL,
   SITE_RECORD_LIST_TOOL,
   CREATE_SITE_TOOL,
+  UPDATE_SITE_PAUSE_TOOL,
+  GET_SITE_PAUSE_TOOL,
   CREATE_SITE_MX_RECORD_TOOL,
   CREATE_SITE_NS_RECORD_TOOL,
   CREATE_SITE_TXT_RECORD_TOOL,
@@ -120,9 +126,12 @@ export const esaHandlers: ToolHandlers = {
   er_record_list,
   html_deploy,
   create_site,
+  update_site_pause,
+  get_site_pause,
   create_site_mx_record,
   create_site_ns_record,
   create_site_txt_record,
   create_site_cname_record,
   create_site_a_or_aaaa_record,
+
 };
