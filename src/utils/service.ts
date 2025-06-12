@@ -35,6 +35,8 @@ import ESA, {
   PublishRoutineCodeVersionResponse,
   UpdateRoutineRouteRequest,
   UpdateRoutineRouteResponse,
+  CreateSiteRequest,
+  CreateSiteResponse,
 } from '@alicloud/esa20240910';
 import * as $OpenApi from '@alicloud/openapi-client';
 import * as $Util from '@alicloud/tea-util';
@@ -354,6 +356,16 @@ class Client {
       this.client.listRecords.bind(this.client) as ApiMethod<
         ListRecordsRequest,
         ListRecordsResponse
+      >,
+      request,
+    );
+  }
+  createSite(params: CreateSiteRequest) {
+    const request = new CreateSiteRequest(params);
+    return this.callApi(
+      this.client.createSite.bind(this.client) as ApiMethod<
+        CreateSiteRequest,
+        CreateSiteResponse
       >,
       request,
     );
