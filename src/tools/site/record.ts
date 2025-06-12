@@ -1,10 +1,6 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
 import api from '../../utils/service.js';
-import {
-  ListRecordsRequest,
-  CreateRecordRequest,
-} from '@alicloud/esa20240910';
-
+import { ListRecordsRequest, CreateRecordRequest } from '@alicloud/esa20240910';
 
 export const SITE_RECORD_LIST_TOOL: Tool = {
   name: 'site_record_list',
@@ -223,34 +219,34 @@ export const CREATE_SITE_NS_RECORD_TOOL: Tool = {
         type: 'number',
         description:
           'The website ID, which can be obtained by calling the [ListSites] operation.',
-        recordName: {
-          type: 'string',
-          description: 'The record name.',
-          examples: ['www.example.com'],
-        },
-        ttl: {
-          type: 'number',
-          description:
-            'The TTL of the record. Unit: seconds. If the value is 1, the TTL of the record is determined by the system. Default: 1.',
-          examples: [1],
-        },
-        data: {
-          type: 'object',
-          description:
-            'The DNS record information. The format of this field varies based on the record type. For more information, see https://www.alibabacloud.com/help/doc-detail/2708761.html',
-          properties: {
-            value: {
-              type: 'string',
-              description: 'The name servers for the domain name. Required.',
-              example: ['ns.example.com'],
-            },
+      },
+      recordName: {
+        type: 'string',
+        description: 'The record name.',
+        examples: ['www.example.com'],
+      },
+      ttl: {
+        type: 'number',
+        description:
+          'The TTL of the record. Unit: seconds. If the value is 1, the TTL of the record is determined by the system. Default: 1.',
+        examples: [1],
+      },
+      data: {
+        type: 'object',
+        description:
+          'The DNS record information. The format of this field varies based on the record type. For more information, see https://www.alibabacloud.com/help/doc-detail/2708761.html',
+        properties: {
+          value: {
+            type: 'string',
+            description: 'The name servers for the domain name. Required.',
+            example: ['ns.example.com'],
           },
         },
-        comment: {
-          type: 'string',
-          description:
-            'The comment of the record. The maximum length is 100 characters.',
-        },
+      },
+      comment: {
+        type: 'string',
+        description:
+          'The comment of the record. The maximum length is 100 characters.',
       },
       required: ['siteId', 'recordName', 'type', 'data'],
       annotations: {
@@ -346,15 +342,8 @@ export const create_site_a_or_aaaa_record = async (
   const req = request.params.arguments as CreateRecordRequest;
 
   req.proxied = req.proxied || false;
-  req.type = req.type || 'A/AAAA';
+  req.type = 'A/AAAA';
   req.ttl = req.ttl || 1;
-
-  if (req.type !== 'A/AAAA') {
-    return {
-      content: [{ type: 'text', text: 'type must be A/AAAA' }],
-      success: false,
-    };
-  }
 
   const res = await api.createRecord(req);
 
@@ -367,16 +356,10 @@ export const create_site_a_or_aaaa_record = async (
 export const create_site_cname_record = async (request: CallToolRequest) => {
   const req = request.params.arguments as CreateRecordRequest;
 
-  req.type = req.type || 'CNAME';
-  req.sourceType = req.sourceType || 'Domain';
+  req.type = 'CNAME';
+  req.sourceType = 'Domain';
   req.proxied = true;
   req.ttl = req.ttl || 1;
-  if (req.type !== 'CNAME') {
-    return {
-      content: [{ type: 'text', text: 'type must be CNAME' }],
-      success: false,
-    };
-  }
 
   if (req.sourceType !== 'Domain') {
     return {
@@ -396,15 +379,8 @@ export const create_site_cname_record = async (request: CallToolRequest) => {
 export const create_site_txt_record = async (request: CallToolRequest) => {
   const req = request.params.arguments as CreateRecordRequest;
 
-  req.type = req.type || 'TXT';
+  req.type = 'TXT';
   req.ttl = req.ttl || 1;
-
-  if (req.type !== 'TXT') {
-    return {
-      content: [{ type: 'text', text: 'type must be TXT' }],
-      success: false,
-    };
-  }
 
   const res = await api.createRecord(req);
 
@@ -417,16 +393,8 @@ export const create_site_txt_record = async (request: CallToolRequest) => {
 export const create_site_ns_record = async (request: CallToolRequest) => {
   const req = request.params.arguments as CreateRecordRequest;
 
-  req.type = req.type || 'NS';
+  req.type = 'NS';
   req.ttl = req.ttl || 1;
-
-  if (req.type !== 'NS') {
-    return {
-      content: [{ type: 'text', text: 'type must be NS' }],
-      success: false,
-    };
-  }
-
   const res = await api.createRecord(req);
 
   return {
@@ -438,15 +406,8 @@ export const create_site_ns_record = async (request: CallToolRequest) => {
 export const create_site_mx_record = async (request: CallToolRequest) => {
   const req = request.params.arguments as CreateRecordRequest;
 
-  req.type = req.type || 'MX';
+  req.type = 'MX';
   req.ttl = req.ttl || 1;
-
-  if (req.type !== 'MX') {
-    return {
-      content: [{ type: 'text', text: 'type must be MX' }],
-      success: false,
-    };
-  }
 
   const res = await api.createRecord(req);
 

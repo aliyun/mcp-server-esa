@@ -79,10 +79,15 @@ https://esa.console.aliyun.com/edge/function/list
 |                 | er_record_list               | List all records associated with a specific Edge Routine (ER).                       |
 | **Sites**       | site_active_list             | List all active sites registered in your Alibaba Cloud account.                      |
 |                 | site_match                   | Identify which site in the account matches the provided input criteria.              |
-|                 | site_dns_cname_record_create | Create a CNAME DNS record for a specified site.                                      |
-|                 | site_dns_a_record_create     | Create an A DNS record for a specified site.                                         |
 |                 | site_record_list             | List DNS records associated with a specific site.                                    |
-
+|                 | create_site_a_or_aaaa_record | Creates an A or AAAA DNS record for a specific website.                              |
+|                 | create_site_cname_record     | Creates a CNAME DNS record for a specific website.                                   |
+|                 | create_site_txt_record       | Creates a TXT DNS record for a specific website.                                     |
+|                 | create_site_ns_record        | Creates an NS DNS record for a specific website.                                     |
+|                 | create_site_mx_record        | Creates an MX DNS record for a specific website.                                     |
+|                 | get_site_pause               | Queries the ESA proxy configuration of a website.                                    |
+|                 | update_site_pause            | Modifies the ESA proxy configuration of a website.                                   |
+|                 | create_site                  | Adds a website.                                                                      |
 ## Prompt Examples
 
 - Write a 2048 game and deploy it on Edge Routine, and display the default access URL provided by the Edge Routine.
