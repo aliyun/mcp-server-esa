@@ -4,6 +4,8 @@ import {
   CreateRecordRequest,
   ListRecordsRequest,
   ListSitesRequest,
+  UpdateSitePauseRequest,
+  GetSitePauseRequest,
   CreateSiteRequest,
 } from '@alicloud/esa20240910';
 import { GetMatchSiteRequest } from '../utils/types.js';
@@ -166,6 +168,58 @@ export const CREATE_SITE_TOOL: Tool = {
   },
 };
 
+export const UPDATE_SITE_PAUSE_TOOL: Tool = {
+  name: 'update_site_pause',
+  description: 'Modifies the ESA proxy configuration of a website.',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      siteId: {
+        type: 'number',
+        description:
+          'The website ID, which can be obtained by calling the [ListSites] operation.',
+        examples: ['123456****'],
+      },
+      paused: {
+        type: 'boolean',
+        description:
+          'Specifies whether to temporarily pause ESA on the website. If you set this parameter to true, all requests to the domains in your DNS records go directly to your origin server. Valid values: true, false',
+        examples: ['true'],
+      },
+    },
+    required: ['siteId', 'paused'],
+    annotations: {
+      readOnlyHint: false,
+      destructiveHint: true,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  },
+};
+
+export const GET_SITE_PAUSE_TOOL: Tool = {
+  name: 'get_site_pause',
+  description: 'Queries the ESA proxy configuration of a website.',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      siteId: {
+        type: 'number',
+        description:
+          'The website ID, which can be obtained by calling the [ListSites] operation.',
+        examples: ['123456****'],
+      },
+    },
+    required: ['siteId'],
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: false,
+    },
+  },
+};
+
 export const site_dns_a_record_create = async (request: CallToolRequest) => {
   const res = await api.createRecord({
     ttl: 1,
@@ -256,10 +310,31 @@ export const site_match = async (request: CallToolRequest) => {
     success: true,
   };
 };
-
 export const create_site = async (request: CallToolRequest) => {
   const res = await api.createSite(
     request.params.arguments as CreateSiteRequest,
+  );
+
+  return {
+    content: [{ type: 'text', text: JSON.stringify(res) }],
+    success: true,
+  };
+};
+
+export const update_site_pause = async (request: CallToolRequest) => {
+  const res = await api.updateSitePause(
+    request.params.arguments as UpdateSitePauseRequest,
+  );
+
+  return {
+    content: [{ type: 'text', text: JSON.stringify(res) }],
+    success: true,
+  };
+};
+
+export const get_site_pause = async (request: CallToolRequest) => {
+  const res = await api.getSitePause(
+    request.params.arguments as GetSitePauseRequest,
   );
 
   return {
