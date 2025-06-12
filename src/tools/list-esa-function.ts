@@ -70,7 +70,7 @@ import {
   CREATE_SITE_A_OR_AAAA_RECORD_TOOL,
 } from './site/record';
 
-export const ESA_OPENAPI_ER_LIST = [
+export const ER_OPENAPI_LIST = [
   HTML_DEPLOY_TOOL,
   ROUTINE_CREATE_TOOL,
   ROUTINE_DELETE_TOOL,
@@ -118,7 +118,7 @@ export const SITE_OPENAPI_LIST = [
 ];
 
 export const ESA_OPENAPI_LIST = [
-  ...ESA_OPENAPI_ER_LIST,
+  ...ER_OPENAPI_LIST,
   ...SITE_RECORD_OPENAPI_LIST,
   ...SITE_OPENAPI_LIST,
 ];
