@@ -35,6 +35,8 @@ import ESA, {
   PublishRoutineCodeVersionResponse,
   UpdateRoutineRouteRequest,
   UpdateRoutineRouteResponse,
+  CreateSiteRequest,
+  CreateSiteResponse,
   UpdateSitePauseRequest,
   UpdateSitePauseResponse,
   GetSitePauseRequest,
@@ -358,6 +360,16 @@ class Client {
       this.client.listRecords.bind(this.client) as ApiMethod<
         ListRecordsRequest,
         ListRecordsResponse
+      >,
+      request,
+    );
+  }
+  createSite(params: CreateSiteRequest) {
+    const request = new CreateSiteRequest(params);
+    return this.callApi(
+      this.client.createSite.bind(this.client) as ApiMethod<
+        CreateSiteRequest,
+        CreateSiteResponse
       >,
       request,
     );
