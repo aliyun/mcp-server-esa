@@ -1,7 +1,6 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
 import api from '../../utils/service.js';
 import {
-  ListRecordsRequest,
   ListSitesRequest,
   CreateSiteRequest,
   UpdateSitePauseRequest,
