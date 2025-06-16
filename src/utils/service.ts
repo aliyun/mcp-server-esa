@@ -41,14 +41,28 @@ import ESA, {
   UpdateSitePauseResponse,
   GetSitePauseRequest,
   GetSitePauseResponse,
-} from '@alicloud/esa20240910';
-import * as $OpenApi from '@alicloud/openapi-client';
-import * as $Util from '@alicloud/tea-util';
+  UpdateRecordRequest,
+  UpdateRecordResponse,
+  DeleteRecordRequest,
+  DeleteRecordResponse,
+  GetRecordRequest,
+  GetRecordResponse,
+  GetIPv6Request,
+  GetIPv6Response,
+  UpdateIPv6Request,
+  UpdateIPv6Response,
+  UpdateManagedTransformRequest,
+  UpdateManagedTransformResponse,
+  GetManagedTransformRequest,
+  GetManagedTransformResponse,
+} from "@alicloud/esa20240910";
+import * as $OpenApi from "@alicloud/openapi-client";
+import * as $Util from "@alicloud/tea-util";
 import {
   CliConfig,
   GetMatchSiteRequest,
   ListRoutineRelatedRecordsRequest,
-} from './types';
+} from "./types";
 
 export interface ApiMethod<RequestType, ResponseType> {
   (runtime: $Util.RuntimeOptions): Promise<ResponseType>;
@@ -392,6 +406,83 @@ class Client {
       this.client.getSitePause.bind(this.client) as ApiMethod<
         GetSitePauseRequest,
         GetSitePauseResponse
+      >,
+      request,
+    );
+  }
+
+  updateRecord(params: UpdateRecordRequest) {
+    const request = new UpdateRecordRequest(params);
+    return this.callApi(
+      this.client.updateRecord.bind(this.client) as ApiMethod<
+        UpdateRecordRequest,
+        UpdateRecordResponse
+      >,
+      request,
+    );
+  }
+
+  deleteRecord(params: DeleteRecordRequest) {
+    const request = new DeleteRecordRequest(params);
+    return this.callApi(
+      this.client.deleteRecord.bind(this.client) as ApiMethod<
+        DeleteRecordRequest,
+        DeleteRecordResponse
+      >,
+      request,
+    );
+  }
+
+  getRecord(params: GetRecordRequest) {
+    const request = new GetRecordRequest(params);
+    return this.callApi(
+      this.client.getRecord.bind(this.client) as ApiMethod<
+        GetRecordRequest,
+        GetRecordResponse
+      >,
+      request,
+    );
+  }
+
+  updateIPv6(params: UpdateIPv6Request) {
+    const request = new UpdateIPv6Request(params);
+    return this.callApi(
+      this.client.updateIPv6.bind(this.client) as ApiMethod<
+        UpdateIPv6Request,
+        UpdateIPv6Response
+      >,
+      request,
+    );
+  }
+
+  getIPv6(params: GetIPv6Request) {
+    const request = new GetIPv6Request(params);
+    return this.callApi(
+      this.client.getIPv6.bind(this.client) as ApiMethod<
+        GetIPv6Request,
+        GetIPv6Response
+      >,
+      request,
+    );
+  }
+
+  updateManagedTransform(params: UpdateManagedTransformRequest) {
+    const request = new UpdateManagedTransformRequest(params);
+    return this.callApi(
+      this.client.updateManagedTransform.bind(this.client) as ApiMethod<
+        UpdateManagedTransformRequest,
+        UpdateManagedTransformResponse
+      >,
+      request,
+    );
+  }
+
+  getManagedTransform(params: GetManagedTransformRequest) {
+    const request = new GetManagedTransformRequest(params);
+    return this.callApi(
+      this.client.getManagedTransform.bind(this.client) as ApiMethod<
+        GetManagedTransformRequest,
+        GetManagedTransformResponse
       >,
       request,
     );
