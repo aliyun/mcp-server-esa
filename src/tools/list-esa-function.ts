@@ -68,7 +68,17 @@ import {
   CREATE_SITE_CNAME_RECORD_TOOL,
   create_site_a_or_aaaa_record,
   CREATE_SITE_A_OR_AAAA_RECORD_TOOL,
+  update_record,
+  UPDATE_RECORD_TOOL,
+  DELETE_RECORD_TOOL,
+  LIST_RECORDS_TOOL,
+  GET_RECORD_TOOL,
+  list_records,
+  get_record,
+  delete_record,
 } from './site/record';
+import { get_ipv6, GET_IPV6_TOOL, update_ipv6, UPDATE_IPV6_TOOL } from './ipv6';
+import { get_managed_transform, GET_MANAGED_TRANSFORM_TOOL, update_managed_transform, UPDATE_MANAGED_TRANSFORM_TOOL } from './managedTransform';
 
 export const ESA_OPENAPI_ER_LIST = [
   HTML_DEPLOY_TOOL,
@@ -102,7 +112,29 @@ export const ESA_OPENAPI_ER_LIST = [
   CREATE_SITE_A_OR_AAAA_RECORD_TOOL,
 ];
 
-export const ESA_OPENAPI_LIST = [...ESA_OPENAPI_ER_LIST];
+export const ESA_OPENAPI_SITE_LIST = [
+  UPDATE_RECORD_TOOL,
+  CREATE_SITE_MX_RECORD_TOOL,
+  CREATE_SITE_NS_RECORD_TOOL,
+  CREATE_SITE_TXT_RECORD_TOOL,
+  CREATE_SITE_CNAME_RECORD_TOOL,
+  CREATE_SITE_A_OR_AAAA_RECORD_TOOL,
+  DELETE_RECORD_TOOL,
+  LIST_RECORDS_TOOL,
+  GET_RECORD_TOOL,
+];
+
+export const IPV6_LIST = [
+  UPDATE_IPV6_TOOL,
+  GET_IPV6_TOOL,
+];
+
+export const MANAGED_TRANSFORM_LIST = [
+  UPDATE_MANAGED_TRANSFORM_TOOL,
+  GET_MANAGED_TRANSFORM_TOOL,
+];
+
+export const ESA_OPENAPI_LIST = [...ESA_OPENAPI_ER_LIST, ...ESA_OPENAPI_SITE_LIST, ...IPV6_LIST, ...MANAGED_TRANSFORM_LIST];
 export const esaHandlers: ToolHandlers = {
   site_active_list,
   site_match,
@@ -133,5 +165,12 @@ export const esaHandlers: ToolHandlers = {
   create_site_txt_record,
   create_site_cname_record,
   create_site_a_or_aaaa_record,
-
+  update_record,
+  list_records,
+  get_record,
+  delete_record,
+  update_ipv6,
+  get_ipv6,
+  update_managed_transform,
+  get_managed_transform,
 };
