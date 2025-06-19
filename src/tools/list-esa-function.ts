@@ -1,12 +1,12 @@
 import { ToolHandlers } from '../utils/types';
-import { routine_code_commit, ROUTINE_CODE_COMMIT_TOOL } from './commit';
+import { routine_code_commit, ROUTINE_CODE_COMMIT_TOOL } from './er/commit';
 import {
   CANARY_AREA_LIST,
   canary_area_list,
   routine_code_deploy,
   ROUTINE_CODE_DEPLOY_TOOL,
-} from './deploy';
-import { deployment_delete, DEPLOYMENT_DELETE_TOOL } from './deployments';
+} from './er/deploy';
+import { deployment_delete, DEPLOYMENT_DELETE_TOOL } from './er/deployments';
 import {
   er_record_create,
   ER_RECORD_CREATE_TOOL,
@@ -14,7 +14,7 @@ import {
   ER_RECORD_DELETE_TOOL,
   er_record_list,
   ER_RECORD_LIST_TOOL,
-} from './record';
+} from './er/record';
 import {
   route_create,
   ROUTE_CREATE_TOOL,
@@ -28,7 +28,7 @@ import {
   ROUTINE_ROUTE_LIST_TOOL,
   site_route_list,
   SITE_ROUTE_LIST_TOOL,
-} from './route';
+} from './er/route';
 import {
   ROUTINE_CREATE_TOOL,
   ROUTINE_DELETE_TOOL,
@@ -40,7 +40,7 @@ import {
   routine_get,
   HTML_DEPLOY_TOOL,
   html_deploy,
-} from './routine';
+} from './er/routine';
 
 import {
   site_active_list,
@@ -52,7 +52,7 @@ import {
   update_site_pause,
   UPDATE_SITE_PAUSE_TOOL,
   get_site_pause,
-  GET_SITE_PAUSE_TOOL
+  GET_SITE_PAUSE_TOOL,
 } from './site/site';
 
 import {
@@ -70,7 +70,7 @@ import {
   CREATE_SITE_A_OR_AAAA_RECORD_TOOL,
 } from './site/record';
 
-export const ESA_OPENAPI_ER_LIST = [
+export const ER_OPENAPI_LIST = [
   HTML_DEPLOY_TOOL,
   ROUTINE_CREATE_TOOL,
   ROUTINE_DELETE_TOOL,
@@ -102,7 +102,26 @@ export const ESA_OPENAPI_ER_LIST = [
   CREATE_SITE_A_OR_AAAA_RECORD_TOOL,
 ];
 
-export const ESA_OPENAPI_LIST = [...ESA_OPENAPI_ER_LIST];
+export const SITE_RECORD_OPENAPI_LIST = [
+  CREATE_SITE_MX_RECORD_TOOL,
+  CREATE_SITE_NS_RECORD_TOOL,
+  CREATE_SITE_TXT_RECORD_TOOL,
+  CREATE_SITE_CNAME_RECORD_TOOL,
+  CREATE_SITE_A_OR_AAAA_RECORD_TOOL,
+];
+
+export const SITE_OPENAPI_LIST = [
+  SITE_RECORD_LIST_TOOL,
+  CREATE_SITE_TOOL,
+  UPDATE_SITE_PAUSE_TOOL,
+  GET_SITE_PAUSE_TOOL,
+];
+
+export const ESA_OPENAPI_LIST = [
+  ...ER_OPENAPI_LIST,
+  ...SITE_RECORD_OPENAPI_LIST,
+  ...SITE_OPENAPI_LIST,
+];
 export const esaHandlers: ToolHandlers = {
   site_active_list,
   site_match,
@@ -133,5 +152,4 @@ export const esaHandlers: ToolHandlers = {
   create_site_txt_record,
   create_site_cname_record,
   create_site_a_or_aaaa_record,
-
 };

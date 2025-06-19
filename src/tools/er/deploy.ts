@@ -1,5 +1,5 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
-import api from '../utils/service.js';
+import api from '../../utils/service.js';
 import {
   ListRoutineCanaryAreasResponse,
   PublishRoutineCodeVersionRequest,
