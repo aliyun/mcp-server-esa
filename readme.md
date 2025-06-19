@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/aliyun-mcp-server-esa-badge.png)](https://mseep.ai/app/aliyun-mcp-server-esa)
+
 # ESA MCP Server
 
 An MCP server to conveniently use various Alibaba Cloud ESA services.
