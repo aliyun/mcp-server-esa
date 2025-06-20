@@ -1,4 +1,16 @@
 import ESA, {
+  VerifySiteRequest,
+  VerifySiteResponse,
+  GetSiteRequest,
+  GetSiteResponse,
+  DeleteSiteRequest,
+  DeleteSiteResponse,
+  UpdateSiteCoverageRequest,
+  UpdateSiteCoverageResponse,
+  UpdateDevelopmentModeRequest,
+  UpdateDevelopmentModeResponse,
+  GetDevelopmentModeRequest,
+  GetDevelopmentModeResponse,
   CommitRoutineStagingCodeRequest,
   CommitRoutineStagingCodeResponse,
   CreateRecordRequest,
@@ -41,14 +53,16 @@ import ESA, {
   UpdateSitePauseResponse,
   GetSitePauseRequest,
   GetSitePauseResponse,
-} from '@alicloud/esa20240910';
-import * as $OpenApi from '@alicloud/openapi-client';
-import * as $Util from '@alicloud/tea-util';
+  CheckSiteNameRequest,
+  CheckSiteNameResponse,
+} from "@alicloud/esa20240910";
+import * as $OpenApi from "@alicloud/openapi-client";
+import * as $Util from "@alicloud/tea-util";
 import {
   CliConfig,
   GetMatchSiteRequest,
   ListRoutineRelatedRecordsRequest,
-} from './types';
+} from "./types";
 
 export interface ApiMethod<RequestType, ResponseType> {
   (runtime: $Util.RuntimeOptions): Promise<ResponseType>;
@@ -60,20 +74,20 @@ class Client {
   constructor() {
     const config = {
       auth: {
-        accessKeyId: process.env.ALIBABA_CLOUD_ACCESS_KEY_ID || '',
-        accessKeySecret: process.env.ALIBABA_CLOUD_ACCESS_KEY_SECRET || '',
+        accessKeyId: process.env.ALIBABA_CLOUD_ACCESS_KEY_ID || "",
+        accessKeySecret: process.env.ALIBABA_CLOUD_ACCESS_KEY_SECRET || "",
         securityToken: process.env.ALIBABA_CLOUD_SECURITY_TOKEN,
       },
-      endpoint: 'esa.cn-hangzhou.aliyuncs.com',
+      endpoint: "esa.cn-hangzhou.aliyuncs.com",
     };
     this.client = Client.createClient(config);
   }
 
   static createClient(config: CliConfig) {
     const apiConfig = new $OpenApi.Config({
-      accessKeyId: config.auth?.accessKeyId || '',
-      accessKeySecret: config.auth?.accessKeySecret || '',
-      securityToken: config.auth?.securityToken || '',
+      accessKeyId: config.auth?.accessKeyId || "",
+      accessKeySecret: config.auth?.accessKeySecret || "",
+      securityToken: config.auth?.securityToken || "",
       endpoint: config.endpoint,
     });
     return new ESA(apiConfig);
@@ -286,15 +300,15 @@ class Client {
 
   getMatchSite(requestParams: GetMatchSiteRequest) {
     const params = {
-      action: 'GetMatchSite',
-      version: '2024-09-10',
-      protocol: 'https',
-      method: 'GET',
-      authType: 'AK',
-      bodyType: 'json',
-      reqBodyType: 'json',
-      style: 'RPC',
-      pathname: '/',
+      action: "GetMatchSite",
+      version: "2024-09-10",
+      protocol: "https",
+      method: "GET",
+      authType: "AK",
+      bodyType: "json",
+      reqBodyType: "json",
+      style: "RPC",
+      pathname: "/",
       toMap: function () {
         return this;
       },
@@ -314,15 +328,15 @@ class Client {
 
   listRoutineRelatedRecords(requestParams: ListRoutineRelatedRecordsRequest) {
     const params = {
-      action: 'ListRoutineRelatedRecords',
-      version: '2024-09-10',
-      protocol: 'https',
-      method: 'GET',
-      authType: 'AK',
-      bodyType: 'json',
-      reqBodyType: 'json',
-      style: 'RPC',
-      pathname: '/',
+      action: "ListRoutineRelatedRecords",
+      version: "2024-09-10",
+      protocol: "https",
+      method: "GET",
+      authType: "AK",
+      bodyType: "json",
+      reqBodyType: "json",
+      style: "RPC",
+      pathname: "/",
       toMap: function () {
         return this;
       },
@@ -392,6 +406,81 @@ class Client {
       this.client.getSitePause.bind(this.client) as ApiMethod<
         GetSitePauseRequest,
         GetSitePauseResponse
+      >,
+      request,
+    );
+  }
+  checkSiteName(params: CheckSiteNameRequest) {
+    const request = new CheckSiteNameRequest(params);
+    return this.callApi(
+      this.client.checkSiteName.bind(this.client) as ApiMethod<
+        CheckSiteNameRequest,
+        CheckSiteNameResponse
+      >,
+      request,
+    );
+  }
+  verifySite(params: VerifySiteRequest) {
+    const request = new VerifySiteRequest(params);
+    return this.callApi(
+      this.client.verifySite.bind(this.client) as ApiMethod<
+        VerifySiteRequest,
+        VerifySiteResponse
+      >,
+      request,
+    );
+  }
+
+  getSite(params: GetSiteRequest) {
+    const request = new GetSiteRequest(params);
+    return this.callApi(
+      this.client.getSite.bind(this.client) as ApiMethod<
+        GetSiteRequest,
+        GetSiteResponse
+      >,
+      request,
+    );
+  }
+
+  deleteSite(params: DeleteSiteRequest) {
+    const request = new DeleteSiteRequest(params);
+    return this.callApi(
+      this.client.deleteSite.bind(this.client) as ApiMethod<
+        DeleteSiteRequest,
+        DeleteSiteResponse
+      >,
+      request,
+    );
+  }
+
+  updateSiteCoverage(params: UpdateSiteCoverageRequest) {
+    const request = new UpdateSiteCoverageRequest(params);
+    return this.callApi(
+      this.client.updateSiteCoverage.bind(this.client) as ApiMethod<
+        UpdateSiteCoverageRequest,
+        UpdateSiteCoverageResponse
+      >,
+      request,
+    );
+  }
+
+  updateDevelopmentMode(params: UpdateDevelopmentModeRequest) {
+    const request = new UpdateDevelopmentModeRequest(params);
+    return this.callApi(
+      this.client.updateDevelopmentMode.bind(this.client) as ApiMethod<
+        UpdateDevelopmentModeRequest,
+        UpdateDevelopmentModeResponse
+      >,
+      request,
+    );
+  }
+
+  getDevelopmentMode(params: GetDevelopmentModeRequest) {
+    const request = new GetDevelopmentModeRequest(params);
+    return this.callApi(
+      this.client.getDevelopmentMode.bind(this.client) as ApiMethod<
+        GetDevelopmentModeRequest,
+        GetDevelopmentModeResponse
       >,
       request,
     );

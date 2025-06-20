@@ -77,7 +77,14 @@ https://esa.console.aliyun.com/edge/function/list
 | **Records**     | er_record_create             | Create a new record related to an Edge Routine (ER).                                 |
 |                 | er_record_delete             | Delete a specified record associated with an Edge Routine (ER).                      |
 |                 | er_record_list               | List all records associated with a specific Edge Routine (ER).                       |
-| **Sites**       | site_active_list             | List all active sites registered in your Alibaba Cloud account.                      |
+| **Sites**       | create_site                  | Adds a website.                                                                      |
+|                 | check_site_name              | Checks whether a specified website name is available.                                |
+|                 | verify_site                  | Verifies the ownership of a website domain. Websites that pass the verification are automatically activated.  |
+|                 | get_site                     | Queries information about a site based on the Site ID.                               |
+|                 | list_sites                   | Queries the information about websites in your account, such as the name, status, and configuration of each website.                      |
+|                 | delete_site                  | Deletes a website based on the specified website ID.                                 |
+|                 | update_site_coverage         | Modifies the service location for a single website. This updates the acceleration configuration of the website to adapt to changes in traffic distribution, and improve user experience in specific regions.                     |
+|                 | site_active_list             | List all active sites registered in your Alibaba Cloud account.                      |
 |                 | site_match                   | Identify which site in the account matches the provided input criteria.              |
 |                 | site_record_list             | List DNS records associated with a specific site.                                    |
 |                 | create_site_a_or_aaaa_record | Creates an A or AAAA DNS record for a specific website.                              |
@@ -87,7 +94,9 @@ https://esa.console.aliyun.com/edge/function/list
 |                 | create_site_mx_record        | Creates an MX DNS record for a specific website.                                     |
 |                 | get_site_pause               | Queries the ESA proxy configuration of a website.                                    |
 |                 | update_site_pause            | Modifies the ESA proxy configuration of a website.                                   |
-|                 | create_site                  | Adds a website.                                                                      |
+| **DevelopmentMode**       | get_development_mode                  | Query Site Developer Mode Configuration.                         |
+|      | update_development_mode                 | Modifies the development mode configuration of your website. If you enable Development Mode, all requests bypass caching components on POPs and are redirected to the origin server. This allows clients to retrieve the most recent resources on the origin server.  |
+
 ## Prompt Examples
 
 - Write a 2048 game and deploy it on Edge Routine, and display the default access URL provided by the Edge Routine.
@@ -96,6 +105,9 @@ https://esa.console.aliyun.com/edge/function/list
 - What is the default access address for my Edge Routine named "hello-world"?
 - Create a CNAME record for `test.example.com` with the value set to `example2.com`
 - Create a A record for `test.example.com` with the value set to `1.1.1.1`
+- Disable site xxxx(site_id) development mode.
+- Create site example.com, type is CNAME, coverage is global,  instance_id is xxx.
+- Delete site xxxx(site_id).
 
 ## License
 
