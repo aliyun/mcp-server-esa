@@ -88,6 +88,14 @@ https://esa.console.aliyun.com/edge/function/list
 |                 | get_site_pause               | Queries the ESA proxy configuration of a website.                                    |
 |                 | update_site_pause            | Modifies the ESA proxy configuration of a website.                                   |
 |                 | create_site                  | Adds a website.                                                                      |
+|                 | update_record                | This operation allows you to update multiple types of DNS records.                                |
+|                 | get_record                   | Queries the configuration of a single DNS record.                                   |
+|                 | list_record                  | Queries a list of Domain Name System (DNS) records of a website.                                                                      |
+|                 | delete_record                | Deletes a DNS record of a website based on the specified RecordId.                                    |
+|                 | update_ipv6                  | Modifies the IPv6 configuration of a website.                                   |
+|                 | get_ipv6                      | Queries the IPv6 configuration of a website.                                                                      |
+|                 | update_managed_transform      | Modifies the configuration of managed transforms for your website.                                    |
+|                 | get_managed_transform         | Query Managed Transform Configuration.                                   |
 ## Prompt Examples
 
 - Write a 2048 game and deploy it on Edge Routine, and display the default access URL provided by the Edge Routine.

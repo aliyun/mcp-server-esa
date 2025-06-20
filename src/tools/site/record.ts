@@ -343,13 +343,15 @@ export const UPDATE_RECORD_TOOL: Tool = {
         type: 'boolean',
         description:
           'Specifies whether to proxy the record. Only CNAME and A/AAAA records can be proxied. Valid values: true,false',
+        enum: [true, false],
         examples: [true],
       },
       type: {
         type: 'string',
         description:
           'The type of the DNS record. For example, A/AAAA, TXT, MX, NS, SRV, CAA, CERT, SMIMEA, SSHFP, TLSA, URI or CNAME.',
-        examples: ["A/AAAA"],
+        enum: ['A/AAA', 'TXT', 'MX', 'NS', 'SRV', 'CAA', 'CERT', 'SMIMEA', 'SSHFP', 'TLSA', 'URI', 'CNAME'],
+        examples: ['A/AAA'],
       },
       data: {
         type: 'object',
@@ -414,7 +416,7 @@ export const UPDATE_RECORD_TOOL: Tool = {
             type: 'string',
             description:
               'The public key of the certificate. This parameter is required when you add CERT, SMIMEA, or TLSA records.',
-            example: ["dGVzdGFkYWxrcw=="],
+            example: ['dGVzdGFkYWxrcw=='],
           },
           usage: {
             type: 'number',
@@ -437,7 +439,7 @@ export const UPDATE_RECORD_TOOL: Tool = {
           fingerprint: {
             type: 'string',
             description: 'The public key fingerprint of the record. This parameter is required when you add a SSHFP record.',
-            example: ["abcdef1234567890"],
+            example: ['abcdef1234567890'],
           },
         },
       },
@@ -445,18 +447,20 @@ export const UPDATE_RECORD_TOOL: Tool = {
         type: 'string',
         description:
           'The type of the origin for the CNAME record. This parameter is required when you add a CNAME record. Valid values: OSS : OSS origin. S3 : S3 origin. LB: Load Balancer origin. OP: origin in an origin pool. Domain: common domain name. If you leave the parameter empty or set its value as null, the default is Domain, which is common domain name.',
-        example: ["OSS"],
+        enum: ['OSS', 'S3', 'LB', 'OP', 'Domain', 'IP'],
+        examples: ['OSS'],
       },
       bizName: {
         type: 'string',
         description:
           'The business scenario of the record for acceleration. Leave the parameter empty if your record is not proxied. Valid values: video_image: video and image. api: API. web: web page.',
-        example: ["web"],
+        enum: ['api', 'web', 'video_image'],
+        examples: ['web'],
       },
       comment: {
         type: 'string',
         description: 'The comments of the record.',
-        example: ["This is a remark."],
+        example: ['This is a remark.'],
       },
       authConf: {
         type: 'object',
@@ -466,31 +470,33 @@ export const UPDATE_RECORD_TOOL: Tool = {
             type: 'string',
             description:
               'The authentication type of the origin server. Different origins support different authentication types. The type of origin refers to the SourceType parameter in this operation. If the type of origin is OSS or S3, you must specify the authentication type of the origin. Valid values: public: public read. Select this value when the origin type is OSS or S3 and the origin access is public read. private: private read. Select this value when the origin type is S3 and the origin access is private read.private_same_account: private read under the same account. Select this value when the origin type is OSS, the origins belong to the same Alibaba Cloud account, and the origins have private read access.',
-            example: ["private"],
+            enum: ['private', 'public', 'private_same_account', 'private_cross_account'],
+            examples: ['private'],
           },
           secretKey: {
             type: 'string',
             description:
               'The secret access key of the account to which the origin server belongs. This parameter is required when the SourceType is OSS, and AuthType is private_same_account, or when the SourceType is S3 and AuthType is private.',
-            example: ["u0Nkg5gBK*******QF5wvKMM504JUHt"],
+            example: ['u0Nkg5gBK*******QF5wvKMM504JUHt'],
           },
           accessKey: {
             type: 'string',
             description:
               'The access key of the account to which the origin server belongs. This parameter is required when the SourceType is OSS, and AuthType is private_same_account, or when the SourceType is S3 and AuthType is private.',
-            example: ["VIxuvJSA2S03f******kp208dy5w7"],
+            example: ['VIxuvJSA2S03f******kp208dy5w7'],
           },
           region: {
             type: 'string',
             description:
               'The version of the signature algorithm. This parameter is required when the origin type is S3 and AuthType is private. The following two types are supported: v2 v4. If you leave this parameter empty, the default value v4 is used.',
-            example: ["v2"],
+            enum: ['v2', 'v4'],
+            examples: ['v2'],
           },
           version: {
             type: 'string',
             description:
               'The region of the origin. If the origin type is S3, you must specify this value. You can get the region information from the official website of S3.',
-            example: ["us-east-1"],
+            example: ['us-east-1'],
           },
         },
       },
@@ -499,6 +505,7 @@ export const UPDATE_RECORD_TOOL: Tool = {
         description:
           'The origin host policy. This policy takes effect when the record type is CNAME. You can set the policy in two modes: follow_hostname: match the requested domain name. follow_origin_domain: match the origin\'s domain name.',
         enum: ['follow_hostname', 'follow_origin_domain'],
+        example: ['follow_hostname'],
       },
     },
     required: ['recordId', 'data'],
@@ -511,18 +518,18 @@ export const UPDATE_RECORD_TOOL: Tool = {
 };
 
 export const DELETE_RECORD_TOOL: Tool = {
-  name: "delete_record",
-  description: "Deletes a DNS record of a website based on the specified RecordId.",
+  name: 'delete_record',
+  description: 'Deletes a DNS record of a website based on the specified RecordId.',
   inputSchema: {
-    type: "object",
+    type: 'object',
     properties: {
       recordId: {
-        type: "number",
-        description: "The record ID, which can be obtained by calling ListRecords .",
+        type: 'number',
+        description: 'The record ID, which can be obtained by calling ListRecords .',
         examples: [1234567890123],
       },
     },
-    required: ["recordId"],
+    required: ['recordId'],
     annotations: {
       readOnlyHint: false,
       destructiveHint: false,
@@ -532,63 +539,67 @@ export const DELETE_RECORD_TOOL: Tool = {
 };
 
 export const LIST_RECORDS_TOOL: Tool = {
-  name: "list_records",
+  name: 'list_records',
   description:
-    "Queries a list of Domain Name System (DNS) records of a website, including the record value, priority, and authentication configurations. Supports filtering by specifying parameters such as RecordName and RecordMatchType.",
+    'Queries a list of Domain Name System (DNS) records of a website, including the record value, priority, and authentication configurations. Supports filtering by specifying parameters such as RecordName and RecordMatchType.',
   inputSchema: {
-    type: "object",
+    type: 'object',
     properties: {
       siteId: {
-        type: "number",
-        description: "The website ID, which can be obtained by calling the ListSites operation.",
+        type: 'number',
+        description: 'The website ID, which can be obtained by calling the ListSites operation.',
         examples: [1234567890456],
       },
       recordName: {
-        type: "string",
-        description: "The record name. This parameter specifies a filter condition for the query.",
-        examples: ["www.example.com"],
+        type: 'string',
+        description: 'The record name. This parameter specifies a filter condition for the query.',
+        examples: ['www.example.com'],
       },
       recordMatchType: {
-        type: "string",
+        type: 'string',
         description:
-          "The match mode to search for the record name. Default value: exact. Valid values: prefix: match by prefix.suffix: match by suffix. exact: exact match. fuzzy: fuzzy match.",
-        examples: ["fuzzy"],
+          'The match mode to search for the record name. Default value: exact. Valid values: prefix: match by prefix.suffix: match by suffix. exact: exact match. fuzzy: fuzzy match.',
+        examples: ['fuzzy'],
       },
       pageNumber: {
-        type: "number",
-        description: "The page number. Default value: 1.",
+        type: 'number',
+        description: 'The page number. Default value: 1.',
         examples: [1],
       },
       pageSize: {
-        type: "number",
-        description: "The number of entries per page. Default value: 500.",
+        type: 'number',
+        description: 'The number of entries per page. Default value: 500.',
         examples: [50],
       },
       sourceType: {
-        type: "string",
+        type: 'string',
         description:
-          "The origin type of the record. Only CNAME records can be filtered by using this field. Valid values: OSS: OSS bucket. S3: S3 bucket. LB: load balancer. OP: origin pool. Domain: domain name.",
-        examples: ["OSS"],
+          'The origin type of the record. Only CNAME records can be filtered by using this field. Valid values: OSS: OSS bucket. S3: S3 bucket. LB: load balancer. OP: origin pool. Domain: domain name.',
+        enum: ['OSS', 'S3', 'LB', 'OP', 'Domain', 'IP'],
+        examples: ['OSS'],
       },
       bizName: {
-        type: "string",
+        type: 'string',
         description:
-          "The business scenario of the record for acceleration. Valid values: image_video: video and image. api: API.web: web page.",
-        examples: ["web"],
+          'The business scenario of the record for acceleration. Valid values: image_video: video and image. api: API.web: web page.',
+        enum: ['api', 'web', 'video_image'],
+        examples: ['web'],
       },
       proxied: {
-        type: "boolean",
+        type: 'boolean',
         description:
-          "Filters by whether the record is proxied. Valid values:true, false",
+          'Filters by whether the record is proxied. Valid values:true, false',
+        enum: [true, false],
         examples: [true],
       },
       type: {
-        type: "string",
-        description: "The DNS record type.",
-        examples: ["CNAME"],
+        type: 'string',
+        description: 'The DNS record type.',
+        enum: ['A/AAA', 'TXT', 'MX', 'NS', 'SRV', 'CAA', 'CERT', 'SMIMEA', 'SSHFP', 'TLSA', 'URI', 'CNAME'],
+        examples: ['A/AAA'],
       },
     },
-    required: ["siteId"],
+    required: ['siteId'],
     annotations: {
       readOnlyHint: true,
       destructiveHint: false,
@@ -598,19 +609,19 @@ export const LIST_RECORDS_TOOL: Tool = {
 };
 
 export const GET_RECORD_TOOL: Tool = {
-  name: "get_record",
+  name: 'get_record',
   description:
-    "Queries the configuration of a single DNS record, such as the record value, priority, and origin authentication setting (exclusive to CNAME records).",
+    'Queries the configuration of a single DNS record, such as the record value, priority, and origin authentication setting (exclusive to CNAME records).',
   inputSchema: {
-    type: "object",
+    type: 'object',
     properties: {
       recordId: {
-        type: "number",
-        description: "The record ID, which can be obtained by calling ListRecords.",
+        type: 'number',
+        description: 'The record ID, which can be obtained by calling ListRecords.',
         examples: [1234567890123],
       },
     },
-    required: ["recordId"],
+    required: ['recordId'],
     annotations: {
       readOnlyHint: true,
       destructiveHint: false,
