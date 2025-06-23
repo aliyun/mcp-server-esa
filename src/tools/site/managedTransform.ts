@@ -2,25 +2,27 @@ import {
   UpdateManagedTransformRequest,
   GetManagedTransformRequest,
 } from '@alicloud/esa20240910';
-import api from '../utils/service.js';
+import api from '../../utils/service.js';
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
 
 export const UPDATE_MANAGED_TRANSFORM_TOOL: Tool = {
   name: 'update_managed_transform',
-  description: 'Modifies the configuration of managed transforms for your website.',
+  description:
+    'Modifies the configuration of managed transforms for your website.',
   inputSchema: {
     type: 'object',
     properties: {
       siteId: {
         type: 'number',
-        description: 'The website ID, which can be obtained by calling the ListSites operation.',
+        description:
+          'The website ID, which can be obtained by calling the ListSites operation.',
         example: [12228828888],
       },
       addClientGeolocationHeader: {
         type: 'string',
         description:
           'Specifies whether to include the header that indicates the geographical location of a client in an origin request.',
-        enum: ['on','off'],
+        enum: ['on', 'off'],
       },
       siteVersion: {
         type: 'number',
@@ -31,8 +33,8 @@ export const UPDATE_MANAGED_TRANSFORM_TOOL: Tool = {
       addRealClientIpHeader: {
         type: 'string',
         description:
-          'Specifies whether to include the \'ali-real-client-ip\' header that indicates the \'s real IP address in an origin request.',
-        enum: ['on','off'],
+          "Specifies whether to include the 'ali-real-client-ip' header that indicates the 's real IP address in an origin request.",
+        enum: ['on', 'off'],
       },
       realClientIpHeaderName: {
         type: 'string',

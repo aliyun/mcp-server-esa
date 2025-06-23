@@ -1,9 +1,6 @@
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
 import api from '../../utils/service.js';
-import {
-  ListRoutineCanaryAreasResponse,
-  PublishRoutineCodeVersionRequest,
-} from '@alicloud/esa20240910';
+import { PublishRoutineCodeVersionRequest } from '@alicloud/esa20240910';
 
 export const ROUTINE_CODE_DEPLOY_TOOL: Tool = {
   name: 'routine_code_deploy',
@@ -31,15 +28,6 @@ export const ROUTINE_CODE_DEPLOY_TOOL: Tool = {
   },
 };
 
-export const CANARY_AREA_LIST: Tool = {
-  name: 'canary_area_list',
-  description: 'List all available canary areas for routine deployment',
-  inputSchema: {
-    type: 'object',
-    properties: {},
-  },
-};
-
 export const routine_code_deploy = async (request: CallToolRequest) => {
   const res = await api.publishRoutineCodeVersion(
     request.params.arguments as PublishRoutineCodeVersionRequest,
@@ -60,32 +48,6 @@ export const routine_code_deploy = async (request: CallToolRequest) => {
         {
           type: 'text',
           text: JSON.stringify(res),
-        },
-      ],
-      success: true,
-    };
-  }
-};
-
-export const canary_area_list = async () => {
-  const res: ListRoutineCanaryAreasResponse =
-    await api.listRoutineCanaryAreas();
-  if (res.statusCode !== 200) {
-    return {
-      content: [
-        {
-          type: 'text',
-          text: `Failed to list canary areas. ${JSON.stringify(res)}`,
-        },
-      ],
-      success: false,
-    };
-  } else {
-    return {
-      content: [
-        {
-          type: 'text',
-          text: JSON.stringify(res.body?.canaryAreas || []),
         },
       ],
       success: true,

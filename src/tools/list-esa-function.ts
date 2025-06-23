@@ -1,12 +1,3 @@
-import { ToolHandlers } from '../utils/types';
-import { routine_code_commit, ROUTINE_CODE_COMMIT_TOOL } from './commit';
-import {
-  CANARY_AREA_LIST,
-  canary_area_list,
-  routine_code_deploy,
-  ROUTINE_CODE_DEPLOY_TOOL,
-} from './deploy';
-import { deployment_delete, DEPLOYMENT_DELETE_TOOL } from './deployments';
 import {
   er_record_create,
   ER_RECORD_CREATE_TOOL,
@@ -14,7 +5,7 @@ import {
   ER_RECORD_DELETE_TOOL,
   er_record_list,
   ER_RECORD_LIST_TOOL,
-} from './record';
+} from './er/record';
 import {
   route_create,
   ROUTE_CREATE_TOOL,
@@ -28,7 +19,7 @@ import {
   ROUTINE_ROUTE_LIST_TOOL,
   site_route_list,
   SITE_ROUTE_LIST_TOOL,
-} from './route';
+} from './er/route';
 import {
   ROUTINE_CREATE_TOOL,
   ROUTINE_DELETE_TOOL,
@@ -40,7 +31,7 @@ import {
   routine_get,
   HTML_DEPLOY_TOOL,
   html_deploy,
-} from './routine';
+} from './er/routine';
 
 import {
   site_active_list,
@@ -76,13 +67,22 @@ import {
   get_record,
   delete_record,
 } from './site/record';
-import { get_ipv6, GET_IPV6_TOOL, update_ipv6, UPDATE_IPV6_TOOL } from './ipv6';
+import {
+  get_ipv6,
+  GET_IPV6_TOOL,
+  update_ipv6,
+  UPDATE_IPV6_TOOL,
+} from './site/ipv6';
 import {
   get_managed_transform,
   GET_MANAGED_TRANSFORM_TOOL,
   update_managed_transform,
   UPDATE_MANAGED_TRANSFORM_TOOL,
-} from './managedTransform';
+} from './site/managedTransform';
+import { ToolHandlers } from '../utils/types';
+import { routine_code_deploy, ROUTINE_CODE_DEPLOY_TOOL } from './er/deploy';
+import { deployment_delete, DEPLOYMENT_DELETE_TOOL } from './er/deployments';
+import { ROUTINE_CODE_COMMIT_TOOL } from './er/commit';
 
 export const ESA_OPENAPI_ER_LIST = [
   HTML_DEPLOY_TOOL,
@@ -93,7 +93,6 @@ export const ESA_OPENAPI_ER_LIST = [
   ROUTINE_CODE_COMMIT_TOOL,
   ROUTINE_CODE_DEPLOY_TOOL,
   ROUTINE_ROUTE_LIST_TOOL,
-  CANARY_AREA_LIST,
   DEPLOYMENT_DELETE_TOOL,
   SITE_ACTIVE_LIST_TOOL,
   SITE_ROUTE_LIST_TOOL,
@@ -150,10 +149,8 @@ export const esaHandlers: ToolHandlers = {
   routine_delete,
   routine_list,
   routine_get,
-  routine_code_commit,
   routine_code_deploy,
   routine_route_list,
-  canary_area_list,
   deployment_delete,
   route_create,
   route_delete,

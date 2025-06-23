@@ -1,5 +1,5 @@
 import { UpdateIPv6Request, GetIPv6Request } from '@alicloud/esa20240910';
-import api from '../utils/service.js';
+import api from '../../utils/service.js';
 import { CallToolRequest, Tool } from '@modelcontextprotocol/sdk/types.js';
 
 export const UPDATE_IPV6_TOOL: Tool = {
@@ -10,7 +10,8 @@ export const UPDATE_IPV6_TOOL: Tool = {
     properties: {
       siteId: {
         type: 'number',
-        description: 'The website ID, which can be obtained by calling the ListSites operation.',
+        description:
+          'The website ID, which can be obtained by calling the ListSites operation.',
         example: [12228828888],
       },
       enable: {
@@ -20,8 +21,7 @@ export const UPDATE_IPV6_TOOL: Tool = {
       },
       region: {
         type: 'string',
-        description:
-          'Enable IPV6 in the region.',
+        description: 'Enable IPV6 in the region.',
         enum: ['x.x', 'cn.cn'],
       },
     },
@@ -42,7 +42,8 @@ export const GET_IPV6_TOOL: Tool = {
     properties: {
       siteId: {
         type: 'number',
-        description: 'The website ID, which can be obtained by calling the ListSites operation.',
+        description:
+          'The website ID, which can be obtained by calling the ListSites operation.',
         example: [12228828888],
       },
     },

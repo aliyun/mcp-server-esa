@@ -184,10 +184,6 @@ class Client {
     );
   }
 
-  listRoutineCanaryAreas() {
-    return this.callApi(this.client.listRoutineCanaryAreas.bind(this.client));
-  }
-
   listSites(params: ListSitesRequest) {
     const request = new ListSitesRequest(params);
     return this.callApi(
