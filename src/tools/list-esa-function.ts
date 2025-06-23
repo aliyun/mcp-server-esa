@@ -52,12 +52,11 @@ import {
   update_site_pause,
   UPDATE_SITE_PAUSE_TOOL,
   get_site_pause,
-  GET_SITE_PAUSE_TOOL
+  GET_SITE_PAUSE_TOOL,
 } from './site/site';
 
 import {
   site_record_list,
-  SITE_RECORD_LIST_TOOL,
   create_site_mx_record,
   CREATE_SITE_MX_RECORD_TOOL,
   create_site_ns_record,
@@ -78,7 +77,12 @@ import {
   delete_record,
 } from './site/record';
 import { get_ipv6, GET_IPV6_TOOL, update_ipv6, UPDATE_IPV6_TOOL } from './ipv6';
-import { get_managed_transform, GET_MANAGED_TRANSFORM_TOOL, update_managed_transform, UPDATE_MANAGED_TRANSFORM_TOOL } from './managedTransform';
+import {
+  get_managed_transform,
+  GET_MANAGED_TRANSFORM_TOOL,
+  update_managed_transform,
+  UPDATE_MANAGED_TRANSFORM_TOOL,
+} from './managedTransform';
 
 export const ESA_OPENAPI_ER_LIST = [
   HTML_DEPLOY_TOOL,
@@ -101,7 +105,7 @@ export const ESA_OPENAPI_ER_LIST = [
   ER_RECORD_CREATE_TOOL,
   ER_RECORD_DELETE_TOOL,
   ER_RECORD_LIST_TOOL,
-  SITE_RECORD_LIST_TOOL,
+
   CREATE_SITE_TOOL,
   UPDATE_SITE_PAUSE_TOOL,
   GET_SITE_PAUSE_TOOL,
@@ -124,17 +128,19 @@ export const ESA_OPENAPI_SITE_LIST = [
   GET_RECORD_TOOL,
 ];
 
-export const IPV6_LIST = [
-  UPDATE_IPV6_TOOL,
-  GET_IPV6_TOOL,
-];
+export const IPV6_LIST = [UPDATE_IPV6_TOOL, GET_IPV6_TOOL];
 
 export const MANAGED_TRANSFORM_LIST = [
   UPDATE_MANAGED_TRANSFORM_TOOL,
   GET_MANAGED_TRANSFORM_TOOL,
 ];
 
-export const ESA_OPENAPI_LIST = [...ESA_OPENAPI_ER_LIST, ...ESA_OPENAPI_SITE_LIST, ...IPV6_LIST, ...MANAGED_TRANSFORM_LIST];
+export const ESA_OPENAPI_LIST = [
+  ...ESA_OPENAPI_ER_LIST,
+  ...ESA_OPENAPI_SITE_LIST,
+  ...IPV6_LIST,
+  ...MANAGED_TRANSFORM_LIST,
+];
 export const esaHandlers: ToolHandlers = {
   site_active_list,
   site_match,
