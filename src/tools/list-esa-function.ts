@@ -44,6 +44,8 @@ import {
   UPDATE_SITE_PAUSE_TOOL,
   get_site_pause,
   GET_SITE_PAUSE_TOOL,
+  LIST_SITES_TOOL,
+  list_sites,
 } from './site/site';
 
 import {
@@ -83,6 +85,20 @@ import { ToolHandlers } from '../utils/types';
 import { routine_code_deploy, ROUTINE_CODE_DEPLOY_TOOL } from './er/deploy';
 import { deployment_delete, DEPLOYMENT_DELETE_TOOL } from './er/deployments';
 import { ROUTINE_CODE_COMMIT_TOOL } from './er/commit';
+import {
+  apply_certificate,
+  APPLY_CERTIFICATE_TOOL,
+  delete_certificate,
+  DELETE_CERTIFICATE_TOOL,
+  get_certificate,
+  get_certificate_quota,
+  GET_CERTIFICATE_QUOTA_TOOL,
+  GET_CERTIFICATE_TOOL,
+  list_certificates,
+  LIST_CERTIFICATES_TOOL,
+  set_certificate,
+  SET_CERTIFICATE_TOOL,
+} from './site/certificate';
 
 export const ESA_OPENAPI_ER_LIST = [
   HTML_DEPLOY_TOOL,
@@ -104,18 +120,13 @@ export const ESA_OPENAPI_ER_LIST = [
   ER_RECORD_CREATE_TOOL,
   ER_RECORD_DELETE_TOOL,
   ER_RECORD_LIST_TOOL,
-
-  CREATE_SITE_TOOL,
-  UPDATE_SITE_PAUSE_TOOL,
-  GET_SITE_PAUSE_TOOL,
-  CREATE_SITE_MX_RECORD_TOOL,
-  CREATE_SITE_NS_RECORD_TOOL,
-  CREATE_SITE_TXT_RECORD_TOOL,
-  CREATE_SITE_CNAME_RECORD_TOOL,
-  CREATE_SITE_A_OR_AAAA_RECORD_TOOL,
 ];
 
 export const ESA_OPENAPI_SITE_LIST = [
+  LIST_SITES_TOOL,
+  CREATE_SITE_TOOL,
+  UPDATE_SITE_PAUSE_TOOL,
+  GET_SITE_PAUSE_TOOL,
   UPDATE_RECORD_TOOL,
   CREATE_SITE_MX_RECORD_TOOL,
   CREATE_SITE_NS_RECORD_TOOL,
@@ -129,6 +140,15 @@ export const ESA_OPENAPI_SITE_LIST = [
 
 export const IPV6_LIST = [UPDATE_IPV6_TOOL, GET_IPV6_TOOL];
 
+export const CERTIFICATE_LIST = [
+  SET_CERTIFICATE_TOOL,
+  APPLY_CERTIFICATE_TOOL,
+  GET_CERTIFICATE_TOOL,
+  DELETE_CERTIFICATE_TOOL,
+  LIST_CERTIFICATES_TOOL,
+  GET_CERTIFICATE_QUOTA_TOOL,
+];
+
 export const MANAGED_TRANSFORM_LIST = [
   UPDATE_MANAGED_TRANSFORM_TOOL,
   GET_MANAGED_TRANSFORM_TOOL,
@@ -138,6 +158,7 @@ export const ESA_OPENAPI_LIST = [
   ...ESA_OPENAPI_ER_LIST,
   ...ESA_OPENAPI_SITE_LIST,
   ...IPV6_LIST,
+  ...CERTIFICATE_LIST,
   ...MANAGED_TRANSFORM_LIST,
 ];
 export const esaHandlers: ToolHandlers = {
@@ -176,4 +197,11 @@ export const esaHandlers: ToolHandlers = {
   get_ipv6,
   update_managed_transform,
   get_managed_transform,
+  set_certificate,
+  apply_certificate,
+  get_certificate,
+  delete_certificate,
+  list_certificates,
+  get_certificate_quota,
+  list_sites,
 };

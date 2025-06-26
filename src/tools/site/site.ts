@@ -8,6 +8,85 @@ import {
 } from '@alicloud/esa20240910';
 import { GetMatchSiteRequest } from '../../utils/types.js';
 
+export const LIST_SITES_TOOL: Tool = {
+  name: 'list_sites',
+  description:
+    '用于查询当前用户下的站点列表 ，包括站点的名称、状态、配置等信息。',
+  inputSchema: {
+    type: 'object',
+    properties: {
+      siteName: {
+        type: 'string',
+        description: '站点名称。用于查询的过滤条件。',
+      },
+      siteSearchType: {
+        type: 'string',
+        description:
+          '站点名称的搜索匹配模式。默认为精确匹配，取值：; - **prefix**：前缀匹配。; - **suffix**：后缀匹配。; - **exact**：精确匹配。; - **fuzzy**：模糊匹配。',
+        enum: ['suffix', 'exact', 'prefix', 'fuzzy'],
+      },
+      pageNumber: {
+        type: 'number',
+        description: '页码。默认值：**1**。',
+      },
+      pageSize: {
+        type: 'number',
+        description: '分页大小。默认值：**500**。',
+      },
+      tagFilter: {
+        type: 'array',
+        description: '标签过滤规则。',
+        items: {
+          type: 'object',
+          properties: {
+            key: {
+              type: 'string',
+              description: '标签键，用于查询的过滤条件。',
+            },
+            value: {
+              type: 'string',
+              description: '标签值，用于查询的过滤条件。',
+            },
+          },
+        },
+      },
+      resourceGroupId: {
+        type: 'string',
+        description: '资源组ID。用于查询的过滤条件。',
+      },
+      status: {
+        type: 'string',
+        description: '站点状态。用于查询的过滤条件。',
+      },
+      onlyEnterprise: {
+        type: 'boolean',
+        description: '仅企业版，传**true**时代表仅查询企业版的站点。',
+      },
+      planSubscribeType: {
+        type: 'string',
+        description:
+          '套餐订阅类型。取值：; - **basicplan**: 基础版。; - **standardplan**：标准版。; - **advancedplan**：高级版。; - **enterpriseplan**：企业版。',
+      },
+      coverage: {
+        type: 'string',
+        description:
+          '加速区域。取值：; - **domestic**：仅中国内地。; - **global**：全球。; - **overseas**：全球（不包含中国内地）。',
+      },
+      accessType: {
+        type: 'string',
+        description:
+          '接入类型。取值：; - **NS**：通过NS托管接入。; - **CNAME**：通过CNAME接入。',
+      },
+      orderBy: {
+        type: 'string',
+        description:
+          '排序字段，默认按照创建时间排序，支持; - gmtCreate：站点创建时间; - visitTime：站点访问时间',
+      },
+    },
+    annotations: {},
+  },
+};
+
 export const SITE_ACTIVE_LIST_TOOL: Tool = {
   name: 'site_active_list',
   description: 'List all active sites',
@@ -147,6 +226,14 @@ export const site_active_list = async () => {
         text: JSON.stringify(res),
       },
     ],
+    success: true,
+  };
+};
+export const list_sites = async (request: CallToolRequest) => {
+  const res = await api.listSites(request.params.arguments as ListSitesRequest);
+
+  return {
+    content: [{ type: 'text', text: JSON.stringify(res) }],
     success: true,
   };
 };

@@ -1,4 +1,16 @@
 import ESA, {
+  SetCertificateRequest,
+  SetCertificateResponse,
+  ApplyCertificateRequest,
+  ApplyCertificateResponse,
+  GetCertificateRequest,
+  GetCertificateResponse,
+  DeleteCertificateRequest,
+  DeleteCertificateResponse,
+  ListCertificatesRequest,
+  ListCertificatesResponse,
+  GetCertificateQuotaRequest,
+  GetCertificateQuotaResponse,
   CommitRoutineStagingCodeRequest,
   CommitRoutineStagingCodeResponse,
   CreateRecordRequest,
@@ -55,14 +67,14 @@ import ESA, {
   UpdateManagedTransformResponse,
   GetManagedTransformRequest,
   GetManagedTransformResponse,
-} from "@alicloud/esa20240910";
-import * as $OpenApi from "@alicloud/openapi-client";
-import * as $Util from "@alicloud/tea-util";
+} from '@alicloud/esa20240910';
+import * as $OpenApi from '@alicloud/openapi-client';
+import * as $Util from '@alicloud/tea-util';
 import {
   CliConfig,
   GetMatchSiteRequest,
   ListRoutineRelatedRecordsRequest,
-} from "./types";
+} from './types';
 
 export interface ApiMethod<RequestType, ResponseType> {
   (runtime: $Util.RuntimeOptions): Promise<ResponseType>;
@@ -479,6 +491,71 @@ class Client {
       this.client.getManagedTransform.bind(this.client) as ApiMethod<
         GetManagedTransformRequest,
         GetManagedTransformResponse
+      >,
+      request,
+    );
+  }
+  setCertificate(params: SetCertificateRequest) {
+    const request = new SetCertificateRequest(params);
+    return this.callApi(
+      this.client.setCertificate.bind(this.client) as ApiMethod<
+        SetCertificateRequest,
+        SetCertificateResponse
+      >,
+      request,
+    );
+  }
+
+  applyCertificate(params: ApplyCertificateRequest) {
+    const request = new ApplyCertificateRequest(params);
+    return this.callApi(
+      this.client.applyCertificate.bind(this.client) as ApiMethod<
+        ApplyCertificateRequest,
+        ApplyCertificateResponse
+      >,
+      request,
+    );
+  }
+
+  getCertificate(params: GetCertificateRequest) {
+    const request = new GetCertificateRequest(params);
+    return this.callApi(
+      this.client.getCertificate.bind(this.client) as ApiMethod<
+        GetCertificateRequest,
+        GetCertificateResponse
+      >,
+      request,
+    );
+  }
+
+  deleteCertificate(params: DeleteCertificateRequest) {
+    const request = new DeleteCertificateRequest(params);
+    return this.callApi(
+      this.client.deleteCertificate.bind(this.client) as ApiMethod<
+        DeleteCertificateRequest,
+        DeleteCertificateResponse
+      >,
+      request,
+    );
+  }
+
+  listCertificates(params: ListCertificatesRequest) {
+    const request = new ListCertificatesRequest(params);
+    return this.callApi(
+      this.client.listCertificates.bind(this.client) as ApiMethod<
+        ListCertificatesRequest,
+        ListCertificatesResponse
+      >,
+      request,
+    );
+  }
+
+  getCertificateQuota(params: GetCertificateQuotaRequest) {
+    const request = new GetCertificateQuotaRequest(params);
+    return this.callApi(
+      this.client.getCertificateQuota.bind(this.client) as ApiMethod<
+        GetCertificateQuotaRequest,
+        GetCertificateQuotaResponse
       >,
       request,
     );

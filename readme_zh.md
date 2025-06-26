@@ -88,6 +88,22 @@
 |              | get_site_pause               | 查询站点暂停配置。                                     |
 |              | update_site_pause            | 修改站点暂停配置。                                     |
 |              | create_site                  | 让用户创建一个新的站点。                               |
+|              | update_record                | 更新多种类型的 DNS 记录。                              |
+|              | get_record                   | 查询单个 DNS 记录的配置。                              |
+|              | list_record                  | 查询站点的 DNS 记录列表。                              |
+|              | delete_record                | 根据指定的 RecordId 删除站点的 DNS 记录。              |
+|              | update_ipv6                  | 修改站点的 IPv6 配置。                                 |
+|              | get_ipv6                     | 查询站点的 IPv6 配置。                                 |
+|              | update_managed_transform     | 修改站点的托管转换配置。                               |
+|              | get_managed_transform        | 查询托管转换配置。                                     |
+|              | list_sites                   | 列出您阿里云账户中注册的所有站点。                     |
+| Certificate  | set_certificate              | 用于设置某站点下是否启用证书功能及更新证书信息         |
+|              | apply_certificate            | 申请免费 SSL 证书。                                    |
+|              | get_certificate              | 获取站点下指定证书信息。                               |
+|              | delete_certificate           | 删除站点下的特定证书。                                 |
+|              | list_certificates            | 查询特定站点下的证书列表。                             |
+|              | get_certificate_quota        | 查询证书配额和使用情况。                               |
+
 ## Prompt示例
 
 - 编写一个 2048 游戏并将其部署在边缘函数上，显示边缘函数提供的默认访问 URL。
