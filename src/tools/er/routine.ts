@@ -53,13 +53,8 @@ export const ROUTINE_CREATE_TOOL: Tool = {
         type: 'string',
         description: 'Description of the routine, no spaces',
       },
-      code: {
-        type: 'string',
-        description:
-          'Source Code of the routine, export default { async fetch(request) { return handleRequest(request); } }',
-      },
     },
-    required: ['name', 'code'],
+    required: ['name'],
   },
 };
 

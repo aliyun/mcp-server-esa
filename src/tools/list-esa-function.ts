@@ -84,7 +84,7 @@ import {
 import { ToolHandlers } from '../utils/types';
 import { routine_code_deploy, ROUTINE_CODE_DEPLOY_TOOL } from './er/deploy';
 import { deployment_delete, DEPLOYMENT_DELETE_TOOL } from './er/deployments';
-import { ROUTINE_CODE_COMMIT_TOOL } from './er/commit';
+import { routine_code_commit, ROUTINE_CODE_COMMIT_TOOL } from './er/commit';
 import {
   apply_certificate,
   APPLY_CERTIFICATE_TOOL,
@@ -167,6 +167,7 @@ export const esaHandlers: ToolHandlers = {
   site_route_list,
   site_record_list,
   routine_create,
+  routine_code_commit,
   routine_delete,
   routine_list,
   routine_get,
