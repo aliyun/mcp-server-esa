@@ -1,0 +1,18 @@
+# Source
+src/
+scripts/
+image/
+
+# Config
+.qoder/
+.prettierrc
+.prettierignore
+eslint.config.mjs
+rslib.config.ts
+tsconfig.json
+
+# Dev files
+*.log*
+.DS_Store
+.git
+.gitignore

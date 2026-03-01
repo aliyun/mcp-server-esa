@@ -1,13 +1,12 @@
-import z from 'zod';
 import {
   Result,
-  CallToolRequestSchema,
+  CallToolRequest,
 } from '@modelcontextprotocol/sdk/types.js';
 import { CreateRoutineRouteRequest } from '@alicloud/esa20240910';
 
 export type ToolHandlers = Record<
   string,
-  (request: z.infer<typeof CallToolRequestSchema>) => Promise<Result>
+  (request: CallToolRequest) => Promise<Result>
 >;
 export interface IOssConfig {
   OSSAccessKeyId: string;

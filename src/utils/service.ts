@@ -1,3 +1,6 @@
+import { name, version } from '../../package.json';
+import FormData from 'form-data';
+import fetch from 'node-fetch';
 import ESA, {
   SetCertificateRequest,
   SetCertificateResponse,
@@ -101,6 +104,7 @@ class Client {
       accessKeySecret: config.auth?.accessKeySecret || '',
       securityToken: config.auth?.securityToken || '',
       endpoint: config.endpoint,
+      userAgent: `${name}/${version}`,
     });
     return new ESA(apiConfig);
   }
@@ -559,6 +563,143 @@ class Client {
       >,
       request,
     );
+  }
+
+  async createRoutineWithAssetsCodeVersion(requestParams: {
+    Name: string;
+    CodeDescription?: string;
+  }) {
+    const params = {
+      action: 'CreateRoutineWithAssetsCodeVersion',
+      version: '2024-09-10',
+      protocol: 'https',
+      method: 'POST',
+      authType: 'AK',
+      bodyType: 'json',
+      reqBodyType: 'json',
+      style: 'RPC',
+      pathname: '/',
+      toMap: function () {
+        return this;
+      },
+    };
+
+    const request = new $OpenApi.OpenApiRequest({
+      body: {
+        Name: requestParams.Name,
+        CodeDescription: requestParams.CodeDescription,
+      },
+    });
+    const runtime = {
+      toMap: function () {
+        return this;
+      },
+    };
+
+    return this.client.callApi(params, request, runtime);
+  }
+
+  async getRoutineCodeVersionInfo(requestParams: {
+    Name: string;
+    CodeVersion: string;
+  }) {
+    const params = {
+      action: 'GetRoutineCodeVersionInfo',
+      version: '2024-09-10',
+      protocol: 'https',
+      method: 'GET',
+      authType: 'AK',
+      bodyType: 'json',
+      reqBodyType: 'json',
+      style: 'RPC',
+      pathname: '/',
+      toMap: function () {
+        return this;
+      },
+    };
+
+    const request = new $OpenApi.OpenApiRequest({
+      query: {
+        Name: requestParams.Name,
+        CodeVersion: requestParams.CodeVersion,
+      },
+    });
+    const runtime = {
+      toMap: function () {
+        return this;
+      },
+    };
+
+    return this.client.callApi(params, request, runtime);
+  }
+
+  async createRoutineCodeDeployment(requestParams: {
+    Name: string;
+    CodeVersions: { Percentage: number; CodeVersion: string }[];
+    Strategy: string;
+    Env: string;
+  }) {
+    const params = {
+      action: 'CreateRoutineCodeDeployment',
+      version: '2024-09-10',
+      protocol: 'https',
+      method: 'POST',
+      authType: 'AK',
+      bodyType: 'json',
+      reqBodyType: 'json',
+      style: 'RPC',
+      pathname: '/',
+      toMap: function () {
+        return this;
+      },
+    };
+
+    const request = new $OpenApi.OpenApiRequest({
+      query: {
+        Name: requestParams.Name,
+        Env: requestParams.Env,
+        Strategy: requestParams.Strategy,
+        CodeVersions: JSON.stringify(requestParams.CodeVersions),
+      },
+    });
+
+    const runtime = {
+      toMap: function () {
+        return this;
+      },
+    };
+
+    return this.client.callApi(params, request, runtime);
+  }
+
+  async uploadZipToOSS(
+    ossConfig: {
+      OSSAccessKeyId: string;
+      Signature: string;
+      Url: string;
+      Key: string;
+      Policy: string;
+      XOssSecurityToken?: string;
+    },
+    zipBuffer: Buffer,
+  ) {
+    const formData = new FormData();
+    formData.append('OSSAccessKeyId', ossConfig.OSSAccessKeyId);
+    formData.append('Signature', ossConfig.Signature);
+    if (ossConfig.XOssSecurityToken) {
+      formData.append('x-oss-security-token', ossConfig.XOssSecurityToken);
+    }
+    formData.append('policy', ossConfig.Policy);
+    formData.append('key', ossConfig.Key);
+    formData.append('file', zipBuffer);
+
+    const ossRes = await fetch(ossConfig.Url, {
+      method: 'POST',
+      body: formData,
+      headers: formData.getHeaders(),
+    });
+
+    return ossRes && (ossRes.status === 200 || ossRes.status === 204);
   }
 }
 
