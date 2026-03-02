@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/aliyun-mcp-server-esa-badge.png)](https://mseep.ai/app/aliyun-mcp-server-esa)
+
 # ESA MCP Server
 
 [![npm version](https://img.shields.io/npm/v/mcp-server-esa.svg)](https://www.npmjs.com/package/mcp-server-esa)
