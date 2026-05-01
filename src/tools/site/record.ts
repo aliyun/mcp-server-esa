@@ -248,13 +248,13 @@ export const CREATE_SITE_NS_RECORD_TOOL: Tool = {
         description:
           'The comment of the record. The maximum length is 100 characters.',
       },
-      required: ['siteId', 'recordName', 'type', 'data'],
-      annotations: {
-        readOnlyHint: false,
-        destructiveHint: false,
-        idempotentHint: false,
-        openWorldHint: false,
-      },
+    },
+    required: ['siteId', 'recordName', 'type', 'data'],
+    annotations: {
+      readOnlyHint: false,
+      destructiveHint: false,
+      idempotentHint: false,
+      openWorldHint: false,
     },
   },
 };
