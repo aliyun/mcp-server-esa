@@ -21,7 +21,7 @@ export const ROUTE_CREATE_TOOL: Tool = {
         description: 'The ID of the site',
       },
       mode: {
-        type: 'enum',
+        type: 'string',
         enum: ['simple', 'custom'],
         description: 'The mode of the route, default is simple',
       },
@@ -45,12 +45,12 @@ export const ROUTE_CREATE_TOOL: Tool = {
           'The name of the route, use to identify the route. For example: test-route',
       },
       bypass: {
-        type: 'enum',
+        type: 'string',
         enum: ['on', 'off'],
         description: 'The bypass of the route, default is off',
       },
       routeEnable: {
-        type: 'enum',
+        type: 'string',
         enum: ['on', 'off'],
         description: 'The enable of the route, default is on',
       },
@@ -91,7 +91,7 @@ export const ROUTE_UPDATE_TOOL: Tool = {
         description: 'The name of the route, use to identify the route.',
       },
       routeEnable: {
-        type: 'enum',
+        type: 'string',
         enum: ['on', 'off'],
         description: 'The enable of the route',
       },
@@ -104,7 +104,7 @@ export const ROUTE_UPDATE_TOOL: Tool = {
         description: 'The name of the routine',
       },
       bypass: {
-        type: 'enum',
+        type: 'string',
         enum: ['on', 'off'],
         description: 'The bypass of the route ',
       },
